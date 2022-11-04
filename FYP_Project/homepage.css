@@ -1,0 +1,343 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*--------------Header-----------*/
+.header
+{
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar
+{
+    display:flex;
+    align-items: center;
+}
+
+nav
+{
+    flex: 1;
+    text-align: right;
+}
+
+nav ul
+{
+    display: inline-block;
+    list-style: none;
+}
+
+nav ul li
+{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+a
+{
+    text-decoration: none;
+    color: black;
+}
+
+.container
+{
+    max-width: 1500px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.row
+{
+    display: flex;
+    justify-content: space-around;
+}
+
+.col-2
+{
+    min-width: 300px;
+}
+.col-2 img
+{
+    max-width: 100%;
+     height: 500px;
+    width: 1120px; 
+    margin: auto;
+}
+
+
+/*----------------Index-------------*/
+.small-container
+{
+    /* max-width: 100%; */
+    max-width: 1080px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.categories
+{
+    margin: 70px 0;
+}
+
+.col-6
+{
+    flex-basis: 30%;
+    min-width: 200px;
+}
+
+.col-6 img
+{
+    width: 320px;
+    height: 300px;
+    padding: auto;
+    margin-left: 150px;
+}
+
+.col-3
+{
+    flex-basis: 25%;
+    padding: 10px;
+    min-width: 200px;
+    margin-bottom: 50px;
+    transition:  0.5s;
+    border: 1px solid black;
+}
+
+.col-3 img
+{
+    width: 270px;
+    height: 250px;
+}
+
+.col-3 p, .col-3 .rating, .col-3 h4
+{
+    text-align: center;
+    margin-left: 10px;
+}
+
+h4
+{
+    color: rgb(17, 17, 17);
+    font-weight: normal;
+}
+
+.col-3 p
+{
+    font-size: 14px;
+}
+
+.rating .fa
+{
+    color: #2a7c6f;
+}
+
+.cart
+{
+    margin-top: 20px;
+}
+
+.cart button
+{
+    padding: 15px 20px;
+    background: #2a7c6f;
+    color: white;
+    border-radius: 0;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.cart button:first-of-type
+{
+    padding: 15px 100px;
+    background: #2a7c6f;
+    color: white;
+    border-radius: 0;
+}
+
+.col-3:hover
+{
+    transform: translateY(-5px);
+}
+
+.title
+{
+    text-align:center;
+    margin: 0 auto 80px;
+    position: relative;
+    line-height: 60px;
+    color: #555;
+}
+
+.title::after{
+    content:'';
+    background: #2a7c6f;
+    width: 80px;
+    height: 5px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.brands
+{
+    margin: 100px auto 20px;
+}
+
+.col-4
+{
+    width: 160px;
+}
+
+.col-4 img
+{
+    width: 80px;
+    cursor: pointer;
+    margin: auto 0 auto 30px;
+}
+
+
+
+
+
+/*----------------Footer--------------*/
+.footer
+{
+    font-family: 'Poppins', sans-serif;
+    background: #ddead1;
+    color: #4b6043;
+    font-size: 18px;    
+}
+
+.footer h3
+{
+    font-size: 20px;
+    color: #4b6043;
+    margin-bottom: 10px;
+}
+
+.footer-col-1 img
+{
+    width: 150px;
+    margin-bottom: 10px;
+    padding: auto;
+}
+
+.footer-col-1, .footer-col-2, .footer-col-3
+{
+    max-width: 1300px;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.footer-col-1
+{
+    flex-basis: 10%;
+}
+
+.footer h3
+{
+    margin-left: 40px;
+}
+
+.footer-col-2,.footer-col-3
+{
+    margin-top: 5px;
+    text-align: center;
+}
+
+.footer ul
+{
+    list-style: none;
+}
+
+.footer-col-2 li, .footer-col-3 li
+{
+    padding: 10px;
+}
+
+.footer-col-2 a
+{
+    color: #4b6043;
+}
+
+.footer-col-2 a:hover
+{
+    text-decoration: underline;
+}
+
+.footer-col-3 a
+{
+    color: #4b6043;
+}
+
+.copy
+{
+    text-align: center;
+}
+
+
+.menu-icon
+{
+    width: 28px;
+    margin-left: 20px;
+    display: none;
+}
+
+/*-----------media query for menu--------*/
+@media only screen and (max-width: 800px)
+{
+    nav ul
+    {
+        position: absolute;
+        top:90px;
+        left: 0;
+        background: #333;
+        width: 100%;
+        overflow: hidden;
+        transition: 0.5s;
+    }
+
+    nav ul li
+    {
+        display: block;
+        margin-right: 80px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    nav ul li a
+    {
+        color:#fff;
+        
+    }
+
+    .menu-icon
+    {
+        display: block;
+        cursor: pointer;
+    }
+}
+
+
+/*media query for less than 600 screen size*/
+@media only screen and (max-width: 600px)
+{
+    .row
+    {
+        text-align: center;
+    }
+
+    .col-2, .col-3, .col-4
+    {
+        flex-basis: 100%;
+    }
+}
