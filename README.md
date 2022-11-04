@@ -1,1 +1,6 @@
-# wisteria
+FYP - Wisteria
+
+Member List
+1. KUAN SHENG ZHE
+2. LIONG XIN YEI
+3. ONG CHU JING
