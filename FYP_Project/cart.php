@@ -26,7 +26,7 @@ if(isset($_POST['update_update_btn'])){
     mysqli_query($connect, "DELETE FROM `cart`");
     header('location:cart.php');
  }
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
