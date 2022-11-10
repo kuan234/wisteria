@@ -5,7 +5,11 @@
     if(!isset($_SESSION['user_id']))
     {
         header("Location: login.php");
-        
+        die;
+    }
+    else
+    {
+        $sid = $_SESSION['user_id']; 
     }
 ?>
 
@@ -25,6 +29,74 @@
 
 </head>
 <body>
+<?php
+if(isset($_FILES["image"]["name"])){
+     
+
+    $imageName = $_FILES["image"]["name"];
+    $imageSize = $_FILES["image"]["size"];
+    $tmpName = $_FILES["image"]["name"];
+
+    // Image validation
+    $validImageExtension = ['jpg', 'jpeg', 'png'];
+    $imageExtension = explode('.', $imageName);
+    $imageExtension = strtolower(end($imageExtension));
+    if (!in_array($imageExtension, $validImageExtension)){
+      echo
+      "
+      <script>
+        alert('Invalid Image Extension');
+        
+      </script>
+      ";
+    }
+    elseif ($imageSize > 1200000){
+      echo
+      "
+      <script>
+        alert('Image Size Is Too Large');
+        
+      </script>
+      ";
+    }
+    else{
+      $newImageName = $imageName; // Generate new image name
+      //move_uploaded_file($tmpName, './image/' .$newImageName);
+      $fnm = $_FILES["image"]["name"];
+      $dst="./image/upload_image/" .$fnm;
+      move_uploaded_file($_FILES["image"]["tmp_name"],$dst);
+      $query = "UPDATE user_info SET user_image = '$newImageName' WHERE `user_id` = $sid";
+      mysqli_query($connect, $query);
+      echo '<script type="text/javascript">swal("Saved","","success");</script>';      ;
+    }
+  }
+
+
+if(isset($_POST['savebtn']))
+    {
+        $uname = $_POST['username'];
+        $uaddress = $_POST['address'];
+        
+        $uphone = $_POST['phone'];
+        $ubirthday = $_POST['birthday'];
+        
+
+        // $fnm = $_FILES["upload_image"]["name"];
+        // $dst="./image/" .$fnm;
+        // $dst1=$fnm;
+        // move_uploaded_file($_FILES["upload_image"]["tmp_name"],$dst);
+
+        // mysqli_query($connect,"UPDATE `user_info` SET `username` = '$uname', `address` = '$uaddress', `phone` = '$uphone' WHERE `user_id` = '$id'");
+        //mysqli_query($connect,"UPDATE `user_reg` SET `email` = $uemail WHERE `uid` = '$id'");
+        $work = mysqli_query($connect," UPDATE `user_info` SET `username`='$uname',`address`='$uaddress',`phone`='$uphone',`birthday`='$ubirthday',`user_id`='$sid' WHERE `user_id` = '$sid'");
+        // $change_email = mysqli_query($connect, "UPDATE `user_reg` SET `email` = '$uemail' WHERE `uid` = '$sid'");
+
+        echo '<script type="text/javascript">swal("Saved", "New Record Saved", "success");</script>';        
+        
+    }
+    ?>
+
+
     <style>
         body{
             margin-top:20px;
@@ -119,7 +191,7 @@
         
     </nav>
     <hr class="mt-0 mb-4">
-    <form method='POST' id='upload_image'>
+    <form method='POST' id='upload_image' enctype="multipart/form-data">
     <div class="row">
         <div class="col-xl-4">
             <!-- Profile picture card-->
@@ -127,7 +199,7 @@
                 <div class="card-header">Profile Picture</div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="./image/<?php echo $row['user_image']; ?>" alt="">
+                    <img class="img-account-profile rounded-circle mb-2" src="./image/upload_image/<?php echo $row['user_image']; ?>" alt="">
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <!-- Profile picture upload button-->
@@ -147,51 +219,7 @@
 
 
 <?php
-    if(isset($_FILES["image"]["name"])){
-      $id = $_POST['id'];
-      $name = $_POST["name"];
-
-      $imageName = $_FILES["image"]["name"];
-      $imageSize = $_FILES["image"]["size"];
-      $tmpName = $_FILES["image"]["tmp_name"];
-
-      // Image validation
-      $validImageExtension = ['jpg', 'jpeg', 'png'];
-      $imageExtension = explode('.', $imageName);
-      $imageExtension = strtolower(end($imageExtension));
-      if (!in_array($imageExtension, $validImageExtension)){
-        echo
-        "
-        <script>
-          alert('Invalid Image Extension');
-          document.location.href = './image/';
-        </script>
-        ";
-      }
-      elseif ($imageSize > 1200000){
-        echo
-        "
-        <script>
-          alert('Image Size Is Too Large');
-          document.location.href = './image/';
-        </script>
-        ";
-      }
-      else{
-        $newImageName = $name . " - " . date("Y.m.d") . " - " . date("h.i.sa"); // Generate new image name
-        $newImageName .= '.' .$imageExtension;
-        $query = "UPDATE user_info SET user_image = '$newImageName' WHERE infoid = $id";
-        mysqli_query($connect, $query);
-        move_uploaded_file($tmpName, './image/' .$newImageName);
-        echo
-        "
-        <script>
-        document.location.href = './image';
-  
-        </script>
-        ";
-      }
-    }
+    
     ?>
 
         <div class="col-xl-8">
@@ -204,7 +232,7 @@
                     <form method='POST' >
                         <!-- Form Group (username)-->
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
+                            <label class="small mb-1" for="inputUsername">Name (how your name will appear to other users on the site)</label>
                             <input class="form-control" name="username" id="inputUsername" type="text" placeholder="Enter your username" value="<?php echo $row['username'];?>">
                         </div>
                         <!-- Form Row-->
@@ -234,7 +262,7 @@
                             <input class="form-control" name="email" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="
                             <?php                           
                             echo $email;
-                            ?>">
+                            ?>" disabled>
                         </div>
                         <!-- Form Row-->
                         <div class="row gx-3 mb-3">
@@ -280,32 +308,7 @@
 
 //   }
 
-if(isset($_POST['savebtn']))
-    {
-        $uname = $_POST['username'];
-        $uaddress = $_POST['address'];
-        $uemail = $_POST['email'];
-        $uphone = $_POST['phone'];
-        $ubirthday = $_POST['birthday'];
-        
-
-        // $fnm = $_FILES["upload_image"]["name"];
-        // $dst="./image/" .$fnm;
-        // $dst1=$fnm;
-        // move_uploaded_file($_FILES["upload_image"]["tmp_name"],$dst);
-
-        // mysqli_query($connect,"UPDATE `user_info` SET `username` = '$uname', `address` = '$uaddress', `phone` = '$uphone' WHERE `user_id` = '$id'");
-        //mysqli_query($connect,"UPDATE `user_reg` SET `email` = $uemail WHERE `uid` = '$id'");
-        $work = mysqli_query($connect," UPDATE `user_info` SET `username`='$uname',`address`='$uaddress',`phone`='$uphone',`birthday`='$ubirthday',`user_id`='$sid' WHERE `user_id` = '$sid'");
-        $change_email = mysqli_query($connect, "UPDATE `user_reg` SET `email` = '$uemail' WHERE `uid` = '$sid'");
-
-        echo '<script type="text/javascript">swal("Saved", "New Record Saved", "success");</script>';        
-        
-        
-    }
-
-
-    ?>
+?>
 
 </body>
 </html>
