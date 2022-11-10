@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>s
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +10,7 @@
     <title>Document</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -95,25 +98,68 @@ color:#69707a;
                 <div class="card mb-4">
                     <div class="card-header">Change Password</div>
                     <div class="card-body">
-                        <form>
+                        <form method='POST'>
                             <!-- Form Group (current password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="currentPassword">Current Password</label>
-                                <input class="form-control" id="currentPassword" type="password" placeholder="Enter current password">
+                                <input class="form-control" name="currentPassword" type="password" placeholder="Enter current password" required>
                             </div>
                             <!-- Form Group (new password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="newPassword">New Password</label>
-                                <input class="form-control" id="newPassword" type="password" placeholder="Enter new password">
+                                <input class="form-control" name="newPassword" type="password" placeholder="Enter new password" required>
                             </div>
                             <!-- Form Group (confirm password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="confirmPassword">Confirm Password</label>
-                                <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm new password">
+                                <input class="form-control" name="confirmPassword" type="password" placeholder="Confirm new password" required>
                             </div>
-                            <button class="btn btn-primary" type="button">Save</button>
+                            <button class="btn btn-primary" name="change-password" type="submit">Save</button>
                         </form>
                     </div>
                 </div>
+
+                <?php
+                include('connection.php');
+
+                if(isset($_POST['change-password']))
+                {
+                    $sid = $_SESSION["user_id"];
+                    $currentp = $_POST['currentPassword'];
+                    $newp = $_POST['newPassword'];
+                    $confirmp = $_POST['confirmPassword'];
+
+                    $result =mysqli_query($connect,"SELECT * FROM user_reg WHERE `uid` = '$sid'");
+                    $count=mysqli_num_rows($result);
+                    if($count != 0)
+                    {
+                        $row=mysqli_fetch_assoc($result);
+
+                        //validation 
+                        if($currentp === $row['password'])
+                        {
+                            if($newp === $row['password'])
+                            {
+                                echo '<script type="text/javascript">swal("Wrong", "New password Cannot Same with Current Password", "error");</script>';
+                            }
+
+                            if($newp === $confirmp && $newp!=$row['password'])
+                            { 
+                                $change_pass = mysqli_query($connect, "UPDATE `user_reg` SET `password` = '$newp' WHERE `uid` = '$sid'");
+                                echo '<script type="text/javascript">swal("Successfully!", "Password Updated", "success");</script>';
+                            }
+                            else
+                            {
+                                echo '<script type="text/javascript">swal("Wrong", "Password Wrong", "error");</script>';
+                            }
+                        }
+                        else
+                        {
+                            echo '<script type="text/javascript">swal("Wrong", "Current Password Wrong", "error");</script>';
+                        }
+                    }
+                }
+
+                ?>
 </body>
 </html>
