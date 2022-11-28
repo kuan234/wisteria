@@ -7,6 +7,7 @@ if(!isset($_SESSION['user_id']))
         header("Location: login.php");
     }
 
+//update quantity
 if(isset($_POST['update_update_btn'])){
     $update_value = $_POST['update_quantity'];
     $update_id = $_POST['update_quantity_id'];
@@ -15,7 +16,15 @@ if(isset($_POST['update_update_btn'])){
        header('location:cart.php');
     };
  };
+
+ //discount code
+//  if(isset($_POST['update_discount_btn'])){
+//    $promodecode = $_POST['discountcode'];
+//    //$discount = mysqli_query($connect, "SELECT `cart` SET quantity = '$update_value' WHERE id = '$update_id'");
+//    header('location:cart.php');
+//  }
  
+ //remove item
  if(isset($_GET['remove'])){
     $remove_id = $_GET['remove'];
     mysqli_query($connect, "DELETE FROM `cart` WHERE id = '$remove_id'");
@@ -23,10 +32,10 @@ if(isset($_POST['update_update_btn'])){
  };
  
  if(isset($_GET['delete_all'])){
-    mysqli_query($connect, "DELETE FROM `cart`");
+    mysqli_query($connect, "DELETE FROM `cart` WHERE user_id = $id");
     header('location:cart.php');
  }
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,6 +102,15 @@ include('./php/header.php');
             };
          };
          ?>
+         <!-- <tr >
+            <td>Discount Code</td>
+            <td><input class="form-control form-control-lg" type="text" name="discountcode" value="" ></td>
+            <td colspan='1'><form action="" method="post">
+                  <input type="submit" value="update" name="update_discount_btn">
+               </form>  </td>
+            
+         </tr> -->
+
          <tr class="table-bottom">
             <td><a href="product.php" class="option-btn" style="margin-top: 0;">continue shopping</a></td>
             <td colspan="3">grand total</td>
