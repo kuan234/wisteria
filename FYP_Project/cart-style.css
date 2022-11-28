@@ -61,7 +61,7 @@
  .btn:hover,
  .option-btn:hover,
  .delete-btn:hover{
-   background-color: var(--black);
+   background-color: var(--red);
  }
  
  .option-btn i,
@@ -119,7 +119,7 @@
  }
  
  .shopping-cart table input[type="submit"]:hover{
-    background-color: var(--black);
+    background-color: var(--red);
  }
  
  .shopping-cart table .table-bottom{

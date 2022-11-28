@@ -53,11 +53,11 @@ body{
     color: #3F51B5
 }
 
-input::-webkit-outer-spin-button,
+/* input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0
-}
+} */
 
 .inputbox input:focus~span {
     transform: translateX(-0px) translateY(-15px);

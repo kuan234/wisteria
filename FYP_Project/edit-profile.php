@@ -164,7 +164,6 @@ if(isset($_POST['savebtn']))
 
 <?php 
     $sid = $_SESSION['user_id'];
-
     $result = mysqli_query($connect,"SELECT * from `user_reg` where `uid` = '$sid'");
 
                             if(mysqli_num_rows($result) > 0)
@@ -173,8 +172,13 @@ if(isset($_POST['savebtn']))
                                 $email = $e['email'];
                                 }
                             }
+    $info= mysqli_query($connect,"SELECT * FROM `user_info` WHERE `user_id` = '$sid'");
+    if(mysqli_num_rows($info) < 1)
+    {
+        mysqli_query($connect, "INSERT INTO `user_info`(`user_id`) value('$sid')");
+    }
 
-    $select_info = mysqli_query($connect,"SELECT * FROM `user_info` WHERe `user_id` = '$sid'");
+    $select_info = mysqli_query($connect,"SELECT * FROM `user_info` WHERE `user_id` = '$sid'");
     
 
     if(mysqli_num_rows($select_info) > 0)
@@ -279,6 +283,7 @@ if(isset($_POST['savebtn']))
                         </div>
                         <!-- Save changes button-->
                         <button class="btn btn-primary" name="savebtn" type="submit">Save changes</button>
+                        <a class="btn btn-primary" href="logout.php" role="button">Log Out</a>
                     </form>
                 </div>
             </div>
@@ -289,24 +294,6 @@ if(isset($_POST['savebtn']))
 <?php
         }
     }
-
-// if(isset($_FILES["image"]["name"])){
-//     $uname = $_POST['username'];
-//     $uaddress = $_POST['address'];
-//     $uemail = $_POST['email'];
-//     $uphone = $_POST['phone'];
-//     $ubirthday = $_POST['birthday'];
-    
-//     $fnm = $_FILES["image"]["name"];
-//     $dst="./image/" .$fnm;
-//     $dst1=$fnm;
-    
-//     move_uploaded_file($_FILES["image"]["tmp_name"],$dst);
-
-//     $work = mysqli_query($connect," UPDATE `user_info` SET `username`='$uname',`address`='$uaddress',`phone`='$uphone',`birthday`='$ubirthday',`user_id`='$id', `user_image` = '$dst1' WHERE `user_id` = '$id'");
-
-
-//   }
 
 ?>
 

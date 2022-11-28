@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +7,53 @@
     <link rel="stylesheet" href="homepage.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> -->
     <link rel="icon" href="image/logo.png">
 </head>
 <body>
     <?php
+    session_start();
     include('php/header.php');
     
+    if(isset($_SESSION['user_id']))
+    {  
+        ?>
+        <script>
+                const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                })
+
+                                Toast.fire({
+                                icon: 'success',
+                                title: 'Signed in successfully'
+                                })
+                        // const Toast = Swal.mixin({
+                        // toast: true,
+                        // position: 'top',
+                        // showConfirmButton: false,
+                        // timer: 3000,
+                        // timerProgressBar: true,
+                        // didOpen: (toast) => {
+                        //     toast.addEventListener('mouseenter', Swal.stopTimer)
+                        //     toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        // }
+                        // })
+
+                        // Toast.fire({
+                        // icon: 'success',
+                        // title: 'Signed in successfully'
+                        // })
+          </script>
+          <?php
+    }
     ?>
     <!-- ------------Header---------------->
     <div class="header">
@@ -238,8 +280,6 @@
             }
         }
     </script>
-
-
 
 
 </body>

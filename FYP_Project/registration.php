@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $connect = mysqli_connect("localhost","root","","wisteria");
 
 if(!$connect)
@@ -18,6 +18,9 @@ if(!$connect)
         <meta name="viewpoint" content="width=device-width, initial-scale=1.0"/>
         <link rel= "stylesheet" href= "registration.css">
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
     </head>
     <body>
         <div class="backtomain" name="backtomainpage"><a href="login.php">Login</a></div>
@@ -57,19 +60,31 @@ if(!$connect)
         {
             $password =$_POST["upassword"];
             $email =$_POST["uemail"];
+            $select = mysqli_query($connect, "SELECT * from `user_reg` where `email` = '$email'");
 
-            $select = mysqli_query($connect, "SELECT * from `user_reg` where `email` = '$email' and `password` = '$password'");
-            
             if(mysqli_num_rows($select)>0){
                 echo '<script type="text/javascript">swal("Failed", "Please change another email!", "error");</script>';
             }
             else{
                 //insert into database
                 mysqli_query($connect,"INSERT INTO `user_reg`( `email`,`password`) values('$email','$password')");
-                echo '<script type="text/javascript">swal("Saved", "Register Sucessful!", "success");</script>';
-                header("Location: login.php");
+          
+                ?>
+                <script>
+                    swal({
+                        title: "Success!",
+                        text: "Redirecting in 2 seconds.",
+                        type: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                        }, function(){
+                            window.location.href = "login.php";
+                        });
+                </script>
+                <?php
+                
             }
-            
+           
 
             
         }
