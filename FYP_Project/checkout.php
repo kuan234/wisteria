@@ -34,7 +34,28 @@ if(isset($_POST['confirmbtn']))
 
     $order = mysqli_query($connect, "INSERT INTO `order_manage`(`order_name`, `order_cardnum`, `order_address`, `order_city`, `order_state`, `order_postcode` ,`order_user_id`) VALUES ('$name','$cardnum','$address','$city','$state','$postcode','$id') ");
     if($order)
-    {echo"<script>alert('done')</script>";};
+    {
+        $order_id = mysqli_insert_id($connect);
+        $result = mysqli_query($connect, "SELECT * from cart where user_id = $id");	
+        while($row = mysqli_fetch_assoc($result))
+        {
+            $product_name = $row['name'];
+            $price = $row['price'];
+            $quantity = $row['quantity'];
+            $order2 =mysqli_query($connect,"INSERT INTO `user_order`(`order_id`, `product_name`, `price`, `quantity`) VALUES ('$order_id','$product_name','$price','$quantity')");
+        }
+        echo "<script>alert('Order Successful!');
+        </script>";
+    }
+    else
+    {
+        echo "<script>alert('something wrong');
+        </script>";
+    }
+    if($order2)
+    {
+        mysqli_query($connect, "DELETE FROM `cart` WHERE user_id = $id");
+    }
 }
 ?>
 
