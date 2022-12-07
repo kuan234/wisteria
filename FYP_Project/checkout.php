@@ -33,29 +33,52 @@ if(isset($_POST['confirmbtn']))
     
 
     $order = mysqli_query($connect, "INSERT INTO `order_manage`(`order_name`, `order_cardnum`, `order_address`, `order_city`, `order_state`, `order_postcode` ,`order_user_id`) VALUES ('$name','$cardnum','$address','$city','$state','$postcode','$id') ");
+    $order_id = mysqli_insert_id($connect);
+     $_SESSION['oid'] = $order_id;
+    $query2 = "select * from order_manage order by order_number desc limit 1";
+            $result2 = mysqli_query($connect,$query2);
+            $row = mysqli_fetch_array($result2);
+            $last_id = $row['order_number'];
+            if ($last_id == "")
+            {
+                $oid = "W000000100";
+            }
+            else
+            {
+                $oid = substr($last_id, 3);
+                $oid = intval($oid);
+                $oid = "W000000" . ($oid + 1);
+            }
+    $query3 = mysqli_query($connect,"UPDATE `order_manage` SET `order_number`='$oid' WHERE `orderID` = $order_id");
+    
     if($order)
-    {
-        $order_id = mysqli_insert_id($connect);
+    {  
         $result = mysqli_query($connect, "SELECT * from cart where user_id = $id");	
         while($row = mysqli_fetch_assoc($result))
         {
             $product_name = $row['name'];
             $price = $row['price'];
             $quantity = $row['quantity'];
-            $order2 =mysqli_query($connect,"INSERT INTO `user_order`(`order_id`, `product_name`, `price`, `quantity`) VALUES ('$order_id','$product_name','$price','$quantity')");
+            $image = $row['image'];
+            $order2 =mysqli_query($connect,"INSERT INTO `user_order`(`order_id`, `product_name`, `price`, `quantity`, `image`) VALUES ('$order_id','$product_name','$price','$quantity','$image')");
+            
+            
         }
         echo "<script>alert('Order Successful!');
         </script>";
+        if($order2)
+        {
+            mysqli_query($connect, "DELETE FROM `cart` WHERE user_id = $id");
+        }
+        header("Location: order_detail.php");
     }
     else
     {
         echo "<script>alert('something wrong');
         </script>";
     }
-    if($order2)
-    {
-        mysqli_query($connect, "DELETE FROM `cart` WHERE user_id = $id");
-    }
+    
+
 }
 ?>
 
@@ -115,7 +138,7 @@ if(isset($_POST['confirmbtn']))
 
         <div class="mt-4 mb-4">
 
-            <h6 class="text-uppercase">Billing Address</h6>
+            <h6 class="text-uppercase">Delivery Address</h6>
 
 
             <div class="row mt-3">
