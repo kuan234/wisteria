@@ -100,7 +100,16 @@ include('./php/header.php');
          <?php
            $grand_total = $grand_total + $sub_total;  
             };
-         };
+         }
+         else
+         {
+            ?>
+            <tr>
+            <td colspan="6"><h3>Cart is Empty</h3><td>
+            </tr>
+            <?php
+         }
+         
          ?>
          <!-- <tr >
             <td>Discount Code</td>
@@ -123,7 +132,7 @@ include('./php/header.php');
    </table>
 
    <div class="checkout-btn">
-      <a href="checkout.php" class="btn <?= ($grand_total > 1)?'':'disabled'; ?>">procced to checkout</a>
+      <a href="checkout.php" class="btn <?= ($grand_total > 1)?'':'disabled'; ?>">proceed to checkout</a>
    </div>
 
 </section>
