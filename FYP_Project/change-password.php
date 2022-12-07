@@ -87,7 +87,7 @@ color:#69707a;
         <!-- Account page navigation-->
         <nav class="nav nav-borders">
         <a class="nav-link  ms-0" href="edit-profile.php" target="__blank">Profile</a>
-        <a class="nav-link" href="" target="__blank">Billing</a>
+        <a class="nav-link" href="order.php" target="__blank">History</a>
         <a class="nav-link active" href="change-password.php" target="__blank">Security</a>
         
         </nav>
