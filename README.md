@@ -1,4 +1,4 @@
-FYP - Wisteria
+FYP - Wisteria Plant
 
 Member List
 1. KUAN SHENG ZHE
