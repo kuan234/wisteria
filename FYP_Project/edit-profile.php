@@ -1,6 +1,5 @@
 <?php
     session_start();
-    include('php/header.php');
     include('connection.php');
     if(!isset($_SESSION['user_id']))
     {
@@ -30,6 +29,10 @@
 </head>
 <body>
 <?php
+        include('php/header.php');
+    ?>
+<?php
+
 if(isset($_FILES["image"]["name"])){
      
 
@@ -190,7 +193,7 @@ if(isset($_POST['savebtn']))
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
         <a class="nav-link active ms-0" href="edit-profile.php" target="__blank">Profile</a>
-        <a class="nav-link" href="" target="__blank">Billing</a>
+        <a class="nav-link" href="order.php" target="__blank">History</a>
         <a class="nav-link" href="change-password.php" target="__blank">Security</a>
         
     </nav>
