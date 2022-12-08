@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2022 at 04:37 AM
+-- Generation Time: Dec 08, 2022 at 04:53 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -63,6 +63,38 @@ CREATE TABLE `cart` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `order_manage`
+--
+
+CREATE TABLE `order_manage` (
+  `orderID` int(100) NOT NULL,
+  `order_number` varchar(255) DEFAULT NULL,
+  `order_name` varchar(255) NOT NULL,
+  `order_cardnum` int(20) NOT NULL,
+  `order_address` varchar(255) NOT NULL,
+  `order_city` varchar(100) NOT NULL,
+  `order_state` varchar(100) NOT NULL,
+  `order_postcode` int(10) NOT NULL,
+  `order_user_id` int(100) NOT NULL,
+  `order_date` date DEFAULT current_timestamp(),
+  `delivery_date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `order_manage`
+--
+
+INSERT INTO `order_manage` (`orderID`, `order_number`, `order_name`, `order_cardnum`, `order_address`, `order_city`, `order_state`, `order_postcode`, `order_user_id`, `order_date`, `delivery_date`) VALUES
+(2, NULL, 'kuan', 123456789, 'mmmmm', 'melaka', 'melaka', 123321, 1, '2022-12-05', '2022-12-07'),
+(16, NULL, 'test4', 123213, 'hhh', 'jjj', 'kkk', 123322, 1, '2022-12-05', '2022-12-07'),
+(24, 'W00000000100', 'test3', 2147483647, '6,jalan10,permata1', 'mmm', 'mlk', 12345, 1, '2022-12-07', '2022-12-07'),
+(26, 'W0000000010101', 'ttt', 1234, '1', '1', '1', 1, 1, '2022-12-07', '2022-12-07'),
+(27, 'W00000010102', 'test11', 12341234, 'wqdqwdwqdq', 'mlk', 'mlk', 88888, 1, '2022-12-07', '2022-12-14'),
+(28, 'W00000010103', 'test44', 2147483647, 'jjjhdlahegbf', 'MLK', 'MLK', 12345, 1, '2022-12-07', '2022-12-14');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product`
 --
 
@@ -116,6 +148,31 @@ INSERT INTO `user_info` (`infoid`, `username`, `address`, `phone`, `birthday`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user_order`
+--
+
+CREATE TABLE `user_order` (
+  `id` int(100) NOT NULL,
+  `order_id` int(100) NOT NULL,
+  `product_name` varchar(100) NOT NULL,
+  `price` int(100) NOT NULL,
+  `quantity` int(100) NOT NULL,
+  `image` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_order`
+--
+
+INSERT INTO `user_order` (`id`, `order_id`, `product_name`, `price`, `quantity`, `image`) VALUES
+(18, 27, 'Artifical', 20, 5, 'Artifical.jpg'),
+(21, 28, 'Marble Pothos', 35, 1, 'Marble pothos.PNG'),
+(22, 28, 'Artifical', 20, 1, 'Artifical.jpg'),
+(23, 28, 'Baby Rubber', 25, 1, 'Baby_Rubber.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_reg`
 --
 
@@ -155,6 +212,14 @@ ALTER TABLE `cart`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `order_manage`
+--
+ALTER TABLE `order_manage`
+  ADD PRIMARY KEY (`orderID`),
+  ADD UNIQUE KEY `order_number` (`order_number`),
+  ADD KEY `Foreignkey` (`order_user_id`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -166,6 +231,12 @@ ALTER TABLE `product`
 ALTER TABLE `user_info`
   ADD PRIMARY KEY (`infoid`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `user_order`
+--
+ALTER TABLE `user_order`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user_reg`
@@ -190,6 +261,12 @@ ALTER TABLE `cart`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
+-- AUTO_INCREMENT for table `order_manage`
+--
+ALTER TABLE `order_manage`
+  MODIFY `orderID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
@@ -200,6 +277,12 @@ ALTER TABLE `product`
 --
 ALTER TABLE `user_info`
   MODIFY `infoid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `user_order`
+--
+ALTER TABLE `user_order`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `user_reg`
@@ -216,6 +299,12 @@ ALTER TABLE `user_reg`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_reg` (`uid`);
+
+--
+-- Constraints for table `order_manage`
+--
+ALTER TABLE `order_manage`
+  ADD CONSTRAINT `Foreignkey` FOREIGN KEY (`order_user_id`) REFERENCES `user_reg` (`uid`);
 
 --
 -- Constraints for table `user_info`
