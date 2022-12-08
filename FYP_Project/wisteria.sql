@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2022 at 10:38 AM
+-- Generation Time: Dec 08, 2022 at 04:37 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -60,13 +60,6 @@ CREATE TABLE `cart` (
   `user_id` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`id`, `name`, `price`, `quantity`, `image`, `user_id`) VALUES
-(28, 'Artifical', 20, 1, 'Artifical.jpg', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -117,7 +110,8 @@ INSERT INTO `user_info` (`infoid`, `username`, `address`, `phone`, `birthday`, `
 (1, 'kuan', '1, Jalan Bass 1, Taman gugua, 21111, Melaka', 123456789, '2011-08-21', 1, 'Marble pothos.PNG'),
 (2, '', '', 0, '0000-00-00', 18, 'test.png'),
 (6, 'dddddd', '1,jalan,mal', 123456789, '2222-11-25', 55, 'profile.png'),
-(7, '', '', 0, '0000-00-00', 56, NULL);
+(7, '', '', 0, '0000-00-00', 56, NULL),
+(8, 'shengzhe', '123,melaka', 1234567890, '2002-11-25', 57, 'test.png');
 
 -- --------------------------------------------------------
 
@@ -139,7 +133,9 @@ INSERT INTO `user_reg` (`uid`, `email`, `password`) VALUES
 (1, 'email@gmail.com', '123'),
 (18, 'kuan123@email.com', 'kuan123'),
 (55, 'yohe@gmail.com', '123'),
-(56, 'shengzhe@gmail.com', '123');
+(56, 'shengzhe@gmail.com', '123'),
+(57, 'shengzhe123@email.com', '123'),
+(58, 'wqeqwe@qweqw.com', '123');
 
 --
 -- Indexes for dumped tables
@@ -191,7 +187,7 @@ ALTER TABLE `admlogin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -203,13 +199,13 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `infoid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `infoid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_reg`
 --
 ALTER TABLE `user_reg`
-  MODIFY `uid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `uid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- Constraints for dumped tables
