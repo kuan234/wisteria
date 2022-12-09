@@ -67,10 +67,16 @@ if(!$connect)
         {
             $password =$_POST["upassword"];
             $email =$_POST["uemail"];
+            $confirmp = $_POST['cpassword'];
             $select = mysqli_query($connect, "SELECT * from `user_reg` where `email` = '$email'");
+            
 
             if(mysqli_num_rows($select)>0){
                 echo '<script type="text/javascript">swal("Failed", "Please change another email!", "error");</script>';
+            }
+            else if($confirmp!=$password )
+            {
+                echo '<script type="text/javascript">swal("Wrong", "Confirm Password Must Same with password", "error");</script>';
             }
             else{
                 //insert into database

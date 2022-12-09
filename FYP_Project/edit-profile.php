@@ -96,9 +96,7 @@ if(isset($_POST['savebtn']))
         
     }
     ?>
-<?php
-        include('php/header.php');
-    ?>
+
 
     <style>
         body{
@@ -180,6 +178,8 @@ if(isset($_POST['savebtn']))
     {
         mysqli_query($connect, "INSERT INTO `user_info`(`user_id`) value('$sid')");
     }
+    
+    include('php/header.php');
 
     $select_info = mysqli_query($connect,"SELECT * FROM `user_info` WHERE `user_id` = '$sid'");
     
@@ -188,6 +188,9 @@ if(isset($_POST['savebtn']))
     {
         while($row = mysqli_fetch_assoc($select_info)){
         ?>
+
+
+
 
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
@@ -239,7 +242,7 @@ if(isset($_POST['savebtn']))
                     <form method='POST' >
                         <!-- Form Group (username)-->
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Name (how your name will appear to other users on the site)</label>
+                            <label class="small mb-1" for="inputUsername">Username</label>
                             <input class="form-control" name="username" id="inputUsername" type="text" placeholder="Enter your username" value="<?php echo $row['username'];?>">
                         </div>
                         <!-- Form Row-->

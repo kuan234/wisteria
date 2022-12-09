@@ -73,7 +73,7 @@ session_start();
                     $_SESSION['user_id'] = $row['uid'];
                     $_SESSION['user_email'] = $row['email'];         
                     $_SESSION['user_password'] = $row['password'];       
-                    header("Location: homepage.php");
+                    header("Location: edit-profile.php");
                 }
                 else
                 {
