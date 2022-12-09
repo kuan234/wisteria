@@ -135,28 +135,29 @@ color:#69707a;
                     {
                         $row=mysqli_fetch_assoc($result);
 
-                        //validation 
-                        if($currentp === $row['password'])
-                        {
-                            if($newp === $row['password'])
+                            //validation 
+                            if($currentp === $row['password'])
                             {
-                                echo '<script type="text/javascript">swal("Wrong", "New password Cannot Same with Current Password", "error");</script>';
-                            }
 
-                            if($newp === $confirmp && $newp!=$row['password'])
-                            { 
-                                $change_pass = mysqli_query($connect, "UPDATE `user_reg` SET `password` = '$newp' WHERE `uid` = '$sid'");
-                                echo '<script type="text/javascript">swal("Successfully!", "Password Updated", "success");</script>';
+                                if($newp === $confirmp && $newp!=$row['password'])
+                                { 
+                                    $change_pass = mysqli_query($connect, "UPDATE `user_reg` SET `password` = '$newp' WHERE `uid` = '$sid'");
+                                    echo '<script type="text/javascript">swal("Successfully!", "Password Updated", "success");</script>';
+                                }
+                                if($newp==$row['password'])
+                                {
+                                    echo '<script type="text/javascript">swal("Wrong", "New password Cannot Same with Current Password", "error");</script>';
+                                }
+
+                                if($newp!=$currentp && $confirmp != $newp )
+                                {
+                                    echo '<script type="text/javascript">swal("Wrong", "Confirm Password Wrong", "error");</script>';
+                                }
                             }
                             else
                             {
-                                echo '<script type="text/javascript">swal("Wrong", "Password Wrong", "error");</script>';
+                                echo '<script type="text/javascript">swal("Wrong", "Current Password Wrong", "error");</script>';
                             }
-                        }
-                        else
-                        {
-                            echo '<script type="text/javascript">swal("Wrong", "Current Password Wrong", "error");</script>';
-                        }
                     }
                 }
 
