@@ -274,13 +274,7 @@ a
                         ?>
                     </div>
 
-                    <div class="menu">
-                    <h3>
-                        User Account
-                        <div>
-                            Operational Team
-                        </div>
-                    </h3>
+                    
 
                     <!------ Check User Login In or not ------>
                     <!------ If not dropdown menu display Login & Register ------>
@@ -288,6 +282,39 @@ a
                     if(isset($_SESSION['user_id']))
                     {
                     ?>
+                    <div class="menu">
+                    <h3>
+                        <?php
+                        $select_info = mysqli_query($connect,"SELECT * FROM `user_info` WHERE `user_id` =" .$_SESSION['user_id']);
+        
+
+                        if(mysqli_num_rows($select_info) > 0)
+                        {
+                            while($row = mysqli_fetch_assoc($select_info)){
+                            
+                            
+                            echo $row['username'];
+                            ?>
+                            <div>
+                            <?php
+                            
+                            $query1 = mysqli_query($connect,"SELECT * FROM `user_reg` WHERE `uid` =" .$_SESSION['user_id']);
+            
+    
+                            if(mysqli_num_rows($query1) > 0)
+                            {
+                                while($r1 = mysqli_fetch_assoc($query1)){
+                                    echo $r1['email'];
+                                }
+                            ?>
+                            </div><?php
+                            }
+                            }
+                        }
+                        ?>
+                        
+                        
+                    </h3>
                     <ul>
                         <li>
                             <span class="material-icons icons-size">person</span>
@@ -314,6 +341,10 @@ a
                 <?php 
                 }else
                 {?>
+                <div class="menu">
+                    <h3>
+                        User Account
+                    </h3>
                     <ul>
                     <li>
                         <span class="material-icons icons-size">how_to_reg</span>
