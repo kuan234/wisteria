@@ -1,31 +1,7 @@
 <?php
     session_start();
     include('connection.php');
-    $id = $_SESSION['user_id'];
-
-    if(isset($_POST['add_to_cart']))
-    {
-        $product_name = $_POST['product_name'];
-        $product_price = $_POST['product_price'];
-        $product_image = $_POST['product_image'];
-        $product_quantity = 1;
-
-        $select_cart = mysqli_query($connect, "SELECT * FROM `cart` WHERE name = '$product_name' && `user_id` = '$id'");
-
-        if(mysqli_num_rows($select_cart) > 0)
-        {
-            echo"<script>
-                alert('product already added to cart')
-                </script>";
-        }
-        else{
-            $insert_product = mysqli_query($connect,"INSERT INTO `cart`( name,price,image,quantity,`user_id`)
-            VALUES('$product_name','$product_price','$product_image','$product_quantity','$id')");
-            echo"<script>
-            alert('product added to cart successful!!')
-            </script>";
-        }
-    }
+    // $id = $_SESSION['user_id'];
 
 ?>
 
@@ -43,10 +19,60 @@
         <!-- Bootstrap CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
+        <script src="sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <?php
         include('php/header.php');
+        if(isset($_POST['add_to_cart']))
+    {
+        if(isset($_SESSION['user_id']))
+        {
+            $product_name = $_POST['product_name'];
+            $product_price = $_POST['product_price'];
+            $product_image = $_POST['product_image'];
+            $product_quantity = 1;
+
+            $select_cart = mysqli_query($connect, "SELECT * FROM `cart` WHERE name = '$product_name' && `user_id` =" . $_SESSION['user_id']);
+
+            if(mysqli_num_rows($select_cart) > 0)
+            {
+                echo"<script>
+                    alert('product already added to cart')
+                    </script>";
+            }
+            else{
+                $insert_product = mysqli_query($connect,"INSERT INTO `cart`( name,price,image,quantity,`user_id`)
+                VALUES('$product_name','$product_price','$product_image','$product_quantity','{$_SESSION['user_id']}')");
+                echo"<script>
+                alert('product added to cart successful!!')
+                </script>";
+            }
+        }
+        else
+        {
+            ?>
+            <script>
+                    const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    timerProgressBar: true,
+                                    })
+
+                                    Toast.fire({
+                                    icon: 'info',
+                                    title: 'Please Log In'
+                                    })
+                           
+            </script>
+            <?php
+        }
+    }
     ?>
     <div class="container">
         <div class="row text-center py-5">

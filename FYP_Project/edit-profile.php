@@ -28,9 +28,7 @@
 
 </head>
 <body>
-<?php
-        include('php/header.php');
-    ?>
+
 <?php
 
 if(isset($_FILES["image"]["name"])){
@@ -98,7 +96,9 @@ if(isset($_POST['savebtn']))
         
     }
     ?>
-
+<?php
+        include('php/header.php');
+    ?>
 
     <style>
         body{
@@ -286,7 +286,7 @@ if(isset($_POST['savebtn']))
                         </div>
                         <!-- Save changes button-->
                         <button class="btn btn-primary" name="savebtn" type="submit">Save changes</button>
-                        <a class="btn btn-primary" href="logout.php" role="button">Log Out</a>
+                        <!-- <a class="btn btn-primary" href="logout.php" role="button">Log Out</a> -->
                     </form>
                 </div>
             </div>

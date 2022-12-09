@@ -22,7 +22,7 @@ if(!$connect)
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
     </head>
-    <body>
+    <body> 
         <div class="backtomain" name="backtomainpage"><a href="login.php">Login</a></div>
         <div class="container">
         <h1 class="form-title">Registration</h1>
@@ -40,6 +40,13 @@ if(!$connect)
                     <input type="password"
                              id="password"
                              name="upassword"
+                             placeholder="Enter Password"/>
+                </div>
+                <div class="user-input-box">
+                    <label for="password">Confirm Password</label>
+                    <input type="password"
+                             id="cpassword"
+                             name="cpassword"
                              placeholder="Enter Password"/>
                 </div>
             </div>
