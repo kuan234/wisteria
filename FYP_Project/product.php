@@ -40,16 +40,44 @@
 
             if(mysqli_num_rows($select_cart) > 0)
             {
-                echo"<script>
-                    alert('product already added to cart')
-                    </script>";
+                ?>
+            <script>
+                    const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    timerProgressBar: true,
+                                    })
+
+                                    Toast.fire({
+                                    icon: 'error',
+                                    title: 'Product is in Cart'
+                                    })
+                           
+            </script>
+            <?php
             }
             else{
                 $insert_product = mysqli_query($connect,"INSERT INTO `cart`( name,price,image,quantity,`user_id`)
                 VALUES('$product_name','$product_price','$product_image','$product_quantity','{$_SESSION['user_id']}')");
-                echo"<script>
-                alert('product added to cart successful!!')
-                </script>";
+                ?>
+                <script>
+                        const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top',
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                        timerProgressBar: true,
+                                        })
+    
+                                        Toast.fire({
+                                        icon: 'success',
+                                        title: 'Add to Cart Successful'
+                                        })
+                               
+                </script>
+                <?php
             }
         }
         else
