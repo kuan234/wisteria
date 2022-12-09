@@ -179,8 +179,7 @@ $sql1 = mysqli_query($connect,"SELECT * FROM `order_manage` WHERE `orderID` = $o
                         
                     </div><span class="d-block">Expected delivery date</span><span class="font-weight-bold text-success">
                         <?php
-                        $date = date("Y-m-d", strtotime("+1 week"));
-                        $update = mysqli_query($connect,"UPDATE `order_manage` SET `delivery_date`='$date' WHERE `orderID` = $orderid");
+                        
                         echo $row['delivery_date'];
                         ?>
                     </span><span class="d-block mt-3 text-black-50 fs-15">We will be sending a shipping confirmation email when the item is shipped!</span>

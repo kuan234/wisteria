@@ -50,7 +50,9 @@ if(isset($_POST['confirmbtn']))
                 $oid = "W000000" . ($oid + 1);
             }
     $query3 = mysqli_query($connect,"UPDATE `order_manage` SET `order_number`='$oid' WHERE `orderID` = $order_id");
-    
+    $date = date("Y-m-d", strtotime("+1 week"));
+    $update = mysqli_query($connect,"UPDATE `order_manage` SET `delivery_date`='$date' WHERE `orderID` = $order_id");
+
     if($order)
     {  
         $result = mysqli_query($connect, "SELECT * from cart where user_id = $id");	
