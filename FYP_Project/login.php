@@ -41,9 +41,9 @@ session_start();
             </div>
 
             <br>
-            <div class="checkbox">
+            <!-- <div class="checkbox">
                 <input type="checkbox" checked="checked" name="Agree"><br> I agree to the terms and condition and the privacy policy.
-            </div>
+            </div> -->
             <br>
             <a href="registration.php">Forgot password</a>
             <p>Don't have an account? <a href="registration.php">Register here</a></p>
@@ -72,8 +72,15 @@ session_start();
                     $row=mysqli_fetch_assoc($result);
                     $_SESSION['user_id'] = $row['uid'];
                     $_SESSION['user_email'] = $row['email'];         
-                    $_SESSION['user_password'] = $row['password'];       
-                    header("Location: edit-profile.php");
+                    $_SESSION['user_password'] = $row['password'];  
+                    if($row['verify_status'] == '0')
+                    {
+                        echo '<script type="text/javascript">swal("Failed", "Please Verify Your Email", "warning");</script>';
+                    }
+                    else
+                    {
+                        header("Location: edit-profile.php");
+                    }
                 }
                 else
                 {
