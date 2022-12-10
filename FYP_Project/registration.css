@@ -53,9 +53,7 @@ body
 
 .main-user-info
 {
-    /* display: flex; */
-    /* flex-wrap: wrap;
-    justify-content: space-between; */
+
     padding: 20px 0;
 }
 
@@ -66,9 +64,7 @@ body
 
 .user-input-box
 {
-    /* display: flex; */
-    /* flex-wrap: wrap; */
-    /* width: 50%; */
+
     padding-bottom: 15px;
 }
 
@@ -111,7 +107,7 @@ body
     padding: 10px;
     border: none;
     border-radius: 3px;
-    color: rgb(209, 209, 209);
+    color: rgb(209, 209, 209); 
     background: rgba(63, 114, blue76, 0.7);
 }
 

@@ -6,7 +6,50 @@ if(!$connect)
 {
     echo("Failed to connect database.");
 }
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
+
+function sendemail_verify($email, $verify_token)
+{
+    //Create an instance; passing `true` enables exceptions
+    $mail = new PHPMailer(true);
+
+    //$mail->SMTPDebug = 2;
+    $mail->isSMTP();   
+      
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;  
+    $mail->Username = 'kuanzhesheng02@gmail.com';
+    $mail->Password = 'culiopxhvjtqfkaq';
+
+    $mail->SMTPSecure = 'ssl';   
+    $mail->Port = 465;
+
+    $mail->setFrom('kuanzhesheng02@gmail.com');
+    $mail->addAddress($email);
+
+    $mail->isHTML(true);
+    $mail->Subject = 'Email Verification from Wisteria';
+
+    $email_template = "
+        <h2>You have Registered In Wisteria</h2>
+        <h4>Click the link to Verify your email address to login with the below given link</h4>
+        <br /><br />
+        <a href='http://localhost/FYP_Project/verify-email.php?token=$verify_token'> Click Me to Verify Email</a>
+    ";
+
+    $mail->Body = $email_template;
+    $mail->send();
+    //echo 'Message has been sent';
+
+}
 
 ?> 
 
@@ -65,12 +108,13 @@ if(!$connect)
         <?php
         if(isset($_POST['submit']))
         {
+            $name = "kuan";
             $password =$_POST["upassword"];
             $email =$_POST["uemail"];
             $confirmp = $_POST['cpassword'];
             $select = mysqli_query($connect, "SELECT * from `user_reg` where `email` = '$email'");
+            $verify_token = md5(rand());
             
-
             if(mysqli_num_rows($select)>0){
                 echo '<script type="text/javascript">swal("Failed", "Please change another email!", "error");</script>';
             }
@@ -80,22 +124,22 @@ if(!$connect)
             }
             else{
                 //insert into database
-                mysqli_query($connect,"INSERT INTO `user_reg`( `email`,`password`) values('$email','$password')");
+                mysqli_query($connect,"INSERT INTO `user_reg`( `email`,`password`,`token`) values('$email','$password','$verify_token')");
           
                 ?>
                 <script>
                     swal({
                         title: "Success!",
-                        text: "Redirecting in 2 seconds.",
+                        text: "Please Check Your Email For Verify Purpose",
                         type: "success",
-                        timer: 2000,
+                        timer: 3000,
                         showConfirmButton: false
                         }, function(){
                             window.location.href = "login.php";
                         });
                 </script>
                 <?php
-                
+                sendemail_verify("$email","$verify_token");
             }
            
 
