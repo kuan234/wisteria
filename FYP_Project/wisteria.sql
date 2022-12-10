@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2022 at 04:53 AM
+-- Generation Time: Dec 10, 2022 at 03:01 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -88,9 +88,10 @@ INSERT INTO `order_manage` (`orderID`, `order_number`, `order_name`, `order_card
 (2, NULL, 'kuan', 123456789, 'mmmmm', 'melaka', 'melaka', 123321, 1, '2022-12-05', '2022-12-07'),
 (16, NULL, 'test4', 123213, 'hhh', 'jjj', 'kkk', 123322, 1, '2022-12-05', '2022-12-07'),
 (24, 'W00000000100', 'test3', 2147483647, '6,jalan10,permata1', 'mmm', 'mlk', 12345, 1, '2022-12-07', '2022-12-07'),
-(26, 'W0000000010101', 'ttt', 1234, '1', '1', '1', 1, 1, '2022-12-07', '2022-12-07'),
 (27, 'W00000010102', 'test11', 12341234, 'wqdqwdwqdq', 'mlk', 'mlk', 88888, 1, '2022-12-07', '2022-12-14'),
-(28, 'W00000010103', 'test44', 2147483647, 'jjjhdlahegbf', 'MLK', 'MLK', 12345, 1, '2022-12-07', '2022-12-14');
+(28, 'W00000010103', 'test44', 2147483647, 'jjjhdlahegbf', 'MLK', 'MLK', 12345, 1, '2022-12-07', '2022-12-14'),
+(29, 'W00000010104', 'kk', 1231231231, '123123', '12312312', '32132131', 32131, 1, '2022-12-08', '2022-12-15'),
+(30, 'W00000010105', 'k', 1234, 'ewqe', 'qe', 'qwe', 12345, 1, '2022-12-09', '2022-12-16');
 
 -- --------------------------------------------------------
 
@@ -139,11 +140,8 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`infoid`, `username`, `address`, `phone`, `birthday`, `user_id`, `user_image`) VALUES
-(1, 'kuan', '1, Jalan Bass 1, Taman gugua, 21111, Melaka', 123456789, '2011-08-21', 1, 'Marble pothos.PNG'),
-(2, '', '', 0, '0000-00-00', 18, 'test.png'),
-(6, 'dddddd', '1,jalan,mal', 123456789, '2222-11-25', 55, 'profile.png'),
-(7, '', '', 0, '0000-00-00', 56, NULL),
-(8, 'shengzhe', '123,melaka', 1234567890, '2002-11-25', 57, 'test.png');
+(1, 'kuan', '1, Jalan Bass 1, Taman gugua, 21111, Melaka', 123456789, '2022-09-19', 1, 'Artifical.jpg'),
+(25, '', '', 0, '0000-00-00', 77, NULL);
 
 -- --------------------------------------------------------
 
@@ -168,7 +166,10 @@ INSERT INTO `user_order` (`id`, `order_id`, `product_name`, `price`, `quantity`,
 (18, 27, 'Artifical', 20, 5, 'Artifical.jpg'),
 (21, 28, 'Marble Pothos', 35, 1, 'Marble pothos.PNG'),
 (22, 28, 'Artifical', 20, 1, 'Artifical.jpg'),
-(23, 28, 'Baby Rubber', 25, 1, 'Baby_Rubber.jpg');
+(23, 28, 'Baby Rubber', 25, 1, 'Baby_Rubber.jpg'),
+(25, 29, 'Artifical', 20, 3, 'Artifical.jpg'),
+(26, 30, 'Aloe Vara', 20, 4, 'Aloe_Vara.jpg'),
+(27, 30, 'Artifical', 20, 1, 'Artifical.jpg');
 
 -- --------------------------------------------------------
 
@@ -179,20 +180,20 @@ INSERT INTO `user_order` (`id`, `order_id`, `product_name`, `price`, `quantity`,
 CREATE TABLE `user_reg` (
   `uid` int(20) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `verify_status` tinyint(2) NOT NULL DEFAULT 0 COMMENT '0=no,1=yes',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user_reg`
 --
 
-INSERT INTO `user_reg` (`uid`, `email`, `password`) VALUES
-(1, 'email@gmail.com', '123'),
-(18, 'kuan123@email.com', 'kuan123'),
-(55, 'yohe@gmail.com', '123'),
-(56, 'shengzhe@gmail.com', '123'),
-(57, 'shengzhe123@email.com', '123'),
-(58, 'wqeqwe@qweqw.com', '123');
+INSERT INTO `user_reg` (`uid`, `email`, `password`, `token`, `verify_status`, `created_at`) VALUES
+(1, 'email@gmail.com', '123', '', 0, '2022-12-10 09:41:47'),
+(59, 'sz123@gmail.com', '11', '', 0, '2022-12-10 09:41:47'),
+(77, 'kuanzhesheng02@gmail.com', '12345', '61d713afe4ead0709d3e7ac08dc9dcf3', 1, '2022-12-10 13:24:25');
 
 --
 -- Indexes for dumped tables
@@ -258,13 +259,13 @@ ALTER TABLE `admlogin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `order_manage`
 --
 ALTER TABLE `order_manage`
-  MODIFY `orderID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `orderID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -276,19 +277,19 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `infoid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `infoid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `user_order`
 --
 ALTER TABLE `user_order`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `user_reg`
 --
 ALTER TABLE `user_reg`
-  MODIFY `uid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `uid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- Constraints for dumped tables
