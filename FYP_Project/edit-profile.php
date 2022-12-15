@@ -68,16 +68,18 @@ if(isset($_FILES["image"]["name"])){
       move_uploaded_file($_FILES["image"]["tmp_name"],$dst);
       $query = "UPDATE user_info SET user_image = '$newImageName' WHERE `user_id` = $sid";
       mysqli_query($connect, $query);
-      echo '<script type="text/javascript">swal("Saved","","success");</script>';      ;
+      echo '<script type="text/javascript">swal("Saved","","success");</script>';
     }
   }
 
-
+//update profile 
 if(isset($_POST['savebtn']))
     {
         $uname = $_POST['username'];
         $uaddress = $_POST['address'];
-        
+        $ustate = $_POST['state'];
+        $ucity = $_POST['city'];
+        $upostcode = $_POST['postcode'];
         $uphone = $_POST['phone'];
         $ubirthday = $_POST['birthday'];
         
@@ -89,7 +91,7 @@ if(isset($_POST['savebtn']))
 
         // mysqli_query($connect,"UPDATE `user_info` SET `username` = '$uname', `address` = '$uaddress', `phone` = '$uphone' WHERE `user_id` = '$id'");
         //mysqli_query($connect,"UPDATE `user_reg` SET `email` = $uemail WHERE `uid` = '$id'");
-        $work = mysqli_query($connect," UPDATE `user_info` SET `username`='$uname',`address`='$uaddress',`phone`='$uphone',`birthday`='$ubirthday',`user_id`='$sid' WHERE `user_id` = '$sid'");
+        $work = mysqli_query($connect," UPDATE `user_info` SET `username`='$uname',`address`='$uaddress',`state`='$ustate',`city`='$ucity',`postcode`='$upostcode',`phone`='$uphone',`birthday`='$ubirthday',`user_id`='$sid' WHERE `user_id` = '$sid'");
         // $change_email = mysqli_query($connect, "UPDATE `user_reg` SET `email` = '$uemail' WHERE `uid` = '$sid'");
 
         echo '<script type="text/javascript">swal("Saved", "New Record Saved", "success");</script>';        
@@ -160,6 +162,19 @@ if(isset($_POST['savebtn']))
     margin-right: 1rem;
 }
 
+.input-group{
+    margin-right :-1px;
+}
+
+.input-group-text{
+    padding: 0.6rem 1.0rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    border-radius: 0.25rem;
+
+}
+
         </style>
     
 
@@ -176,7 +191,7 @@ if(isset($_POST['savebtn']))
     $info= mysqli_query($connect,"SELECT * FROM `user_info` WHERE `user_id` = '$sid'");
     if(mysqli_num_rows($info) < 1)
     {
-        mysqli_query($connect, "INSERT INTO `user_info`(`user_id`) value('$sid')");
+        mysqli_query($connect, "INSERT INTO `user_info`(`user_id`,`phone`) value('$sid','01123456789')");
     }
     
     include('php/header.php');
@@ -263,9 +278,24 @@ if(isset($_POST['savebtn']))
                             <!-- Form Group (location)-->
                             
                                 <label class="small mb-1" for="inputLocation">Address</label>
-                                <input class="form-control" name="address" id="inputLocation" type="text" placeholder="Enter your address" value="<?php echo $row['address'];?>">
+                                <input class="form-control" name="address" id="inputLocation" type="text" placeholder="No x, Jalan XXX, Taman XXX" value="<?php echo $row['address'];?>">
                             
                         </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-4">
+                            <label class="small mb-1" for="state">State</label>
+                            <input class="form-control" type="text" name="state" placeholder="Enter Your State" value="<?php echo $row['state'];?>">
+                            </div>
+                            <div class="col-md-4">
+                            <label class="small mb-1" for="city">City</label>
+                            <input class="form-control" type="text" name="city" placeholder="Enter Your City" value="<?php echo $row['city'];?>">
+                            </div>
+                            <div class="col-md-4">
+                            <label class="small mb-1" for="postcode">Postcode</label>
+                            <input class="form-control" type="number" id="postcode" name="postcode" placeholder="Enter Your Postcode" value="<?php echo $row['postcode'];?>">
+                            </div>
+                        </div>
+
                         <!-- Form Group (email address)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
@@ -279,7 +309,12 @@ if(isset($_POST['savebtn']))
                             <!-- Form Group (phone number)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPhone">Phone number</label>
+                                <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">+60</span>
+                                </div>
                                 <input class="form-control" name="phone" id="inputPhone" type="tel" placeholder="Enter your phone number" value="<?php echo $row['phone'];?>">
+        </div>
                             </div>
                             <!-- Form Group (birthday)-->
                             <div class="col-md-6">

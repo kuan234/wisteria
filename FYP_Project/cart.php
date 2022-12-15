@@ -105,7 +105,12 @@ include('./php/header.php');
          {
             ?>
             <tr>
-            <td colspan="6"><h3>Cart is Empty</h3><td>
+            <td colspan="6"><div class="col-sm-12 empty-cart-cls text-center">
+									<img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+									<h3><strong>Your Cart is Empty</strong></h3>
+									<h4>Add something to make me happy :)</h4>
+								
+								</div><td>
             </tr>
             <?php
          }

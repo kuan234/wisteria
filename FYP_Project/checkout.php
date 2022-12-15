@@ -1,6 +1,7 @@
 <?php
     session_start();
     include("connection.php");
+    include('php/header.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +22,8 @@
 <body>
 
 <?php
+
+
 if(isset($_POST['confirmbtn']))
 {
     $id = $_SESSION['user_id'];
@@ -72,7 +75,9 @@ if(isset($_POST['confirmbtn']))
         {
             mysqli_query($connect, "DELETE FROM `cart` WHERE user_id = $id");
         }
-        header("Location: order_detail.php");
+        ?>
+        <script>window.location.href="order_detail.php"</script>
+        <?php
     }
     else
     {
@@ -94,6 +99,17 @@ if(isset($_POST['confirmbtn']))
 <span>please make the payment, after that you can enjoy all the features and benefits.</span>
     
 </div>
+
+<?php
+    $id = $_SESSION['user_id'];
+    $sql1_run = mysqli_query($connect,"SELECT * FROM `user_info` WHERE `user_id` = $id" );
+    if(mysqli_num_rows($sql1_run)>0)
+    {
+        while($r1 = mysqli_fetch_assoc($sql1_run))
+        {
+            
+        
+?>
 <form action="" method="POST">
     <div class="row">
 
@@ -146,45 +162,94 @@ if(isset($_POST['confirmbtn']))
             <div class="row mt-3">
 
                 <div class="col-md-6">
-
-                    <div class="inputbox mt-3 mr-2"> <input type="text" name="address" class="form-control" required="required"> <span>Address</span> </div>
+                    <?php
+                    if($r1['address']==null)
+                    {?>
+                        <div class="inputbox mt-3 mr-2"> <input type="text" name="address" class="form-control" required="required"> <span>Address</span>
                     
+                        </div>
+                        <?php
+                    }
+                    else
+                    {?>
+                        <div class="inputbox mt-3 mr-2"> <input type="text" name="address" class="form-control" value="<?php echo $r1['address'];?>"><span>Address</span>
+                            
+                        </div>
+                        <?php
+                    }
+                    
+                    ?>
 
                 </div>
 
 
                  <div class="col-md-6">
 
-                    <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" required="required"> <span>City</span> </div>
-                    
+                    <?php
+                        if($r1['city']==null)
+                        {?>
+                            <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" required="required"> <span>City</span>
+                        
+                            </div>
+                            <?php
+                        }
+                        else
+                        {?>
+                            <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" value="<?php echo $r1['city'];?>"><span>City</span>
+                                
+                            </div>
+                            <?php
+                        }
+                        
+                        ?>    
 
-                </div>
-
-
-                
+                </div>              
 
             </div>
-
 
             <div class="row mt-2">
 
                 <div class="col-md-6">
-
-                    <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" required="required"> <span>State</span> </div>
+                <?php
+                    if($r1['state']==null)
+                    {?>
+                        <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" required="required"> <span>State</span>
                     
+                        </div>
+                        <?php
+                    }
+                    else
+                    {?>
+                        <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" value="<?php echo $r1['state'];?>"><span>State</span>
+                            
+                        </div>
+                        <?php
+                    }
+                    
+                    ?>                   
 
                 </div>
-
 
                  <div class="col-md-6">
-
-                    <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" required="required"> <span>Postcode</span> </div>
+                 <?php
+                    if($r1['postcode']==null)
+                    {?>
+                        <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" required="required"> <span>Postcode</span>
                     
-
-                </div>
-
-
-                
+                        </div>
+                        <?php
+                    }
+                    else
+                    {?>
+                        <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" value="<?php echo $r1['postcode'];?>"><span>Postcode</span>
+                            
+                        </div>
+                        <?php
+                    }
+                    
+                    ?>
+                    
+                </div>        
 
             </div>
 
@@ -212,7 +277,10 @@ if(isset($_POST['confirmbtn']))
 
 </div>
 </form>
-
+<?php
+}
+}
+?>
 </div>
 
 <!------------------->

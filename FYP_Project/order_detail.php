@@ -4,6 +4,7 @@ $sid = $_SESSION['user_id'];
 $semail = $_SESSION['user_email'];
 $orderid = $_SESSION['oid'];
 $total =0;
+$subtotal=0;
 
 include('connection.php');
 ?>

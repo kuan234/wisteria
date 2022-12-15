@@ -7,9 +7,10 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Change Password</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -30,6 +31,11 @@ color:#69707a;
 .rounded-circle {
     border-radius: 50% !important;
 }
+
+.row{
+    justify-content:space-around;
+}
+
 .card {
     box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
 }
@@ -81,6 +87,50 @@ color:#69707a;
 }
 
 
+.password_required
+{
+    display: none;
+}
+
+.password_required ul
+{
+    padding: 0;
+    margin: 0 0 15px;
+    list-style: none;
+}
+
+.password_required ul li
+{
+    margin-bottom: 8px;
+    color: red;
+    font-weight: 700;
+}
+
+.password_required ul li.active
+{
+    color:#29ff5e;
+}
+
+.password_required ul li span::before
+{
+    content:"✖ ";
+}
+
+.password_required ul li.active span::before
+{
+    content:"✔ ";
+    
+}
+
+.card-body button{
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.card-body button.active{
+    pointer-events: auto;
+}
+
     </style>
 
 <div class="container-xl px-4 mt-4">
@@ -107,14 +157,25 @@ color:#69707a;
                             <!-- Form Group (new password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="newPassword">New Password</label>
-                                <input class="form-control" name="newPassword" type="password" placeholder="Enter new password" required>
+                                <input class="form-control" id="password" name="newPassword" type="password" placeholder="Enter new password" required>
                             </div>
                             <!-- Form Group (confirm password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="confirmPassword">Confirm Password</label>
                                 <input class="form-control" name="confirmPassword" type="password" placeholder="Confirm new password" required>
                             </div>
-                            <button class="btn btn-primary" name="change-password" type="submit">Save</button>
+
+                            <div class="password_required">
+                                <ul>
+                                    <li class = 'length'><span></span>At Least 8 Character</li>
+                                    <li class = 'lowercase'><span></span>One Lower Letter</li>
+                                    <li class = 'uppercase'><span></span>One Capiter Letter</li>
+                                    <li class = 'number'><span></span>One Number</li>
+                                    <li class = 'special'><span></span>One Special Character</li>
+                                </ul>
+                            </div>
+
+                            <button class="input_submit btn btn-primary" name="change-password" type="submit">Save</button>
                         </form>
                     </div>
                 </div>
@@ -162,5 +223,6 @@ color:#69707a;
                 }
 
                 ?>
+                <script src="script.js"></script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 $connect = mysqli_connect("localhost","root","","wisteria");
+include('php/header.php');
 
 if(!$connect)
 {
@@ -64,9 +65,10 @@ function sendemail_verify($email, $verify_token)
         <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+        <script src="script.js"></script>
     </head>
-    <body> 
-        <div class="backtomain" name="backtomainpage"><a href="login.php">Login</a></div>
+    <body > 
+        <main>
         <div class="container">
         <h1 class="form-title">Registration</h1>
         <form method="POST">
@@ -92,11 +94,25 @@ function sendemail_verify($email, $verify_token)
                              name="cpassword"
                              placeholder="Enter Password"/>
                 </div>
+
+                <div class="password_required">
+                    <ul>
+                        <li class = 'length'><span></span>At Least 8 Character</li>
+                        <li class = 'lowercase'><span></span>One Lower Letter</li>
+                        <li class = 'uppercase'><span></span>One Capiter Letter</li>
+                        <li class = 'number'><span></span>One Number</li>
+                        <li class = 'special'><span></span>One Special Character</li>
+                    </ul>
+                </div>
+
             </div>
             
             <div class="form-submit-btn">
-                <input type="submit" name="submit" value="Register">
+                <input class="input_submit" type="submit" name="submit" value="Register">
             </div>
+
+            
+            <p><a href="login.php">Already have an account? Login!</a></p>
 
             
             <!-- <div class="form-submit-btn">
@@ -116,7 +132,7 @@ function sendemail_verify($email, $verify_token)
             $verify_token = md5(rand());
             
             if(mysqli_num_rows($select)>0){
-                echo '<script type="text/javascript">swal("Failed", "Please change another email!", "error");</script>';
+                echo '<script type="text/javascript">swal("Email already Exists", "Please change another email!", "error");</script>';
             }
             else if($confirmp!=$password )
             {
@@ -147,6 +163,7 @@ function sendemail_verify($email, $verify_token)
         }
 
     ?>
-
+    <script src="script.js"></script>
+    </main>
     </body>
 </html>

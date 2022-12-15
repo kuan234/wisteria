@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('php/header.php');
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +14,7 @@ session_start();
 
     </head>
     <body>
-        
+        <main>
         <div class="container">
         <h1 class="form-title">Login</h1>
         <form method="POST" action=''>
@@ -45,7 +46,7 @@ session_start();
                 <input type="checkbox" checked="checked" name="Agree"><br> I agree to the terms and condition and the privacy policy.
             </div> -->
             <br>
-            <a href="registration.php">Forgot password</a>
+            <p><a href="forgot-password.php">Forgot password</a></p>
             <p>Don't have an account? <a href="registration.php">Register here</a></p>
         </form>   
         </div>
@@ -79,7 +80,9 @@ session_start();
                     }
                     else
                     {
-                        header("Location: edit-profile.php");
+                        ?>
+                        <script>window.location.href="edit-profile.php";</script>
+                        <?php
                     }
                 }
                 else
@@ -91,6 +94,6 @@ session_start();
                 
             }
         ?>
-
+    </main>
     </body>
 </html>

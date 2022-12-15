@@ -6,17 +6,45 @@
     font-family: sans-serif;
 }
 
-body
-{
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
+body{
     background-image: url("image/background.jpg");
     background-size: cover;
 }
 
-.backtomain
+main
+{
+    display: flex;
+    /* height: 100vh; */
+    justify-content: center;
+    align-items: center;
+    
+}
+
+p a
+{
+    margin-top: 20px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-size: 15px;
+    text-align: center;
+    justify-content: center;
+    color: #77d3ff;
+    text-decoration: none;
+}
+
+p a:hover{
+    text-decoration: underline;
+}
+
+p
+{
+    font-family: sans-serif;
+    color: azure;
+    display: flex;
+    justify-content: center;
+}
+
+/* .backtomain
 {
     font-size: small;
     color: black;
@@ -28,7 +56,7 @@ body
 {
     cursor: pointer;
     text-decoration: underline;
-}
+} */
 .container
 {
     width: 100%;
@@ -81,17 +109,54 @@ body
 .user-input-box input
 {
     height: 40px;
-    width: 95%;
+    width: 100%;
     border-radius: 7px;
     outline: none;
     border: 1px solid grey;
     padding: 0 10px;
 }
 
-.form-submit-btn button
+.password_required
+{
+    display: none;
+}
+
+.password_required ul
+{
+    padding: 0;
+    margin: 0 0 15px;
+    list-style: none;
+}
+
+.password_required ul li
+{
+    margin-bottom: 8px;
+    color: red;
+    font-weight: 700;
+}
+
+.password_required ul li.active
+{
+    color:#29ff5e;
+}
+
+.password_required ul li span::before
+{
+    content:"✖ ";
+}
+
+.password_required ul li.active span::before
+{
+    content:"✔ ";
+    
+}
+
+
+
+/* .form-submit-btn 
 {
     cursor: pointer;
-}
+} */
 
 .form-submit-btn
 {
@@ -109,6 +174,13 @@ body
     border-radius: 3px;
     color: rgb(209, 209, 209); 
     background: rgba(63, 114, blue76, 0.7);
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.form-submit-btn input.active
+{
+    pointer-events: auto;
 }
 
 .form-submit-btn input:hover

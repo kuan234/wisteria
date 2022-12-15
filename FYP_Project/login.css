@@ -4,17 +4,22 @@
     margin: 0;
     box-sizing: border-box;
     font-family: sans-serif;
+    
 }
 
-body
-{
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
+body{
     background-image: url("image/background.jpg");
     
     background-size: cover;
+}
+
+main
+{
+    display: flex;
+    /* height: 100vh; */
+    justify-content: center;
+    align-items: center;
+    
 }
 
 .container
@@ -103,7 +108,7 @@ body
     color: rgb(255, 255, 255);
 }
 
-a
+p a
 {
     margin-top: 20px;
     font-family: sans-serif;
@@ -112,6 +117,11 @@ a
     text-align: center;
     justify-content: center;
     color: rgb(22, 22, 223);
+}
+
+p a:hover{
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 p
