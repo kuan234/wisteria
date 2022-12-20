@@ -77,7 +77,8 @@ if(isset($_POST['admlogin_btn']))
         $row=mysqli_fetch_assoc($login_query_run);
         $_SESSION['admin_id'] = $row['admid'];
         $_SESSION['admin_email'] = $row['emailaddress'];         
-        $_SESSION['admin_password'] = $row['password'];       
+        $_SESSION['admin_password'] = $row['password'];      
+        $_SESSION['admin_role'] = $row['role_as']; 
         header("Location: adminindex.php");
     }
     else
