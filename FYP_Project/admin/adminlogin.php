@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang ="en">
 
@@ -10,15 +9,19 @@
     <link rel="icon" href="../image/logo.png">
     <link rel="stylesheet" href="admstyle.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
 </head>
 
 <body>
     <div class="fullpg">
         <div class="framebox">
+            <!-- <//?php include('message.php'); ?> -->
             <div class="image">
                 <img src ="../image/logo.png" style="padding-bottom: -20px;"alt>
             </div>
-            <form action="" method="POST">
+                <form action="" method="POST">
                 <h3>Welcome back, Admin!</h3>
                 <div class="admloginform">
                     
@@ -26,7 +29,7 @@
                     <input type="text" name="emailaddress" placeholder="Enter email address" class="frameboxform" required>
                     
                     <!----use fave icon to put email---->
-                    <input type="password" name="pw" placeholder="Password" class="frameboxform"  required>
+                    <input type="password" name="pw" placeholder="Password" class="frameboxform" required>
                 </div>
                 <br><br>
                 <div class="admloginbtn">
@@ -35,19 +38,19 @@
                 </div>
                 <div class="forgetpw">
                     <p>"Forgot password ? "
-                        <a href="forgot-pass">Click here</a>
+                        <a href="forgotpass.php">Click here</a>
                     </p>
                 </div>
 
-                <?php
+                <!---?php
                     // Your message code
                     include('message.php');
-                    // if(isset($_SESSION['message']))
-                    // {
-                    //     echo '<h4 class="alert alert-warning">'.$_SESSION['message'].'</h4>';
-                    //     unset($_SESSION['message']);
-                    // } // Your message code
-                ?>
+                    if(isset($_SESSION['message']))
+                    {
+                        echo '<h4 class="alert alert-warning">'.$_SESSION['message'].'</h4>';
+                        unset($_SESSION['message']);
+                    } // Your message code
+                ?--->
 
             </form>
         </div>
@@ -72,17 +75,18 @@ if(isset($_POST['admlogin_btn']))
     if($count != 0)
     {
         $row=mysqli_fetch_assoc($login_query_run);
-        $_SESSION['admin_id'] = $row['aid'];
-        $_SESSION['admin_email'] = $row['email'];         
+        $_SESSION['admin_id'] = $row['admid'];
+        $_SESSION['admin_email'] = $row['emailaddress'];         
         $_SESSION['admin_password'] = $row['password'];       
-        header("Location: admproducts.php");
+        header("Location: adminindex.php");
     }
     else
     {
         echo '<script type="text/javascript">swal("Failed", "Please try again", "error");</script>';
     }
                 
-}          
+}     
+  
                 
             
 //     if(mysqli_num_rows($login_query_run) > 0)
@@ -133,5 +137,4 @@ if(isset($_POST['admlogin_btn']))
 //     exit(0);
 // }
 
-?>
 ?>

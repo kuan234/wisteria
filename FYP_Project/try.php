@@ -1,168 +1,152 @@
+<?php
+session_start();
+$connect = mysqli_connect("localhost","root","","wisteria");
+
+if(!$connect)
+{
+    echo("Failed to connect database.");
+}
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
+
+function sendemail_verify($email, $verify_token)
+{
+    //Create an instance; passing `true` enables exceptions
+    $mail = new PHPMailer(true);
+
+    //$mail->SMTPDebug = 2;
+    $mail->isSMTP();   
+      
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;  
+    $mail->Username = 'kuanzhesheng02@gmail.com';
+    $mail->Password = 'culiopxhvjtqfkaq';
+
+    $mail->SMTPSecure = 'ssl';   
+    $mail->Port = 465;
+
+    $mail->setFrom('kuanzhesheng02@gmail.com');
+    $mail->addAddress($email);
+
+    $mail->isHTML(true);
+    $mail->Subject = 'Email Verification from Wisteria';
+
+    $email_template = "
+        <h2>You have Registered with Wisteria</h2>
+        <h5>Verify your email address to login with the below given link</h5>
+        <br /><br />
+        <a href='http://localhost/FYP_Project/verify-email.php?token=$verify_token'> Click Me</a>
+    ";
+
+    $mail->Body = $email_template;
+    $mail->send();
+    //echo 'Message has been sent';
+
+}
+
+?> 
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Account Dropdown Menu Using Html CSS & Vanilla Javascript</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
-</head> 
-<body>
-
-<style>
-    *{
-    font-family: "poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-}
-body{
-    background-color: #333;
-    height: 100vh;
-}
-.icons-size{
-    color: #333;
-    font-size: 14px;
-}
-.action{
-    position: fixed;
-    right: 30px;
-    top:20px
-}
-.action .profile{
-    border-radius: 60%;
-    cursor: pointer;
-    height: 60px;
-    overflow: hidden;
-    position: relative;
-    width: 60px;
-}
-.action .profile img{
-    width: 100%;
-    top:0;
-    position: absolute;
-    object-fit: cover;
-    left: 0;
-    height: 100%;
-}
-.action .menu{
-    background-color:#FFF;
-    box-sizing:0 5px 25px rgba(0,0,0,0.1);
-    border-radius: 15px;
-    padding: 10px 20px;
-    position: absolute;
-    right: -10px;
-    width: 200px;
-    transition: 0.5s;
-    top: 120px;
-    visibility: hidden;
-    opacity: 0;
-}
-.action .menu.active{
-    opacity: 1;
-    top: 80px;
-    visibility: visible;
-}
-.action .menu::before{
-    background-color:#fff;
-    content: '';
-    height: 20px;
-    position: absolute;
-    right: 30px;
-    transform:rotate(45deg);
-    top:-5px;
-    width: 20px;
-}
-.action .menu h3{
-    color: #555;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.3em;
-    padding: 20px 0px;
-    text-align: left;
-    width: 100%;
-}
-.action .menu h3 div{
-    color: #818181;
-    font-size: 14px;
-    font-weight: 400;
-}
-.action .menu ul li{
-    align-items: center;
-    border-top:1px solid rgba(0,0,0,0.05);
-    display: flex;
-    justify-content: left;
-    list-style: none;
-    padding: 10px 0px;
-}
-.action .menu ul li img{
-    max-width: 20px;
-    margin-right: 10px;
-    opacity: 0.5;
-    transition:0.5s
-}
-.action .menu ul li a{
-    display: inline-block;
-    color: #555;
-    font-size: 14px;
-    font-weight: 600;
-    padding-left: 15px;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: 0.5s;
-}
-.action .menu ul li:hover img{
-    opacity: 1;
-}
-.action .menu ul li:hover a{
-    color:#ff00ff;
-}
-</style>
-
-
-    <div class="action">
-        <div class="profile" onclick="menuToggle();">
-            <img src="image/profile.png" alt="">
-        </div>
-
-        <div class="menu">
-            <h3>
-                User Account
-                <div>
-                    Operational Team
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Responsive Registration Form</title>
+        <meta name="viewpoint" content="width=device-width, initial-scale=1.0"/>
+        <link rel= "stylesheet" href= "registration.css">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+    </head>
+    <body> 
+        <div class="backtomain" name="backtomainpage"><a href="login.php">Login</a></div>
+        <div class="container">
+        <h1 class="form-title">Registration</h1>
+        <form method="POST">
+            <div class="main-user-info">
+                <div class="user-input-box">
+                    <label for="email">Email</label>
+                    <input type="email"
+                             id="email"
+                             name="uemail"
+                             placeholder="Enter Email"/>
                 </div>
-            </h3>
-            <ul>
-                <li>
-                    <span class="material-icons icons-size">person</span>
-                    <a href="#">My Profile</a>
-                </li>
-                <li>
-                    <span class="material-icons icons-size">receipt</span>
-                    <a href="#">My Orders</a>
-                </li>
-                <li>
-                    <span class="material-icons icons-size">shopping_cart</span>
-                    <a href="#">Shopping Cart</a>
-                </li>
-                <li>
-                    <span class="material-icons icons-size">logout</span>
-                    <a href="#">Log Out</a>
-                </li>
-               
-                <!-- <li>
-                    <span class="material-icons icons-size">account_balance_wallet</span>
-                    <a href="#">Wallet</a>
-                </li> -->
-            </ul>
+                <div class="user-input-box">
+                    <label for="password">Password</label>
+                    <input type="password"
+                             id="password"
+                             name="upassword"
+                             placeholder="Enter Password"/>
+                </div>
+                <div class="user-input-box">
+                    <label for="password">Confirm Password</label>
+                    <input type="password"
+                             id="cpassword"
+                             name="cpassword"
+                             placeholder="Enter Password"/>
+                </div>
+            </div>
+            
+            <div class="form-submit-btn">
+                <input type="submit" name="submit" value="Register">
+            </div>
+
+            
+            <!-- <div class="form-submit-btn">
+                <input type="Login" name="submit" value="Login">
+            </div> -->
+        </form>   
         </div>
-    </div>
-    <script>
-        function menuToggle(){
-            const toggleMenu = document.querySelector('.menu');
-            toggleMenu.classList.toggle('active')
+
+        <?php
+        if(isset($_POST['submit']))
+        {
+            $name = "kuan";
+            $password =$_POST["upassword"];
+            $email =$_POST["uemail"];
+            $confirmp = $_POST['cpassword'];
+            $select = mysqli_query($connect, "SELECT * from `user_reg` where `email` = '$email'");
+            $verify_token = md5(rand());
+            
+            if(mysqli_num_rows($select)>0){
+                echo '<script type="text/javascript">swal("Failed", "Please change another email!", "error");</script>';
+            }
+            else if($confirmp!=$password )
+            {
+                echo '<script type="text/javascript">swal("Wrong", "Confirm Password Must Same with password", "error");</script>';
+            }
+            else{
+                //insert into database
+                mysqli_query($connect,"INSERT INTO `user_reg`( `email`,`password`,`token`) values('$email','$password','$verify_token')");
+          
+                ?>
+                <script>
+                    swal({
+                        title: "Success!",
+                        text: "Redirecting in 2 seconds.",
+                        type: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                        }, function(){
+                            window.location.href = "login.php";
+                        });
+                </script>
+                <?php
+                sendemail_verify("$email","$verify_token");
+            }
+           
+
+            
         }
-    </script>
-</body>
+
+    ?>
+
+    </body>
 </html>
