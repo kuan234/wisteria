@@ -67,6 +67,10 @@ if(isset($_POST['confirmbtn']))
             $image = $row['image'];
             $order2 =mysqli_query($connect,"INSERT INTO `user_order`(`order_id`, `product_name`, `price`, `quantity`, `image`) VALUES ('$order_id','$product_name','$price','$quantity','$image')");
             
+                            $price = $row['price'] * $row['quantity'];
+                            $subtotal = $subtotal + $price;
+                            $total = $total + $price;
+            $updatetotal = mysqli_query($connect,"UPDATE `order_manage` SET `order_price`='$total' WHERE `orderID` = $order_id");
             
         }
         echo "<script>alert('Order Successful!');
@@ -119,14 +123,21 @@ if(isset($_POST['confirmbtn']))
     <div class="card p-3">
 
         <h6 class="text-uppercase">Payment details</h6>
-        <div class="inputbox mt-3"> <input type="text" name="cname" class="form-control" required="required"> <span>Name on card</span> </div>
-
+        <?php
+        if($r1['username']==null)
+        {?>
+            <div class="inputbox mt-3"> <input type="text" name="cname" class="form-control" required="required"> <span>Name on card</span> </div>
+        <?php
+        }else{
+            ?><div class="inputbox mt-3"> <input type="text" name="cname" class="form-control" value="<?php echo $r1['username'] ?>" required="required"> <span>Name on card</span> </div><?php
+        }
+        ?>
 
         <div class="row">
 
             <div class="col-md-6">
 
-                <div class="inputbox mt-3 mr-2"> <input type="text" name="cardnum" class="form-control" required="required" data-slots="0" data-accept="\d" size="19"> <i class="fa fa-credit-card"></i> <span>Card Number</span> 
+                <div class="inputbox mt-3 mr-2"> <input type="text" name="cardnum" id="cc" class="form-control" required="required" data-slots="0" data-accept="\d" size="16" onkeypress="return checkDigit(event)"> <i class="fa fa-credit-card"></i> <span>Card Number</span> 
 
 
                 </div>
@@ -134,24 +145,47 @@ if(isset($_POST['confirmbtn']))
 
             </div>
 
-            <div class="col-md-6">
+            
 
                  <div class="d-flex flex-row">
 
-
-                     <div class="inputbox mt-3 mr-2"> <input type="text" name="expiry" class="form-control" required="required"> <span>Expiry(xx/xx)</span> </div>
-
+                
+                 <select class="form-select inputbox mt-3 mr-2" aria-label="Default select example" required>
+                    <option selected>Month</option>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+                <select class="form-select inputbox mt-3 mr-2" aria-label="Default select example" required>
+                <option selected>Year</option>
+                    <option value="1">23</option>
+                    <option value="2">24</option>
+                    <option value="3">25</option>
+                    <option value="4">26</option>
+                    <option value="5">27</option>
+                    <option value="6">28</option>
+                    <option value="7">29</option>
+                    <option value="8">30</option>
+                </select>
                   <div class="inputbox mt-3 mr-2"> <input type="text" name="cvv" class="form-control" required="required"> <span>CVV</span> </div>
                      
 
                  </div>
                 
 
-            </div>
+            
             
 
         </div>
-
 
 
         <div class="mt-4 mb-4">
@@ -282,6 +316,38 @@ if(isset($_POST['confirmbtn']))
 }
 ?>
 </div>
+
+<script>
+    function cc_format(value) {
+  var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+  var matches = v.match(/\d{4,16}/g);
+  var match = matches && matches[0] || ''
+  var parts = []
+  for (i=0, len=match.length; i<len; i+=4) {
+    parts.push(match.substring(i, i+4))
+  }
+  if (parts.length) {
+    return parts.join(' ')
+  } else {
+    return value
+  }
+}
+
+onload = function() {
+  document.getElementById('cc').oninput = function() {
+    this.value = cc_format(this.value)
+  }
+}
+function checkDigit(event) {
+    var code = (event.which) ? event.which : event.keyCode;
+
+    if ((code < 48 || code > 57) && (code > 31)) {
+        return false;
+    }
+
+    return true;
+}
+    </script>
 
 <!------------------->
 <!--------

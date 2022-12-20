@@ -130,11 +130,12 @@ $sql1 = mysqli_query($connect,"SELECT * FROM `order_manage` WHERE `orderID` = $o
                             <h5>
                             <?php
                             echo"RM ";
-                                        echo $pd['price'];
+                            $price = $pd['price'] * $pd['quantity'];
+                            $subtotal = $subtotal + $price;
+                            $total = $total + $price;
+                            echo $price;
                                         
-                                        $price = $pd['price'] * $pd['quantity'];
-                                        $subtotal = $total + $price;
-                                        $total = $total + $price;
+                                        
                                     ?>
                             </h5>
                         </div>
