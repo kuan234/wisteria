@@ -97,6 +97,12 @@ if(isset($_POST['addbtn'])){
 }
 
 
+//delete admin 
+if(isset($_GET['delete'])){
+  $remove_id = $_GET['delete'];
+  mysqli_query($connect, "DELETE FROM `admlogin` WHERE `admid` = '$remove_id'");
+  header('location:view_admin.php');
+};
 ?>
 
 
@@ -347,7 +353,7 @@ if(isset($_POST['addbtn'])){
                       
                      <!-- ############################################################################################################### --> 
 
-                    <a href=""  ><button type="submit" class="btn btn-danger text-white" >
+                    <a href="view_admin.php?delete=<?php echo $e1['admid'] ?>" onclick="return confirm('Remove <?php echo $e1['firstname'] .$e1['lastname'] ;?> from admin?')" ><button type="submit" class="btn btn-danger text-white" >
                     Delete
                     </button></a>
                   </td>

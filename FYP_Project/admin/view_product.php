@@ -443,7 +443,7 @@ if(isset($_GET['restore'])){
                                           <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                           <!-- Profile picture upload button-->
                                           <input class="btn btn-primary" name="image" id="image" type="file" onchange="loadImage(this)"  accept=".jpg, .jpeg, .png" >
-
+                                          <?php $editimage = $row['product_image']; ?>
                                       </div>
                                   </div>
                               </div>
@@ -454,7 +454,7 @@ if(isset($_GET['restore'])){
                               <div class="modal-footer">
                                 <!-- Save changes button-->
                                 <button class="btn btn-primary" name="editsavebtn" type="submit">Save changes</button>
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="empimg(this)">Close</button>
                               </div>
                             </form>
                           </div>
@@ -463,7 +463,7 @@ if(isset($_GET['restore'])){
                       
                      <!-- ############################################################################################################### --> 
 
-                    <a href="view_product.php?delete=<?php echo $row['prodID'] ?>" onclick="return confirm('remove item from cart?')" ><button type="submit" class="btn btn-danger text-white" >
+                    <a href="view_product.php?delete=<?php echo $row['prodID'] ?>" onclick="return confirm('remove <?php echo $row['product_name'] ?> from product?')" ><button type="submit" class="btn btn-danger text-white" >
                     Delete
                     </button></a>
                   </td>
@@ -792,7 +792,7 @@ if(isset($_GET['restore'])){
                                           <!-- Profile picture help block-->
                                           <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                           <!-- Profile picture upload button-->
-                                          <input class="btn btn-primary" name="image" id="image" type="file" onchange="addload(this)"  accept=".jpg, .jpeg, .png" >
+                                          <input class="btn btn-primary" name="aimage" id="aimage" type="file" onchange="addload(this)"  accept=".jpg, .jpeg, .png" >
 
                                       </div>
                                   </div>
@@ -804,7 +804,7 @@ if(isset($_GET['restore'])){
                               <div class="modal-footer">
                                 <!-- Save changes button-->
                                 <button class="btn btn-primary" name="addbtn" type="submit">Add Product</button>
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="empimg(this)">Close</button>
                               </div>
                             </form>
                           </div>
@@ -856,9 +856,9 @@ if(isset($_GET['restore'])){
 
 function addload(e){
       
-      if(e.files.length>0){
-        e.files = [e.files[1]];
-      }
+      // if(e.files.length>0){
+      //   e.files = [e.files[1]];
+      // }
 
       if(e.files[0]){
         var reader = new FileReader();
@@ -869,6 +869,13 @@ function addload(e){
         }
         reader.readAsDataURL(e.files[0]);
       }
+}
+
+function empimg(e){
+  $("#preview").remove();
+  document.getElementById('image').value = "";
+  document.getElementById('preview').src = e.target.result; 
+
 }
       
     </script>
