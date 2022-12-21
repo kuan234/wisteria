@@ -14,25 +14,26 @@ include('connection.php');
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
+<body class="hbody">
 
 <style>
-*{
+.hbody{
     font-family: "poppins", sans-serif;
     margin: 0;
     padding: 0;
+    overflow-x:hidden;
 }
 
 .icons-size{
     color: #333;
     font-size: 14px;
 }
-/* .action{
+/* .haction{
     position: fixed;
     right: 30px;
     top:20px
 } */
-.action .profile{
+.haction .profile{
     border-radius: 60%;
     cursor: pointer;
     height: 40px;
@@ -40,7 +41,7 @@ include('connection.php');
     position: relative;
     width: 40px;
 }
-.action .profile img{
+.haction .profile img{
     width: 100%;
     top:0;
     position: absolute;
@@ -49,26 +50,26 @@ include('connection.php');
     height: 100%;
     border: 2px solid black;
 }
-.action .menu{
+.haction .menu{
     background-color:#FFF;
     box-sizing:0 5px 25px rgba(0,0,0,0.1);
     border-radius: 15px;
     padding: 10px 20px;
     position: absolute;
-    right: -10px;
+    right: -5px;
     width: 200px;
     transition: 0.5s;
     top: 120px;
     visibility: hidden;
     opacity: 0;
 }
-.action .menu.active{
+.haction .menu.active{
     opacity: 1;
     top: auto;
     visibility: visible;
     z-index:10;
 }
-.action .menu::before{
+.haction .menu::before{
     background-color:#fff;
     content: '';
     height: 20px;
@@ -78,7 +79,7 @@ include('connection.php');
     top:-5px;
     width: 20px;
 }
-.action .menu h3{
+.haction .menu h3{
     color: #555;
     font-size: 16px;
     font-weight: 600;
@@ -87,12 +88,18 @@ include('connection.php');
     text-align: left;
     width: 100%;
 }
-.action .menu h3 div{
+.haction .menu h3 div{
     color: #818181;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 400;
 }
-.action .menu ul li{
+
+.haction .menu ul{
+    margin:0;
+    padding:0;
+}
+
+.haction .menu ul li{
     align-items: center;
     border-top:1px solid rgba(0,0,0,0.05);
     display: flex;
@@ -100,13 +107,13 @@ include('connection.php');
     list-style: none;
     padding: 10px 15px;
 }
-.action .menu ul li img{
+.haction .menu ul li img{
     max-width: 20px;
     margin-right: 10px;
     opacity: 0.5;
     transition:0.5s
 }
-.action .menu ul li a{
+.haction .menu ul li a{
     display: inline-block;
     color: #555;
     font-size: 14px;
@@ -116,10 +123,10 @@ include('connection.php');
     text-transform: uppercase;
     transition: 0.5s;
 }
-.action .menu ul li:hover img{
+.haction .menu ul li:hover img{
     opacity: 1;
 }
-.action .menu ul li:hover a{
+.haction .menu ul li:hover a{
     color:#ff00ff;
 }
     /*--------------Header-----------*/
@@ -142,7 +149,7 @@ nav
 
 nav ul
 {
-    display: inline-block;
+    display: inline;
     list-style: none;
 }
 
@@ -166,11 +173,21 @@ a
     padding-right: 25px;
 }
 
-.row
+li .mnav
+{
+    text-decoration: none;
+    color: black;
+}
+
+li .mnav:hover {
+    color: #024dbc;
+}
+
+/* .row
 {
     display: flex;
     justify-content: space-around;
-}
+} */
 
 .col-2
 {
@@ -239,39 +256,51 @@ a
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="homepage.php">Home</a></li>
-                        <li><a href="product.php">Products</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a class="mnav" href="homepage.php">Home</a></li>
+                        <li><a class="mnav" href="product.php">Products</a></li>
+                        <li><a class="mnav" href="#">About</a></li>
+                        <li><a class="mnav" href="#">Contact</a></li>
                         
                     
-                <li class="action">
+                <li class="haction">
                 
                     <div class="profile" onclick="menuToggle();">
-                    <?php
-                    if(isset($_SESSION['user_id']))
-                    {
-                        $select_info = mysqli_query($connect,"SELECT * FROM `user_info` WHERE `user_id` =" .$_SESSION['user_id']);
-    
-
-                        if(mysqli_num_rows($select_info) > 0)
-                        {
-                            while($row = mysqli_fetch_assoc($select_info)){
-                            ?>
-                            
-                            <img src="./image/upload_image/<?php echo $row['user_image']; ?>" alt="">
-                            <?php
-                            }
-                        }
-                        
-                    }
-                    else
-                    {
-                        ?>
-                        <img src="image/profile.png" class="rounded-circle" alt="">
                         <?php
-                    }
-                        ?>
+                        if(isset($_SESSION['user_id']))
+                        {
+                            $sl = mysqli_query($connect,"SELECT * FROM `user_info` WHERE `user_id` =" .$_SESSION['user_id']);
+        
+                            if(mysqli_num_rows($sl) > 0)
+                            {
+                                while($r = mysqli_fetch_assoc($sl)){
+                                    
+                                    if($r['user_image'] == null)
+                                    {
+                                        ?>
+                                        <img src="./image/profile.png" class="rounded-circle" alt="">
+                                        <?php
+                                    }
+
+                                    if($r['user_image'] != null){
+                                ?>
+                                
+                                <img src="./image/upload_image/<?php echo $r['user_image']; ?>" alt="">
+                                <?php
+                                    }
+                                    
+                                }
+                            }
+                            
+                        }
+                        else
+                        {
+                            ?>
+                            <img src="image/profile.png" class="rounded-circle" alt="">
+                            <?php
+                        }
+
+
+                            ?>
                     </div>
 
                     
