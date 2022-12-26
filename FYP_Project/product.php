@@ -18,6 +18,9 @@
 
         <!-- Bootstrap CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="style.css">
         <!-- <script src="sweetalert2.min.js"></script>
         <link rel="stylesheet" href="sweetalert2.min.css"> -->
@@ -31,6 +34,7 @@
     {
         if(isset($_SESSION['user_id']))
         {
+            $product_id = $_POST['product_id'];
             $product_name = $_POST['product_name'];
             $product_price = $_POST['product_price'];
             $product_image = $_POST['product_image'];
@@ -59,8 +63,8 @@
             <?php
             }
             else{
-                $insert_product = mysqli_query($connect,"INSERT INTO `cart`( name,price,image,quantity,`user_id`)
-                VALUES('$product_name','$product_price','$product_image','$product_quantity','{$_SESSION['user_id']}')");
+                $insert_product = mysqli_query($connect,"INSERT INTO `cart`( name,price,image,quantity,`user_id`,`prod_id`)
+                VALUES('$product_name','$product_price','$product_image','$product_quantity','{$_SESSION['user_id']}','$product_id')");
                 ?>
                 <script>
                         const Toast = Swal.mixin({
@@ -122,13 +126,14 @@
                 $result = mysqli_query($connect, "SELECT * from product");	
                 while($row = mysqli_fetch_assoc($result))
                     {
+                            
                         
                     ?>	
                     <div class="col-md-3 col-sm-6 my-3 my-md-0">
                         <form acion="" method="POST">
                             <div class="card shadow">
                                 <div class="img-fluid card-img-top">
-                                <img src= "./image/<?php echo $row['product_image']; ?>" alt="">
+                                <img src= "./image/<?php echo $row['product_image']; ?>" alt="" >
                                 </div>
 
                                 
@@ -149,7 +154,7 @@
                                         <small><del class='text-secondary'>RM<?php echo $row['product_price'] *2.0;?></del></small>
                                     </h5>
 
-                                    
+                                    <input type='hidden' name='product_id' value='<?php echo $row["prodID"]; ?>'>
                                     <input type='hidden' name='product_name' value='<?php echo $row["product_name"]; ?>'>
                                     <input type='hidden' name='product_price' value='<?php echo $row['product_price']?>'>
                                     <input type='hidden' name='product_image' value='<?php echo $row['product_image']; ?>'>
