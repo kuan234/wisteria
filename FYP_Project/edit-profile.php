@@ -284,7 +284,7 @@ if(isset($_POST['savebtn']))
                         <div class="row gx-3 mb-3">
                             <div class="col-md-4">
                             <label class="small mb-1" for="state">State</label>
-                            <input class="form-control" type="text" name="state" placeholder="Enter Your State" value="<?php echo $row['state'];?>">
+                            <input class="form-control" type="text" name="state"  placeholder="Enter Your State" value="<?php echo $row['state'];?>">
                             </div>
                             <div class="col-md-4">
                             <label class="small mb-1" for="city">City</label>
@@ -292,7 +292,7 @@ if(isset($_POST['savebtn']))
                             </div>
                             <div class="col-md-4">
                             <label class="small mb-1" for="postcode">Postcode</label>
-                            <input class="form-control" type="number" id="postcode" name="postcode" placeholder="Enter Your Postcode" value="<?php echo $row['postcode'];?>">
+                            <input class="form-control" type="text" id="postcode" name="postcode" pattern="[0-9]{5}" title="Only contain 5 digit" placeholder="Enter Your Postcode" value="<?php echo $row['postcode'];?>"  >
                             </div>
                         </div>
 
