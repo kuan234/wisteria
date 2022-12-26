@@ -284,7 +284,7 @@ li .mnav:hover {
                                     if($r['user_image'] != null){
                                 ?>
                                 
-                                <img src="./image/upload_image/<?php echo $r['user_image']; ?>" alt="">
+                                <img src="./image/upload_image/<?php echo $r['user_image']; ?>" alt="" style="border:none">
                                 <?php
                                     }
                                     
@@ -295,7 +295,7 @@ li .mnav:hover {
                         else
                         {
                             ?>
-                            <img src="image/profile.png" class="rounded-circle" alt="">
+                            <img src="image/profile.png" class="rounded-circle" alt="" >
                             <?php
                         }
 
