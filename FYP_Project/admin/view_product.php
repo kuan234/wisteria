@@ -98,10 +98,10 @@ if(isset($_POST['addbtn'])){
   $pqty = $_POST['quantity'];
   $pctg = $_POST['category'];
 
-  if(isset($_FILES["image"]["name"])){
-  $imageName = $_FILES["image"]["name"];
-  $imageSize = $_FILES["image"]["size"];
-  $tmpName = $_FILES["image"]["name"];
+  if(isset($_FILES["aimage"]["name"])){
+  $imageName = $_FILES["aimage"]["name"];
+  $imageSize = $_FILES["aimage"]["size"];
+  $tmpName = $_FILES["aimage"]["name"];
 
   // Image validation
   $validImageExtension = ['jpg', 'jpeg', 'png'];
@@ -116,18 +116,19 @@ if(isset($_POST['addbtn'])){
   else{
     $newImageName = $imageName; // Generate new image name
     //move_uploaded_file($tmpName, './image/' .$newImageName);
-    $fnm = $_FILES["image"]["name"];
+    $fnm = $_FILES["aimage"]["name"];
     $dst="../image/upload_image/" .$fnm;
-    move_uploaded_file($_FILES["image"]["tmp_name"],$dst);
+    move_uploaded_file($_FILES["aimage"]["tmp_name"],$dst);
     $insertsql = "INSERT INTO `product`( `product_name`, `product_price`, `product_image`, `description`, `quantity`, `category`, `is_delete`) 
                 VALUES ('$pname','$pprice','$newImageName','$pdesc','$pqty','$pctg','0') ";
     $insertsql_run = mysqli_query($connect,"$insertsql");
-  }
-  }
-
     if($insertsql_run){
       echo '<script type="text/javascript">swal("Saved", "New Record Saved", "success");</script>';  
   }
+  }
+  }
+
+    
 
 }
 
@@ -259,13 +260,14 @@ if(isset($_GET['restore'])){
         <div class="col-12">
             <div class="container-fluid">
 
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <ul class="nav nav-pills mb-3 float-right" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button class="nav-link active" id="pills-available-tab" data-bs-toggle="pill" data-bs-target="#pills-available" type="button" role="tab" aria-controls="pills-available" aria-selected="true">Available</button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" id="pills-unavailable-tab" data-bs-toggle="pill" data-bs-target="#pills-unavailable" type="button" role="tab" aria-controls="pills-unavailable" aria-selected="false">Unavailable</button>
                 </li>
+                
             </ul>
 
             <div class="tab-content" id="pills-tabContent">
@@ -690,8 +692,8 @@ if(isset($_GET['restore'])){
 
               
 
-            <button class="btn btn-primary" name="modaladdbtn" type="submit" data-bs-toggle="modal" data-bs-target="#addModal" >Add Product</button>
-
+            <button class="btn btn-primary mb-4" name="modaladdbtn" type="submit" data-bs-toggle="modal" data-bs-target="#addModal" >Add Product</button>
+                
             <div class="modal fade " id="addModal" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content ">
@@ -804,7 +806,7 @@ if(isset($_GET['restore'])){
                               <div class="modal-footer">
                                 <!-- Save changes button-->
                                 <button class="btn btn-primary" name="addbtn" type="submit">Add Product</button>
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="empimg(this)">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                               </div>
                             </form>
                           </div>
@@ -822,7 +824,7 @@ if(isset($_GET['restore'])){
     <!-- ////////////////////////////////////////////////////////////////////////////-->
 
 
-    <footer class="footer footer-static footer-light navbar-border navbar-shadow fixed-bottom">
+    <footer class="footer footer-static footer-light navbar-border navbar-shadow" style="margin-left:0;">
       <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
         <span class="float-md-left d-block d-md-inline-block">2022  &copy; Wisteria Plant Copyright</span>
       </div>
@@ -871,12 +873,12 @@ function addload(e){
       }
 }
 
-function empimg(e){
-  $("#preview").remove();
-  document.getElementById('image').value = "";
-  document.getElementById('preview').src = e.target.result; 
+// function empimg(e){
+//   $("#preview").remove();
+//   document.getElementById('image').value = "";
+//   document.getElementById('preview').src = e.target.result; 
 
-}
+// }
       
     </script>
 
