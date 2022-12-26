@@ -92,7 +92,7 @@ function sendemail_verify($email, $verify_token)
                     <input type="password"
                              id="cpassword"
                              name="cpassword"
-                             placeholder="Enter Password"/>
+                             placeholder="Enter Password" required/>
                 </div>
 
                 <div class="password_required">
