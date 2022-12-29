@@ -80,9 +80,26 @@ $subtotal = 0;
                 </div>
               </li> -->
               <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">             <span class="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <div class="arrow_box_right"><a class="dropdown-item" href="#"><span class="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><span class="user-name text-bold-700 ml-1">John Doe</span></span></a>
-                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a><a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a><a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a><a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <?php 
+                        $getname = mysqli_query($connect,"SELECT * from admlogin where admid = ".$_SESSION['admin_id']);
+                        if(mysqli_num_rows($getname)>0)
+                        {
+                          while($g = mysqli_fetch_assoc($getname))
+                          {
+                            ?>
+                        
+                  <div class="arrow_box_right"><a class="dropdown-item" href="#"><span class="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><span class="user-name text-bold-700 ml-1">
+                    
+                  <?php
+                  echo $g['firstname']. " " .$g['lastname'];
+                  ?>
+                  </span></span></a>
+                  <?php
+                } 
+              }
+          ?>
+                  <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
                     <div class="dropdown-divider"></div><a class="dropdown-item" href="logout.php"><i class="ft-power"></i> Logout</a>
                   </div>
                 </div>
@@ -116,11 +133,14 @@ $subtotal = 0;
             </li>
           <li class=" nav-item "><a href="view_product.php"><i class="material-symbols-rounded">potted_plant</i><span class="menu-title" data-i18n="">Products</span></a>
            
-                </li>
+            </li>
+          <li class=" nav-item"><a href="view_category.php"><i class="material-symbols-rounded">category</i><span class="menu-title" data-i18n="">Category</span></a>
+           
+           </li>
           <li class=" nav-item active"><a href="view_order.php"><i class="material-symbols-rounded">receipt_long</i><span class="menu-title" data-i18n="">Orders</span></a>
            
           </li>
-          <li class=" nav-item "><a href="view_admin.php"><i class="material-symbols-rounded">manage_accounts</i><span class="menu-title" data-i18n="">Staffs</span></a>
+          <li class=" nav-item "><a href="view_admin.php"><i class="material-symbols-rounded">manage_accounts</i><span class="menu-title" data-i18n="">Admins</span></a>
             
           </li>
           <li class=" nav-item"><a href="reports.php"><i class="material-symbols-rounded">monitoring</i><span class="menu-title" data-i18n="">Reports</span></a>
@@ -148,7 +168,7 @@ $subtotal = 0;
                 <table class="table table-striped" width="100%">
                             <thead class="table-dark">
                                 <tr>
-                                <th scope="col" class="text-center">ID</th>
+                                <th scope="col" class="text-center">No</th>
                                 <th scope="col" class="text-center">Order ID</th>
                                 <th scope="col" class="text-center">Email</th>
                                 <th scope="col" class="text-center">Order Date</th>
@@ -165,13 +185,13 @@ $subtotal = 0;
                                 
                                     if(mysqli_num_rows($sql_run)>0)
                                     {
-                                    
+                                    $i=1;
                                         while($row = mysqli_fetch_assoc($sql_run)){
                                     
                                    $oid = $row['order_user_id']; 
                                 ?>
                                 <tr>
-                                <th scope="row" class="text-center"><?php echo $row['orderID'];?></th>
+                                <th scope="row" class="text-center"><?php echo $i++;?></th>
                                     <th scope="row" class="text-center"><?php echo $row['order_number'];?></th>
                                     <td class="fs-5 text-center">
                                     <?php

@@ -119,17 +119,25 @@ if(isset($_POST['addbtn'])){
     $fnm = $_FILES["aimage"]["name"];
     $dst="../image/upload_image/" .$fnm;
     move_uploaded_file($_FILES["aimage"]["tmp_name"],$dst);
-    $insertsql = "INSERT INTO `product`( `product_name`, `product_price`, `product_image`, `description`, `quantity`, `category`, `is_delete`) 
-                VALUES ('$pname','$pprice','$newImageName','$pdesc','$pqty','$pctg','0') ";
-    $insertsql_run = mysqli_query($connect,"$insertsql");
-    if($insertsql_run){
-      echo '<script type="text/javascript">swal("Saved", "New Record Saved", "success");</script>';  
-  }
-  }
-  }
 
+    $chkproduct = mysqli_query($connect,"SELECT * FROM product where `product_name` = '$pname'");
+    if(mysqli_num_rows($chkproduct)>0)
+    {
+      echo '<script type="text/javascript">swal("Failed", "Product Name cannot be same", "info");</script>';
+    }
+    else
+    {
+      $insertsql = "INSERT INTO `product`( `product_name`, `product_price`, `product_image`, `description`, `quantity`, `category`, `is_delete`) 
+      VALUES ('$pname','$pprice','$newImageName','$pdesc','$pqty','$pctg','0') ";
+      $insertsql_run = mysqli_query($connect,"$insertsql");
+      if($insertsql_run){
+        echo '<script type="text/javascript">swal("Saved", "New Record Saved", "success");</script>';  
+    }
+    }
     
-
+    
+  }
+  }
 }
 
 
@@ -195,9 +203,26 @@ if(isset($_GET['restore'])){
                 </div>
               </li> -->
               <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">             <span class="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <div class="arrow_box_right"><a class="dropdown-item" href="#"><span class="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><span class="user-name text-bold-700 ml-1">John Doe</span></span></a>
-                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a><a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a><a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a><a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <?php 
+                        $getname = mysqli_query($connect,"SELECT * from admlogin where admid = ".$_SESSION['admin_id']);
+                        if(mysqli_num_rows($getname)>0)
+                        {
+                          while($g = mysqli_fetch_assoc($getname))
+                          {
+                            ?>
+                        
+                  <div class="arrow_box_right"><a class="dropdown-item" href="#"><span class="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><span class="user-name text-bold-700 ml-1">
+                    
+                  <?php
+                  echo $g['firstname']. " " .$g['lastname'];
+                  ?>
+                  </span></span></a>
+                  <?php
+                } 
+              }
+          ?>
+                  <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
                     <div class="dropdown-divider"></div><a class="dropdown-item" href="logout.php"><i class="ft-power"></i> Logout</a>
                   </div>
                 </div>
@@ -232,10 +257,13 @@ if(isset($_GET['restore'])){
           <li class=" nav-item active"><a href="view_product.php"><i class="material-symbols-rounded">potted_plant</i><span class="menu-title" data-i18n="">Products</span></a>
            
                 </li>
+          <li class=" nav-item "><a href="view_category.php"><i class="material-symbols-rounded">category</i><span class="menu-title" data-i18n="">Category</span></a>
+           
+          </li>
           <li class=" nav-item "><a href="view_order.php"><i class="material-symbols-rounded">receipt_long</i><span class="menu-title" data-i18n="">Orders</span></a>
            
           </li>
-          <li class=" nav-item "><a href="view_admin.php"><i class="material-symbols-rounded">manage_accounts</i><span class="menu-title" data-i18n="">Staffs</span></a>
+          <li class=" nav-item "><a href="view_admin.php"><i class="material-symbols-rounded">manage_accounts</i><span class="menu-title" data-i18n="">Admins</span></a>
             
           </li>
           <li class=" nav-item"><a href="reports.php"><i class="material-symbols-rounded">monitoring</i><span class="menu-title" data-i18n="">Reports</span></a>
@@ -275,7 +303,7 @@ if(isset($_GET['restore'])){
                 <table class="table table-striped" width="100%">
               <thead class="table-dark">
                 <tr>
-                  <th scope="col" class="text-center">ID</th>
+                  <th scope="col" class="text-center">No</th>
                   <th scope="col" class="text-center">Image</th>
                   <th scope="col" class="text-center">Name</th>
                   <th scope="col" class="text-center">Description</th>
@@ -287,19 +315,19 @@ if(isset($_GET['restore'])){
 
               <tbody>
                 <?php
-                $viewcus = "SELECT * FROM `product` WHERE `is_delete` = 0 ";
+                $viewcus = "SELECT * FROM `product` WHERE `is_delete` = 0 order by product_name";
 
                 $sql_run = mysqli_query($connect,"$viewcus");
                 
                     if(mysqli_num_rows($sql_run)>0)
                     {
-                      
+                      $i=1; 
                         while($row = mysqli_fetch_assoc($sql_run)){
                     
                     
                 ?>
                 <tr>
-                  <th scope="row" class="text-center"><?php echo $row['prodID'];?></th>
+                  <th scope="row" class="text-center"><?php echo $i++ ;?></th>
                   <td class="text-center"><img src= "../image/<?php echo $row['product_image']; ?>" alt="" height="80" width="80"></td>
                   <td class="fs-5 text-center"><?php echo $row['product_name']?></td>
                   <td class="text-center">
@@ -484,7 +512,7 @@ if(isset($_GET['restore'])){
                 <table class="table table-striped" width="100%">
               <thead class="table-dark">
                 <tr>
-                  <th scope="col" class="text-center">ID</th>
+                  <th scope="col" class="text-center">No</th>
                   <th scope="col" class="text-center">Image</th>
                   <th scope="col" class="text-center">Name</th>
                   <th scope="col" class="text-center">Description</th>
@@ -496,19 +524,19 @@ if(isset($_GET['restore'])){
 
               <tbody>
                 <?php
-                $viewcus = "SELECT * FROM `product` WHERE `is_delete` = 1 ";
+                $viewcus = "SELECT * FROM `product` WHERE `is_delete` = 1 order by product_name ";
 
                 $sql_run = mysqli_query($connect,"$viewcus");
                 
                     if(mysqli_num_rows($sql_run)>0)
                     {
-                      
+                      $i=1;
                         while($row = mysqli_fetch_assoc($sql_run)){
                     
                     
                 ?>
                 <tr>
-                  <th scope="row" class="text-center"><?php echo $row['prodID'];?></th>
+                  <th scope="row" class="text-center"><?php  echo $i++ ;?></th>
                   <td class="text-center"><img src= "../image/<?php echo $row['product_image']; ?>" alt="" height="80" width="80"></td>
                   <td class="fs-5 text-center"><?php echo $row['product_name']?></td>
                   <td class="text-center">
@@ -694,7 +722,7 @@ if(isset($_GET['restore'])){
 
             <button class="btn btn-primary mb-4" name="modaladdbtn" type="submit" data-bs-toggle="modal" data-bs-target="#addModal" >Add Product</button>
                 
-            <div class="modal fade " id="addModal" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
+            <div class="modal fade " id="addModal" tabindex="-1" aria-labelledby="addLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content ">
                             <div class="modal-header">
@@ -714,7 +742,7 @@ if(isset($_GET['restore'])){
                                   
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputProductname">Product Name</label>
-                                        <input class="form-control" name="productname" id="inputProductname" type="text" placeholder="Enter Product Name" value="">
+                                        <input class="form-control" name="productname" id="inputProductname" type="text" placeholder="Enter Product Name" value="" required>
                                     </div>
 
                                 </div>
@@ -723,13 +751,13 @@ if(isset($_GET['restore'])){
                                     <!-- Form Group (location)-->
                                     
                                         <label class="small mb-1" for="description">Description</label>
-                                        <textarea class="form-control" rows="3" name="description" id="description" placeholder="Enter Description" ></textarea>
+                                        <textarea class="form-control" rows="3" name="description" id="description" placeholder="Enter Description" required></textarea>
                                     
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-4">
                                       <label class="small mb-1" for="Category">Category</label>
-                                      <select class="form-select" name="category"  value="">
+                                      <select class="form-select" name="category"  value="" required>
                                         
                                         <?php
                                           $sqlctg = "SELECT * FROM category";
@@ -774,12 +802,12 @@ if(isset($_GET['restore'])){
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">RM</span>
                                             </div>
-                                            <input class="form-control" name="price" id="inputprice" type="number" placeholder="Price " value="" min="1">
+                                            <input class="form-control" name="price" id="inputprice" type="number" placeholder="Price " value="" min="1" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                       <label class="small mb-1" for="quantity">Quantity</label>
-                                      <input class="form-control" type="number" id="quantity" name="quantity" placeholder="Quantity" value="" min="1">
+                                      <input class="form-control" type="number" id="quantity" name="quantity" placeholder="Quantity" value="" min="1" required>
                                     </div>
                                 </div>
                                 
@@ -794,7 +822,7 @@ if(isset($_GET['restore'])){
                                           <!-- Profile picture help block-->
                                           <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                           <!-- Profile picture upload button-->
-                                          <input class="btn btn-primary" name="aimage" id="aimage" type="file" onchange="addload(this)"  accept=".jpg, .jpeg, .png" >
+                                          <input class="btn btn-primary" name="aimage" id="aimage" type="file" onchange="addload(this)"  accept=".jpg, .jpeg, .png" required>
 
                                       </div>
                                   </div>
