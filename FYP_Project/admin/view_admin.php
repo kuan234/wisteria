@@ -46,20 +46,39 @@ $roleid = $_SESSION['admin_role'];
   <?php
   // View and Edit Admin Details
 if(isset($_POST['editsavebtn'])){
+  $editadminid = $_POST['eadminid'];
   $editfname = $_POST['efirstname'];
   $editlname = $_POST['elastname'];
   $editrole = $_POST['erole'];
-
-  $editsql = "UPDATE `admlogin` SET `firstname`='$editfname', `lastname`='$editlname', `role_as`='$editrole' WHERE `admid` =".$_SESSION['editid'];
-  $editsql_run = mysqli_query($connect,"$editsql");
-  if($editsql)
+  
+  if($editrole == '0')
   {
-    echo '<script type="text/javascript">swal("Saved", "Updated Successful", "success");</script>';
+    $editsql = "UPDATE `admlogin` SET `firstname`='$editfname', `lastname`='$editlname', `role_as`='0' WHERE `admid` ='$editadminid' ";
+    $editsql_run = mysqli_query($connect,"$editsql");
+    if($editsql_run)
+    {
+      echo '<script type="text/javascript">swal("Saved", "Updated Admin Successful", "success");</script>';
+    }
+    else
+    {
+      echo '<script type="text/javascript">swal("", "Something Wrong!", "error");</script>';
+    }
   }
   else
   {
-    echo '<script type="text/javascript">swal("", "Something Wrong!", "error");</script>';
+    $editsql = "UPDATE `admlogin` SET `firstname`='$editfname', `lastname`='$editlname', `role_as`='$editrole' WHERE `admid` = '$editadminid' ";
+    $editsql_run = mysqli_query($connect,"$editsql");
+    if($editsql_run)
+    {
+      echo '<script type="text/javascript">swal("Saved", "Updated SuperAdmin Successful", "success");</script>';
+    }
+    else
+    {
+      echo '<script type="text/javascript">swal("", "Something Wrong!", "error");</script>';
+    }
   }
+  
+  
 
 }
 
@@ -149,9 +168,26 @@ if(isset($_GET['delete'])){
                 </div>
               </li> -->
               <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">             <span class="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <div class="arrow_box_right"><a class="dropdown-item" href="#"><span class="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><span class="user-name text-bold-700 ml-1">John Doe</span></span></a>
-                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a><a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a><a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a><a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <?php 
+                        $getname = mysqli_query($connect,"SELECT * from admlogin where admid = ".$_SESSION['admin_id']);
+                        if(mysqli_num_rows($getname)>0)
+                        {
+                          while($g = mysqli_fetch_assoc($getname))
+                          {
+                            ?>
+                        
+                  <div class="arrow_box_right"><a class="dropdown-item" href="#"><span class="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><span class="user-name text-bold-700 ml-1">
+                    
+                  <?php
+                  echo $g['firstname']. " " .$g['lastname'];
+                  ?>
+                  </span></span></a>
+                  <?php
+                } 
+              }
+          ?>
+                  <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
                     <div class="dropdown-divider"></div><a class="dropdown-item" href="logout.php"><i class="ft-power"></i> Logout</a>
                   </div>
                 </div>
@@ -186,10 +222,13 @@ if(isset($_GET['delete'])){
           <li class=" nav-item "><a href="view_product.php"><i class="material-symbols-rounded">potted_plant</i><span class="menu-title" data-i18n="">Products</span></a>
            
                 </li>
+          <li class=" nav-item"><a href="view_category.php"><i class="material-symbols-rounded">category</i><span class="menu-title" data-i18n="">Category</span></a>
+           
+          </li>
           <li class=" nav-item "><a href="view_order.php"><i class="material-symbols-rounded">receipt_long</i><span class="menu-title" data-i18n="">Orders</span></a>
            
           </li>
-          <li class=" nav-item active"><a href="view_admin.php"><i class="material-symbols-rounded">manage_accounts</i><span class="menu-title" data-i18n="">Staffs</span></a>
+          <li class=" nav-item active"><a href="view_admin.php"><i class="material-symbols-rounded">manage_accounts</i><span class="menu-title" data-i18n="">Admins</span></a>
             
           </li>
           <li class=" nav-item"><a href="reports.php"><i class="material-symbols-rounded">monitoring</i><span class="menu-title" data-i18n="">Reports</span></a>
@@ -243,17 +282,28 @@ if(isset($_GET['delete'])){
                     <th scope="row" class="text-center"><?php echo $e1['admid'];?></th>
                     <td class="fs-5 text-center"><?php echo $e1['firstname'] .$e1['lastname'];?></th>
                     <td class="fs-5 text-center"><?php echo $e1['emailaddress'];?></td>
-                    <td class="fs-5 text-center"><?php echo $e1['role_as']?></td>
+                    <td class="fs-5 text-center">
+                      <?php 
+                        if($e1['role_as']==0)
+                        {
+                          echo "Admin";
+                        }
+                        else
+                        {
+                          echo "SuperAdmin";
+                        }
+                      ?>
+                      </td>
                     <td class="fs-5 text-center"><?php echo $e1['created_at']?></td>
                  
                   <td class="text-center">
                      <!-- ############################################################################################################### --> 
                     <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $e1['admid']?>">
                       Edit
-                      <?php $_SESSION['editid'] = $e1['admid'] ?>
+                      
                     </button>
                           <!--Edit & View  Modal -->      
-            <div class="modal fade " id="editModal<?php echo $e1['admid']?>" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
+            <div class="modal fade " id="editModal<?php echo $e1['admid']?>" <?php $_SESSION['editid'] = $e1['admid'] ?> tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content ">
                             <div class="modal-header">
@@ -273,12 +323,12 @@ if(isset($_GET['delete'])){
                                   
                                     <div class="col-md-4">
                                         <label class="small mb-1" for="firstname">First Name</label>
-                                        <input class="form-control" name="efirstname" id="firstname" type="text" placeholder="First Name" value="<?php echo $e1['firstname']?>" required>
+                                        <input class="form-control" name="efirstname" id="firstname" type="text" placeholder="First Name" value="<?php echo $e1['firstname']?>" readonly>
                                     </div>
 
                                     <div class="col-md-4">
                                         <label class="small mb-1" for="lastname">Last Name</label>
-                                        <input class="form-control" name="elastname" id="lastname" type="text" placeholder="Last Name" value="<?php echo $e1['lastname']?>" required>
+                                        <input class="form-control" name="elastname" id="lastname" type="text" placeholder="Last Name" value="<?php echo $e1['lastname']?>" readonly>
                                     </div>
 
                                 </div>
@@ -287,7 +337,7 @@ if(isset($_GET['delete'])){
                                     <!-- Form Group (location)-->
                                     
                                         <label class="small mb-1" for="email">Email</label>
-                                        <input class="form-control" type="eemail" name="email" id="email" placeholder="Email" value="<?php echo $e1['emailaddress'] ?>" required>
+                                        <input class="form-control" type="eemail" name="email" id="email" placeholder="Email" value="<?php echo $e1['emailaddress'] ?>" readonly>
                                     
                                 </div>
 
@@ -301,7 +351,7 @@ if(isset($_GET['delete'])){
      
                                             <option value="<?php echo $e1['role_as']?>" selected >
                                             <?php 
-                                              if($e1['role_as']==1)
+                                              if($e1['role_as'] == 1)
                                                 echo "1 - SuperAdmin 1" ;
                                               else
                                                 echo "0 - Admin";
@@ -322,7 +372,9 @@ if(isset($_GET['delete'])){
                                             ?> </option>
                                             <option value="0">0 - Admin</option>
                                             <option value="1">1 - SuperAdmin</option>
-                               <?php         }
+
+                                            <?php        
+                                            }
                         
                                         
                                         ?>
