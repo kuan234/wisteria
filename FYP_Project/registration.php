@@ -65,6 +65,7 @@ function sendemail_verify($email, $verify_token)
         <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
         <script src="script.js"></script>
     </head>
     <body > 
@@ -80,19 +81,25 @@ function sendemail_verify($email, $verify_token)
                              name="uemail"
                              placeholder="Enter Email"/>
                 </div>
-                <div class="user-input-box">
+                <div class="user-input-box" id="show_hide_password" onclick="showhidepassword()">
                     <label for="password">Password</label>
+
                     <input type="password"
                              id="password"
                              name="upassword"
-                             placeholder="Enter Password"/>
+                             placeholder="Enter Password" onfocus="passwordvalidation()">
+                             
+                   <a href=""><i class="fa fa-eye-slash" aria-hidden="true" ></i></a>
+                            
+
                 </div>
-                <div class="user-input-box">
+                <div class="user-input-box" id="show_hide_password" onclick="showhidepassword()">
                     <label for="password">Confirm Password</label>
                     <input type="password"
                              id="cpassword"
                              name="cpassword"
                              placeholder="Enter Password" required/>
+                    <a href=""><i class="fa fa-eye-slash" aria-hidden="true" ></i></a>
                 </div>
 
                 <div class="password_required">

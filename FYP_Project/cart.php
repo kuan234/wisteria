@@ -11,6 +11,27 @@ if(!isset($_SESSION['user_id']))
 if(isset($_POST['update_update_btn'])){
     $update_value = $_POST['update_quantity'];
     $update_id = $_POST['update_quantity_id'];
+    
+   // $prod_q =mysqli_query($connect,"SELECT * FROM product WHERE ");
+   // if(mysqli_num_rows($prod_q)>0)
+   // {
+   //    while($pq = mysqli_fetch_assoc($prod_q))
+   //    {
+   //       $pq = ;
+   //    }
+   // }
+
+    $chkq = mysqli_query($connect,"SELECT * FROM product");
+    if(mysqli_num_rows($chkq)>0)
+    {
+      while($c1 = mysqli_fetch_assoc($chkq))
+      {
+         $qtty = $chkq['quantity'];
+         $update_value == $qtty;
+         break;
+      }
+    }
+
     $update_quantity_query = mysqli_query($connect, "UPDATE `cart` SET quantity = '$update_value' WHERE id = '$update_id'");
     if($update_quantity_query){
        header('location:cart.php');
@@ -20,7 +41,7 @@ if(isset($_POST['update_update_btn'])){
  //discount code
 //  if(isset($_POST['update_discount_btn'])){
 //    $promodecode = $_POST['discountcode'];
-//    //$discount = mysqli_query($connect, "SELECT `cart` SET quantity = '$update_value' WHERE id = '$update_id'");
+//    $discount = mysqli_query($connect, "SELECT `cart` SET quantity = '$update_value' WHERE id = '$update_id'");
 //    header('location:cart.php');
 //  }
  

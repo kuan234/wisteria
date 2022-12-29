@@ -11,6 +11,7 @@ include('php/header.php');
         <meta name="viewpoint" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="login.css">
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="script.js"></script>
 
     </head>
     <body>
@@ -30,11 +31,12 @@ include('php/header.php');
                 <div class="user-input-box">
                     <label for="password">Password</label>
                     <input type="password"
-                             id="password"
+                             id="inputpassword"
                              name="upassword"
                              placeholder="Enter Password"
                              required/>
                 </div>
+                <div class="" style="color:white; font-size:14px "><input type="checkbox" onclick="myFunction()" style="margin-right:3px">Show Password</div>
             
             </div>
             <div class="form-submit-btn">

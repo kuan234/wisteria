@@ -1,14 +1,11 @@
-//password validation for registration
-$('#password').on('focus',function()
+function passwordvalidation()
 {
+    //password validation for registration
     $('.password_required').slideDown();
-})
-
 // $('#password').on('blur',function()
 // {
 //     $('.password_required').slideUp();
 // })
-
 $('#password').on('keyup',function()
 {
     passValue = $(this).val();
@@ -83,3 +80,31 @@ $('#postcode').on('keyup',function(){
     //     $('.length').removeClass('active');
     // }
 })
+}
+
+function showhidepassword(){
+    $(document).ready(function() {
+        $("#show_hide_password a").on('click', function(event) {
+            event.preventDefault();
+            if($('#show_hide_password input').attr("type") == "text"){
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass( "fa-eye-slash" );
+                $('#show_hide_password i').removeClass( "fa-eye" );
+            }else if($('#show_hide_password input').attr("type") == "password"){
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass( "fa-eye-slash" );
+                $('#show_hide_password i').addClass( "fa-eye" );
+            }
+        });
+    });
+}
+
+
+function myFunction() {
+    var x = document.getElementById("inputpassword");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
