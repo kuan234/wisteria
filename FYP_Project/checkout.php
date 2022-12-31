@@ -61,6 +61,7 @@ if(isset($_POST['confirmbtn']))
         $result = mysqli_query($connect, "SELECT * from cart where user_id = $id");	
         while($row = mysqli_fetch_assoc($result))
         {
+            $product_id = $row['prod_id'];
             $product_name = $row['name'];
             $price = $row['price'];
             $quantity = $row['quantity'];
@@ -72,6 +73,14 @@ if(isset($_POST['confirmbtn']))
                             $total = $total + $price;
             $updatetotal = mysqli_query($connect,"UPDATE `order_manage` SET `order_price`='$total' WHERE `orderID` = $order_id");
             
+            $sql_upd_prod_qtty = mysqli_query($connect, "SELECT * from product where prodID = '$product_id'");	
+            while($r2 = mysqli_fetch_assoc($sql_upd_prod_qtty))
+            {
+                $qty = $r2['quantity'];
+                $qtty = $qty - $quantity;
+                $upd_prod_qtty = mysqli_query($connect,"UPDATE `product` SET `quantity`='$qtty'WHERE `prodID` = '$product_id'");
+            }
+
         }
         echo "<script>alert('Order Successful!');
         </script>";
