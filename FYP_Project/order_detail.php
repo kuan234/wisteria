@@ -26,7 +26,7 @@ include('connection.php');
     ?>
 <style>
     body {
-  background-color: #eee;
+  background-color: #f2f6fc;
 }
 
 .fs-12 {
