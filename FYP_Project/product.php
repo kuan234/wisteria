@@ -110,20 +110,20 @@
         <div class="row text-center py-5">
 
             <?php
-            $query = "SELECT * from product ORDER BY prodID ASC";
-            $res= mysqli_query($connect,$query);
-            if($res)
-            {
-                if(mysqli_num_rows($res)>0)
-                while($prod = mysqli_fetch_assoc($res)){
-                  //  print_r($prod);
-                }
-            }
+            // $query = "SELECT * from product ORDER BY prodID ASC";
+            // $res= mysqli_query($connect,$query);
+            // if($res)
+            // {
+            //     if(mysqli_num_rows($res)>0)
+            //     while($prod = mysqli_fetch_assoc($res)){
+            //       //  print_r($prod);
+            //     }
+            // }
             ?>
             
             <?php
                 
-                $result = mysqli_query($connect, "SELECT * from product");	
+                $result = mysqli_query($connect, "SELECT * from product where is_delete = 0 order by product_name ASC");	
                 while($row = mysqli_fetch_assoc($result))
                     {
                             
@@ -158,8 +158,21 @@
                                     <input type='hidden' name='product_name' value='<?php echo $row["product_name"]; ?>'>
                                     <input type='hidden' name='product_price' value='<?php echo $row['product_price']?>'>
                                     <input type='hidden' name='product_image' value='<?php echo $row['product_image']; ?>'>
-                                    <button type="submit" class="btn btn-warning my-3" value='add to cart' name="add_to_cart">Add to Cart <i class="fas fa-shopping-cart"></i></button>
                                     
+                                    <?php
+                                    if($row['quantity']>0)
+                                    {
+                                        ?>
+                                        <button type="submit" class="btn btn-warning my-3" value='add to cart' name="add_to_cart">Add to cart <i class="fas fa-shopping-cart"></i></button>
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <button type="submit" class="btn btn-warning my-3" value='add to cart' name="add_to_cart" disabled>Add to cart <i class="fas fa-shopping-cart"></i></button>
+                                        <?php
+                                    }
+                                    ?>
                                     
                                 </div>
                             </div>
