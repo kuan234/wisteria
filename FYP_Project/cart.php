@@ -7,55 +7,7 @@ if(!isset($_SESSION['user_id']))
         header("Location: login.php");
     }
 
-//update quantity
-if(isset($_POST['update_update_btn'])){
-    $update_value = $_POST['update_quantity'];
-    $update_id = $_POST['update_quantity_id'];
-    
-   // $prod_q =mysqli_query($connect,"SELECT * FROM product WHERE ");
-   // if(mysqli_num_rows($prod_q)>0)
-   // {
-   //    while($pq = mysqli_fetch_assoc($prod_q))
-   //    {
-   //       $pq = ;
-   //    }
-   // }
 
-    $chkq = mysqli_query($connect,"SELECT * FROM product");
-    if(mysqli_num_rows($chkq)>0)
-    {
-      while($c1 = mysqli_fetch_assoc($chkq))
-      {
-         $qtty = $chkq['quantity'];
-         $update_value == $qtty;
-         break;
-      }
-    }
-
-    $update_quantity_query = mysqli_query($connect, "UPDATE `cart` SET quantity = '$update_value' WHERE id = '$update_id'");
-    if($update_quantity_query){
-       header('location:cart.php');
-    };
- };
-
- //discount code
-//  if(isset($_POST['update_discount_btn'])){
-//    $promodecode = $_POST['discountcode'];
-//    $discount = mysqli_query($connect, "SELECT `cart` SET quantity = '$update_value' WHERE id = '$update_id'");
-//    header('location:cart.php');
-//  }
- 
- //remove item
- if(isset($_GET['remove'])){
-    $remove_id = $_GET['remove'];
-    mysqli_query($connect, "DELETE FROM `cart` WHERE id = '$remove_id'");
-    header('location:cart.php');
- };
- 
- if(isset($_GET['delete_all'])){
-    mysqli_query($connect, "DELETE FROM `cart` WHERE user_id = $id");
-    header('location:cart.php');
- }
 ?>
 
 <!DOCTYPE html>
@@ -72,11 +24,85 @@ if(isset($_POST['update_update_btn'])){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="cart-style.css">
     
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 </head>
 <body>
 <?php
 include('./php/header.php');
 ?>
+
+<?php
+
+//update quantity
+if(isset($_POST['update_update_btn'])){
+   $update_value = $_POST['update_quantity'];
+   $update_id = $_POST['update_quantity_id'];
+   $update_product_id = $_POST['update_product_id'];
+
+
+   $chkq = mysqli_query($connect,"SELECT * FROM product where prodID = '$update_product_id'");
+   if(mysqli_num_rows($chkq)>0)
+   {
+     
+     while($c1 = mysqli_fetch_assoc($chkq))
+     {
+        if($update_value <= $c1['quantity'])
+        {
+           $update_quantity_query = mysqli_query($connect, "UPDATE `cart` SET quantity = '$update_value' WHERE id = '$update_id'"); 
+        }
+        else
+        {
+           ?>
+           <script>
+           Swal.fire(
+              'Wrong',
+              'We dont have that much stock',
+              'question',
+            )
+            </script>
+            <?php
+        }
+
+     }
+   }
+       
+};
+
+//promocode code
+//  if(isset($_POST['update_discount_btn'])){
+//    $promodecode = $_POST['discountcode'];
+//    $discount = mysqli_query($connect, "SELECT `cart` SET quantity = '$update_value' WHERE id = '$update_id'");
+//    header('location:cart.php');
+//  }
+
+//remove item
+if(isset($_GET['remove'])){
+   $remove_id = $_GET['remove'];
+   mysqli_query($connect, "DELETE FROM `cart` WHERE id = '$remove_id'");
+   ?>
+        <script>window.location.href="cart.php"</script>
+        <?php
+};
+
+if(isset($_GET['delete_all'])){
+   mysqli_query($connect, "DELETE FROM `cart` WHERE user_id = $id");
+   ?>
+        <script>window.location.href="cart.php"</script>
+        <?php
+}
+?>
+<style>
+   .hcontainer{
+      font-size:large;
+   }
+
+   .swal2-popup {
+      font-size: 1.5rem !important;
+      font-family: Georgia, serif;
+   }
+   </style>
+
 <div class="container">
 
 <section class="shopping-cart">
@@ -111,6 +137,7 @@ include('./php/header.php');
             <td>
                <form action="" method="post">
                   <input type="hidden" name="update_quantity_id"  value="<?php echo $fetch_cart['id']; ?>" >
+                  <input type="hidden" name="update_product_id"  value="<?php echo $fetch_cart['prod_id']; ?>" >
                   <input type="number" name="update_quantity" min="1"  value="<?php echo $fetch_cart['quantity']; ?>" >
                   <input type="submit" value="update" name="update_update_btn">
                </form>   
