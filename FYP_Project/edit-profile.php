@@ -257,7 +257,7 @@ if(isset($_POST['savebtn']))
                     <form method='POST' >
                         <!-- Form Group (username)-->
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Username</label>
+                            <label class="small mb-1" for="inputUsername">Full Name</label>
                             <input class="form-control" name="username" id="inputUsername" type="text" placeholder="Enter your username" value="<?php echo $row['username'];?>">
                         </div>
                         <!-- Form Row-->
@@ -313,7 +313,7 @@ if(isset($_POST['savebtn']))
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">+60</span>
                                 </div>
-                                <input class="form-control" name="phone" id="inputPhone" type="tel" placeholder="Enter your phone number" value="<?php echo $row['phone'];?>">
+                                <input class="form-control" name="phone" id="inputPhone" type="tel" placeholder="Enter your phone number" minlength="9" maxlength="10" value="<?php echo $row['phone'];?>">
         </div>
                             </div>
                             <!-- Form Group (birthday)-->
