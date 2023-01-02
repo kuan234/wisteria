@@ -27,13 +27,13 @@ function sendemail_verify($email, $verify_token)
       
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;  
-    $mail->Username = 'kuanzhesheng02@gmail.com';
-    $mail->Password = 'culiopxhvjtqfkaq';
+    $mail->Username = 'fypwisteriaplant@gmail.com';
+    $mail->Password = 'wiqyfjotsthcvgyi';
 
     $mail->SMTPSecure = 'ssl';   
     $mail->Port = 465;
 
-    $mail->setFrom('kuanzhesheng02@gmail.com');
+    $mail->setFrom('fypwisteriaplant@gmail.com');
     $mail->addAddress($email);
 
     $mail->isHTML(true);
