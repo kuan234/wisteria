@@ -157,7 +157,7 @@ color:#69707a;
                             <!-- Form Group (new password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="newPassword">New Password</label>
-                                <input class="form-control" id="password" name="newPassword" type="password" placeholder="Enter new password" required>
+                                <input class="form-control" id="password" name="newPassword" type="password" placeholder="Enter new password" onfocus="passwordvalidation()" required>
                             </div>
                             <!-- Form Group (confirm password)-->
                             <div class="mb-3">
