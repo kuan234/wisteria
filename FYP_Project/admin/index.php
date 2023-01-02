@@ -1,6 +1,14 @@
 <?php
 session_start();
 include('connection.php');
+
+if(!isset($_SESSION['admin_id']))
+{
+    ?>
+    <script>window.location.href="admlogin.php"</script>
+    <?php
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +59,7 @@ include('connection.php');
     <div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true" data-img="theme-assets/images/backgrounds/02.jpg">
       <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">       
-          <li class="nav-item mr-auto"><a class="navbar-brand" href="adminindex.php"><img class="brand-logo" alt="Wisteria admin logo" src="../image/logo.png"/>
+          <li class="nav-item mr-auto"><a class="navbar-brand" href="index.php"><img class="brand-logo" alt="Wisteria admin logo" src="../image/logo.png"/>
               <h3 class="brand-text">Wisteria Plant</h3></a></li>
           <li class="nav-item d-md-none"><a class="nav-link close-navbar"><i class="ft-x"></i></a></li>
         </ul>
@@ -59,7 +67,7 @@ include('connection.php');
     
       <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-          <li class=" active"><a href="adminindex.php"><i class="material-symbols-rounded">account_circle</i><span class="menu-title" data-i18n="">Dashboard</span></a>
+          <li class=" active"><a href="index.php"><i class="material-symbols-rounded">account_circle</i><span class="menu-title" data-i18n="">Dashboard</span></a>
           </li>
           <!-- <li class=" nav-item"><a href="#"><i class="material-symbols-rounded">notifications_active</i><span class="menu-title" data-i18n="">Notifications</span></a>
           </li> -->
