@@ -135,7 +135,7 @@ if(isset($_POST['confirmbtn']))
         <?php
         if($r1['username']==null)
         {?>
-            <div class="inputbox mt-3"> <input type="text" name="cname" class="form-control" required="required"> <span>Name on card</span> </div>
+            <div class="inputbox mt-3"> <input type="text" name="cname" class="form-control"  required="required"> <span>Name on card</span> </div>
         <?php
         }else{
             ?><div class="inputbox mt-3"> <input type="text" name="cname" class="form-control" value="<?php echo $r1['username'] ?>" required="required"> <span>Name on card</span> </div><?php
@@ -146,7 +146,7 @@ if(isset($_POST['confirmbtn']))
 
             <div class="col-md-6">
 
-                <div class="inputbox mt-3 mr-2"> <input type="text" name="cardnum" id="cc" class="form-control" required="required" data-slots="0" data-accept="\d" size="16" onkeypress="return checkDigit(event)"> <i class="fa fa-credit-card"></i> <span>Card Number</span> 
+                <div class="inputbox mt-3 mr-2"> <input type="text" name="cardnum" id="cc" class="form-control" required="required" pattern="[0-9\s]{19}" title="Only contain 16 digit" onkeypress="return checkDigit(event)"> <i class="fa fa-credit-card"></i> <span>Card Number</span> 
 
 
                 </div>
@@ -160,7 +160,7 @@ if(isset($_POST['confirmbtn']))
 
                 
                  <select class="form-select inputbox mt-3 mr-2" aria-label="Default select example" required>
-                    <option selected>Month</option>
+                    <option value="" >Month</option>
                     <option value="1">01</option>
                     <option value="2">02</option>
                     <option value="3">03</option>
@@ -175,7 +175,7 @@ if(isset($_POST['confirmbtn']))
                     <option value="12">12</option>
                 </select>
                 <select class="form-select inputbox mt-3 mr-2" aria-label="Default select example" required>
-                <option selected>Year</option>
+                <option value="">Year</option>
                     <option value="1">23</option>
                     <option value="2">24</option>
                     <option value="3">25</option>
@@ -185,7 +185,7 @@ if(isset($_POST['confirmbtn']))
                     <option value="7">29</option>
                     <option value="8">30</option>
                 </select>
-                  <div class="inputbox mt-3 mr-2"> <input type="text" name="cvv" class="form-control" required="required"> <span>CVV</span> </div>
+                  <div class="inputbox mt-3 mr-2"> <input type="text" name="cvv" class="form-control" minlength="3" maxlength="3" pattern="[0-9]{3}" title="Only contain 3 digit"  required="required"> <span>CVV</span> </div>
                      
 
                  </div>
@@ -231,14 +231,14 @@ if(isset($_POST['confirmbtn']))
                     <?php
                         if($r1['city']==null)
                         {?>
-                            <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" required="required"> <span>City</span>
+                            <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" required> <span>City</span>
                         
                             </div>
                             <?php
                         }
                         else
                         {?>
-                            <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" value="<?php echo $r1['city'];?>"><span>City</span>
+                            <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" value="<?php echo $r1['city'];?>" required><span>City</span>
                                 
                             </div>
                             <?php
@@ -256,14 +256,14 @@ if(isset($_POST['confirmbtn']))
                 <?php
                     if($r1['state']==null)
                     {?>
-                        <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" required="required"> <span>State</span>
+                        <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" required> <span>State</span>
                     
                         </div>
                         <?php
                     }
                     else
                     {?>
-                        <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" value="<?php echo $r1['state'];?>"><span>State</span>
+                        <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" value="<?php echo $r1['state'];?>" required><span>State</span>
                             
                         </div>
                         <?php
@@ -277,14 +277,14 @@ if(isset($_POST['confirmbtn']))
                  <?php
                     if($r1['postcode']==null)
                     {?>
-                        <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" required="required"> <span>Postcode</span>
+                        <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" required> <span>Postcode</span>
                     
                         </div>
                         <?php
                     }
                     else
                     {?>
-                        <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" value="<?php echo $r1['postcode'];?>"><span>Postcode</span>
+                        <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" value="<?php echo $r1['postcode'];?>" required><span>Postcode</span>
                             
                         </div>
                         <?php
