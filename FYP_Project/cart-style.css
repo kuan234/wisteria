@@ -138,12 +138,12 @@
     margin-top: 1rem;
  }
  
- .shopping-cart .checkout-btn a{
+ .shopping-cart .checkout-btn button{
     display: inline-block;
     width: auto;
  }
  
- .shopping-cart .checkout-btn a.disabled{
+ .shopping-cart .checkout-btn button.disabled{
     pointer-events: none;
     opacity: .5;
     user-select: none;

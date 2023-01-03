@@ -69,6 +69,43 @@ if(isset($_POST['update_update_btn'])){
        
 };
 
+//Check Product & Quantity is in stock
+if(isset($_POST['checkoutbtn']))
+{
+   $update_value = $_POST['update_quantity'];
+   $update_id = $_POST['update_quantity_id'];
+   $update_product_id = $_POST['update_product_id'];
+
+
+   $chkq = mysqli_query($connect,"SELECT * FROM product where prodID = '$update_product_id'");
+   if(mysqli_num_rows($chkq)>0)
+   {
+     
+     while($c1 = mysqli_fetch_assoc($chkq))
+     {
+        if($update_value <= $c1['quantity'])
+        {
+           ?>
+           <script>window.location.href="checkout.php"</script> 
+           <?php
+        }
+        else
+        {
+           ?>
+           <script>
+           Swal.fire(
+              'Wrong',
+              'Product Already Sold Out.',
+              'question',
+            )
+            </script>
+            <?php
+        }
+
+     }
+   }
+}
+
 //promocode code
 //  if(isset($_POST['update_discount_btn'])){
 //    $promodecode = $_POST['discountcode'];
@@ -92,6 +129,8 @@ if(isset($_GET['delete_all'])){
         <?php
 }
 ?>
+
+
 <style>
    .hcontainer{
       font-size:large;
@@ -140,7 +179,7 @@ if(isset($_GET['delete_all'])){
                   <input type="hidden" name="update_product_id"  value="<?php echo $fetch_cart['prod_id']; ?>" >
                   <input type="number" name="update_quantity" min="1"  value="<?php echo $fetch_cart['quantity']; ?>" >
                   <input type="submit" value="update" name="update_update_btn">
-               </form>   
+                 
             </td>
             <td>RM<?php echo $sub_total = ($fetch_cart['price'] * $fetch_cart['quantity']); ?>/-</td>
             <td><a href="cart.php?remove=<?php echo $fetch_cart['id']; ?>" onclick="return confirm('remove item from cart?')" class="delete-btn"> <i class="fas fa-trash"></i> remove</a></td>
@@ -184,10 +223,11 @@ if(isset($_GET['delete_all'])){
 
    </table>
 
+    
    <div class="checkout-btn">
-      <a href="checkout.php" class="btn <?= ($grand_total > 1)?'':'disabled'; ?>">proceed to checkout</a>
+      <button class="btn <?= ($grand_total > 1)?'':'disabled'; ?>" name= "checkoutbtn">proceed to checkout</button>
    </div>
-
+</form>
 </section>
 
 </div>
