@@ -2,10 +2,7 @@ function passwordvalidation()
 {
     //password validation for registration
     $('.password_required').slideDown();
-// $('#password').on('blur',function()
-// {
-//     $('.password_required').slideUp();
-// })
+
 $('#password').on('keyup',function()
 {
     passValue = $(this).val();
