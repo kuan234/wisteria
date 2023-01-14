@@ -252,11 +252,11 @@ li .mnav:hover {
         <div class="hcontainer">
             <div class="navbar">
                 <div class="logo">
-                    <a href="homepage.php"><img src="image/logo.png" width="125px"></a>
+                    <a href="index.php"><img src="image/logo.png" width="125px"></a>
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a class="mnav" href="homepage.php">Home</a></li>
+                        <li><a class="mnav" href="index.php">Home</a></li>
                         <li><a class="mnav" href="product.php">Products</a></li>
                         <li><a class="mnav" href="#">About</a></li>
                         <li><a class="mnav" href="#">Contact</a></li>
