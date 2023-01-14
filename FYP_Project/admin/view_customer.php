@@ -1,6 +1,12 @@
 <?php
 session_start();
 include('connection.php');
+if(!isset($_SESSION['admin_id']))
+{
+    ?>
+    <script>window.location.href="admlogin.php"</script>
+    <?php
+}
 ?>
 
 <!DOCTYPE html>
@@ -139,11 +145,15 @@ include('connection.php');
                     <?php 
                     if($row['verify_status']==0)
                     {
-                      echo "Unactivated";
+                      ?>
+                      <button type="text" class="btn btn-danger" >Unactivated</button>
+                      <?php
                     }
                     else
                     {
-                      echo "Activated";
+                      ?>
+                      <button class="btn btn-success" >Activated</button>
+                      <?php
                     }
                     
                     ?>
