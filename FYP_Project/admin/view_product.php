@@ -1,6 +1,12 @@
 <?php
 session_start();
 include('connection.php');
+if(!isset($_SESSION['admin_id']))
+{
+    ?>
+    <script>window.location.href="admlogin.php"</script>
+    <?php
+}
 ?>
 
 <!DOCTYPE html>
@@ -84,6 +90,7 @@ if(isset($_POST['editsavebtn'])){
     if($udpsql_run || $imgudp_run){
       echo '<script type="text/javascript">swal("Saved", "New Record Saved", "success");</script>';  
   }
+  // echo $pctg;
 
 }
 
@@ -347,8 +354,8 @@ if(isset($_GET['restore'])){
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-4">
                                       <label class="small mb-1" for="Category">Category</label>
-                                      <select class="form-select" name="category"  value="<?php echo $row['category'];?>">
-                                        
+                                      <select class="form-select" name="category" value="<?php $row['category'];?>" >
+
                                         <?php
                                           $sqlctg = "SELECT * FROM category";
                                           $sqlctg_run = mysqli_query($connect,"$sqlctg");
@@ -365,18 +372,17 @@ if(isset($_GET['restore'])){
                                             while($ctg = mysqli_fetch_assoc($sqlctg_run))
                                             {
                                                 
-                                                $cname = $ctg['category_name'];
+                                                $cname = $ctg['id'];
                                               ?>
                                               <?php 
                                               if($pcat == $cname)
                                               {
-                                                ?>
-                                                  <option selected><?php echo $row['category'] ?></option>
-                                                <?php
+                                                echo "<option selected='selected' value='".$row['category']."'>".$ctg['category_name']."</option>";
+                                                
                                               }
                                               else{
                                               ?>
-                                              <option value="<?php echo $ctg['category_name']?>">
+                                              <option value="<?php echo $ctg['id']?>">
                                               <?php echo $ctg['category_name'];?></option><?php
                                               }
 
@@ -556,8 +562,8 @@ if(isset($_GET['restore'])){
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-4">
                                       <label class="small mb-1" for="Category">Category</label>
-                                      <select class="form-select" name="category"  value="<?php echo $row['category'];?>">
-                                        
+                                      <select class="form-select" name="category" value="<?php $row['category'];?>" >
+
                                         <?php
                                           $sqlctg = "SELECT * FROM category";
                                           $sqlctg_run = mysqli_query($connect,"$sqlctg");
@@ -574,18 +580,18 @@ if(isset($_GET['restore'])){
                                             while($ctg = mysqli_fetch_assoc($sqlctg_run))
                                             {
                                                 
-                                                $cname = $ctg['category_name'];
+                                                $cname = $ctg['id'];
                                               ?>
                                               <?php 
                                               if($pcat == $cname)
                                               {
-                                                ?>
-                                                  <option selected><?php echo $row['category'] ?></option>
-                                                <?php
+                                                //selected option and pass category ID and display the category name
+                                                echo "<option selected='selected' value='".$row['category']."'>".$ctg['category_name']."</option>";
+                                                
                                               }
                                               else{
                                               ?>
-                                              <option value="<?php echo $ctg['category_name']?>">
+                                              <option value="<?php echo $ctg['id']?>">
                                               <?php echo $ctg['category_name'];?></option><?php
                                               }
 
