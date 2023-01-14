@@ -1,6 +1,12 @@
 <?php
 session_start();
 include('connection.php');
+if(!isset($_SESSION['admin_id']))
+{
+    ?>
+    <script>window.location.href="admlogin.php"</script>
+    <?php
+}
 ?>
 
 <!DOCTYPE html>
@@ -64,24 +70,63 @@ if(isset($_POST['addbtn'])){
     
     
 }
-  
+
+//edit category & update
+if(isset($_POST['savebtn'])){
+  $cname = $_POST['categoryname'];
+  $cid = $_POST['categoryid'];
+
+  $chkcategory = mysqli_query($connect,"SELECT * FROM category where `id` = '$cid'");
+    if(mysqli_num_rows($chkcategory)>0)
+    {
+      $update_sql = mysqli_query($connect,"UPDATE `category` SET `category_name`='$cname' WHERE `id` = '$cid'");
+      if($update_sql){echo '<script type="text/javascript">swal("Updated Category Successfully", "", "success");</script>';}
+      
+    }
+    else
+    {
+      echo '<script type="text/javascript">swal("Please Type Correct Information", "", "wrong");</script>';
+    }
+    
+    
+}
 
 
 
 
-
-// Delete/Hide the Product 
+// Delete/Hide the Category 
 if(isset($_GET['delete'])){
   $remove_id = $_GET['delete'];
-  mysqli_query($connect, "UPDATE `product` SET `is_delete` = '1' WHERE `prodID` = '$remove_id'");
-  header('location:view_product.php');
+  $chk_category = mysqli_query($connect, "SELECT * FROM product,category WHERE product.category = category.id AND product.category = '$remove_id'");
+  if(mysqli_num_rows($chk_category)>0)
+  {
+    echo '<script type="text/javascript">swal("Cannot Delete Category.", "There are product inside the category", "info");</script>';  
+  }
+  else
+  {
+    $delete_sql = mysqli_query($connect,"UPDATE `category` SET `status`=1 WHERE `id` = '$remove_id'");
+    if($delete_sql)
+    {
+      echo '<script type="text/javascript">swal("Category Deleted.","", "success");</script>';  
+    }
+  }
+  
 };
 
-// Restore the Product
+//restore category
 if(isset($_GET['restore'])){
-  $restore_id = $_GET['restore'];
-  mysqli_query($connect, "UPDATE `product` SET `is_delete` = '0' WHERE `prodID` = '$restore_id'");
-  header('location:view_product.php');
+  $remove_id = $_GET['restore'];
+  $chk_category = mysqli_query($connect, "SELECT * FROM category WHERE id = '$remove_id'");
+  if(mysqli_num_rows($chk_category)>0)
+  {
+    $restore_sql = mysqli_query($connect,"UPDATE `category` SET `status`=0 WHERE `id` = '$remove_id'");
+    if($restore_sql)
+    {
+      echo '<script type="text/javascript">swal("Category Restored Sucessfully.","", "success");</script>';  
+    }  
+  }
+
+  
 };
 
 ?>
@@ -160,6 +205,7 @@ if(isset($_GET['restore'])){
                 <tr>
                   <th scope="col" class="text-center">No</th>
                   <th scope="col" class="text-center">Category Name</th>
+                  <th colspan="2" class="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -177,8 +223,73 @@ if(isset($_GET['restore'])){
                 ?>
                 <tr>
                   <th scope="row" class="text-center"><?php echo $i++?></th>
-                  <td class="text-center"><?php echo $row['category_name']?></td>       
-                </tr>
+                  <td class="text-center"><?php echo $row['category_name']?></td>     
+                  <td class="text-center">
+                  <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $row['id']?>">
+                      Edit
+                      
+                    </button>
+                    <!-- Modal Edit Category -->
+                    <div class="modal fade " id="editModal<?php echo $row['id']?>" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content ">
+                            <div class="modal-header">
+                              <h5 class="modal-title " id="editLabel"><?php echo "Edit Product Category ";?></h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-start">
+                                <form method='POST' enctype="multipart/form-data" >
+
+                                <!-- Form Row-->
+                                <div class="row gx-3 mb-3">
+
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputcategoryid">Category ID</label>
+                                        <input type="hidden" id="inputcategoryid" name="categoryid" value="<?php echo $row['id']?>">
+                                        <input class="form-control" name="categoryid" id="inputcategoryid" type="text" placeholder="Category ID" value="<?php echo $row['id']?> " disabled>
+                                    </div>
+                                  
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputcategoryname">Category Name</label>
+                                        <input class="form-control" name="categoryname" id="inputcategoryname" type="text" placeholder="Enter Category Name" value="<?php echo $row['category_name']?>" required>
+                                    </div>
+
+                                </div>
+                                
+                              </div>
+
+                              <div class="modal-footer">
+                                <!-- Save changes button-->
+                                <button class="btn btn-primary" name="savebtn" type="submit">Save Change</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                              </div>
+                        </form>
+                        </div>
+                        </div>
+                        </div>
+                    
+                    <?php 
+                      if($row['status']== 0)
+                      {
+                        ?>
+                        <a href="view_category.php?delete=<?php echo $row['id'] ?>" onclick="return confirm('Remove <?php echo $row['category_name'];?> From Category?')" ><button type="submit" class="btn btn-danger text-white" >
+                    Delete
+                    </button></a>
+                    <?php
+                      }
+                      else
+                      {
+                        ?>
+                        <a href="view_category.php?restore=<?php echo $row['id'] ?>" onclick="return confirm('Restore <?php echo $row['category_name'];?> From Category?')" ><button type="submit" class="btn btn-success " >
+                    Restore
+                    </button></a>
+                        <?php
+                      }
+                    ?>
+                    
+                    
+                </td>  
+                </tr>           
 
                 <?php
 
@@ -235,7 +346,7 @@ if(isset($_GET['restore'])){
             </div>
         </div>
                 
-         </div> <!------- close div forapp-content------>
+         </div> <!------- close div for app-content------>
           
 
 
