@@ -1,6 +1,12 @@
 <?php
 session_start();
 include('connection.php');
+if(!isset($_SESSION['admin_id']))
+{
+    ?>
+    <script>window.location.href="admlogin.php"</script>
+    <?php
+}
 $total = 0;
 $subtotal = 0;
 ?>
@@ -46,6 +52,24 @@ $subtotal = 0;
     <?php
         include('admin_header.php');
     ?>
+
+
+<?php
+// Update Delivered Status
+if(isset($_POST['statussavebtn']))
+{
+    $edit_status = $_POST['status'];
+    $edit_status_id = $_POST['order_status_id'];
+    $status_update_sql = mysqli_query($connect,"UPDATE `order_manage` SET `status`='$edit_status' WHERE orderID = '$edit_status_id'");
+    if($status_update_sql)
+    {
+        echo '<script type="text/javascript">swal("Status Updated.","", "success");</script>';
+    }
+}
+?>
+
+
+
 
     <!-- ////////////////////////////////////////////////////////////////////////////-->
 
@@ -119,6 +143,7 @@ $subtotal = 0;
                                 <th scope="col" class="text-center">Email</th>
                                 <th scope="col" class="text-center">Order Date</th>
                                 <th scope="col" class="text-center">Total Price</th>
+                                <th scope="col" class="text-center">Status</th>
                                 <th colspan="2" class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -155,11 +180,105 @@ $subtotal = 0;
                                   </td>
                                     <td class="fs-5 text-center"><?php echo $row['order_date']?></td>
                                     <td class="fs-5 text-center"><?php echo "RM " .$row['order_price']?></td>
+                                    
+
+                                    <td class="text-center"> 
+                                        <?php
+                                            if($row['status']=='1')
+                                            {
+                                                ?>
+                                                <button type="submit" class="btn btn-danger text-white" data-toggle="modal" data-target="#statusModal<?php echo $row['orderID'] ?>">
+                                                Pending
+                                                </button>
+                                                <?php
+                                            }
+                                            else if($row['status']=='2')
+                                            {
+                                                ?>
+                                                <button type="submit" class="btn btn-warning text-white" data-toggle="modal" data-target="#statusModal<?php echo $row['orderID'] ?>">
+                                                Delivered
+                                                </button>
+                                                <?php
+                                            }
+                                            else
+                                            {
+                                                ?>
+                                                <button type="submit" class="btn btn-success text-white" data-toggle="modal" data-target="#statusModal<?php echo $row['orderID'] ?>">
+                                                Completely
+                                                </button>
+                                                <?php
+                                            }
+                                        ?>
+
+                                            <!-- Status Modal -->
+                                            <div class="modal fade " id="statusModal<?php echo $row['orderID'] ?>" tabindex="-1" aria-labelledby="statusLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content ">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title " id="editLabel"><?php echo "Update Delivery Status ";?></h5>
+                                                        </div>
+                                                        <div class="modal-body text-start">
+                                                            <form method='POST' enctype="multipart/form-data" >
+
+                                                                <!-- Form Row-->
+                                                                <div class="row gx-3 mb-3">
+                                                                        <label class="small mb-1" for="inputstatusname">Status</label>
+                                                                        <input class="form-control" name="order_status_id" id="inputstatusname" type="hidden" value="<?php echo $row['orderID']?>" required>
+                                                                        <select class="form-select" name="status" value="<?php $row['status'];?>" >
+                                                                            <?php
+                                                                            $sqlctg = "SELECT * FROM `status`";
+                                                                            $sqlctg_run = mysqli_query($connect,"$sqlctg");
+                                                                            $status = $row['status'];
+                                                                            if(mysqli_num_rows($sqlctg_run)>0)
+                                                                            {
+                                                                                if($status == null)
+                                                                                {
+                                                                                    ?>
+                                                                                    <option selected>NULL </option>
+                                                                                    <?php
+                                                                                }
+                                                                                
+                                                                                while($ord = mysqli_fetch_assoc($sqlctg_run))
+                                                                                {
+                                                                                    
+                                                                                    $status_name = $ord['id'];
+                                                                                ?>
+                                                                                <?php 
+                                                                                if($status == $status_name)
+                                                                                {
+                                                                                    //selected option and pass category ID and display the category name
+                                                                                    echo "<option selected='selected' value='".$row['status']."'>".$ord['status']."</option>";
+                                                                                    
+                                                                                }
+                                                                                else{
+                                                                                ?>
+                                                                                <option value="<?php echo $ord['id']?>">
+                                                                                <?php echo $ord['status'];?></option><?php
+                                                                                }
+
+                                                                                }
+                                                                                
+                                                                            }
+                                                                            ?>
+                                                                            </select>
+
+                                                                </div>
+                                                            
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <!-- Save changes button-->
+                                                                    <button class="btn btn-primary" name="statussavebtn" type="submit">Save Change</button>
+                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </form>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                    </td>
+                                    
                                     <td class="text-center">
                                         <!-- ############################################################################################################### --> 
-                                        <!-- Button trigger modal -->
-                    
-
                                         <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#detailModal<?php echo $row['orderID'] ?>">
                                             Details
@@ -187,16 +306,17 @@ $subtotal = 0;
         <div class="d-flex justify-content-center row">
             <div class="col-md-10">
                 <div class="receipt bg-white p-3 rounded"><img src="../image/logo.png" width="120">
-                    <h4 class="mt-2 mb-3">Your order is confirmed!</h4>
-                    <h6 class="name">Hello <?php
+                    <!-- <h4 class="mt-2 mb-3">Your order is confirmed!</h4> -->
+                    <h6 class="name">Customer Name : <strong><?php
                     //  $sql1 = mysqli_query($connect,"SELECT `username` FROM `user_info` WHERE `user_id` = $sid"); 
                     // if(mysqli_num_rows($sql1)>0)
                     // {
                     //     $row = mysqli_fetch_assoc($sql1);
                         echo $r1['order_name'];
                     // }
-                    ?>,
-                    </h6><span class="fs-12 text-black-50">your order has been confirmed and will be shipped in two days</span>
+                    ?>
+                    </strong>
+                    <!-- </h6><span class="fs-12 text-black-50">your order has been confirmed and will be shipped in two days</span> -->
                     <hr>
                     <div class="d-flex flex-row justify-content-between align-items-center order-details">
                         <div><span class="d-block fs-12">Order date</span><span class="font-weight-bold">
@@ -328,7 +448,7 @@ $subtotal = 0;
                                                     </div>
                                                 </div>
                                             </div>
-
+                                           
                                         <!-- ############################################################################################################### --> 
                                     </td>           
                                                 
@@ -349,17 +469,9 @@ $subtotal = 0;
                 
             </div>
 
-              
-
-
-
-
             </div>
         </div>
     </div>
-
-
-
     <!-- ////////////////////////////////////////////////////////////////////////////-->
 
 
@@ -391,6 +503,3 @@ $subtotal = 0;
 
   </body>
 </html>
-
-
-
