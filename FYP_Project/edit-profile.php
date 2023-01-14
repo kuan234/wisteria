@@ -318,8 +318,8 @@ if(isset($_POST['savebtn']))
                             </div>
                             <!-- Form Group (birthday)-->
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                <input class="form-control" name="birthday" id="inputBirthday" type="date" name="birthday" placeholder="Enter your birthday(yyyy-MM-dd)" value="<?php echo $row['birthday'];?>">
+                                <!-- <label class="small mb-1" for="inputBirthday">Birthday</label> -->
+                                <input class="form-control" name="birthday" id="inputBirthday" type="hidden" name="birthday" placeholder="Enter your birthday(yyyy-MM-dd)" value="<?php echo $row['birthday'];?>">
                             </div>
                         </div>
                         <!-- Save changes button-->
