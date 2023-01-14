@@ -79,7 +79,7 @@ if(isset($_POST['admlogin_btn']))
         $_SESSION['admin_email'] = $row['emailaddress'];         
         $_SESSION['admin_password'] = $row['password'];      
         $_SESSION['admin_role'] = $row['role_as']; 
-        header("Location: adminindex.php");
+        header("Location: index.php");
     }
     else
     {
