@@ -199,7 +199,7 @@ if(isset($_GET['delete'])){
         <div class="col-12">
             <div class="container-fluid">
 
-                <table class="table table-striped" width="100%">
+                <table class="table table-striped" width="100%" id="myTable">
                 <thead class="table-dark">
                                 <tr>
                                 <th scope="col" class="text-center">ID</th>
@@ -502,6 +502,7 @@ if(isset($_GET['delete'])){
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src = "search.js"></script>
 
   </body>
 </html>

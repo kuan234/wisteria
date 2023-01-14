@@ -200,7 +200,7 @@ if(isset($_GET['restore'])){
         <div class="col-12">
             <div class="container-fluid">
 
-            <table class="table table-striped fs-5 " width="100%">
+            <table class="table table-striped fs-5 " width="100%" id="myTable">
               <thead class="table-dark">
                 <tr>
                   <th scope="col" class="text-center">No</th>
@@ -371,6 +371,7 @@ if(isset($_GET['restore'])){
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="theme-assets/js/scripts/pages/dashboard-lite.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS-->
+    <script src = "search.js"></script>
   </body>
 </html>
 

@@ -42,6 +42,7 @@ if(!isset($_SESSION['admin_id']))
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 
 
@@ -112,11 +113,12 @@ if(!isset($_SESSION['admin_id']))
         <div class="content-header row">
         </div>
         <div class="content-body">
-            
+
     <div class="row match-height">
         <div class="col-12">
             <div class="container-fluid">
-            <table class="table table-striped fs-5 " width="100%">
+
+            <table class="table table-striped fs-5 " width="100%" id="myTable">
               <thead class="table-dark">
                 <tr>
                   <th scope="col" class="text-center">No</th>
@@ -173,7 +175,8 @@ if(!isset($_SESSION['admin_id']))
         </div>
     </div>
 
-
+    
+  
 
     <!-- ////////////////////////////////////////////////////////////////////////////-->
 
@@ -186,9 +189,6 @@ if(!isset($_SESSION['admin_id']))
     <!-- BEGIN VENDOR JS-->
     <script src="theme-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
     <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <script src="theme-assets/vendors/js/charts/chartist.min.js" type="text/javascript"></script>
-    <!-- END PAGE VENDOR JS-->
     <!-- BEGIN JS-->
     <script src="theme-assets/js/core/app-menu-lite.js" type="text/javascript"></script>
     <script src="theme-assets/js/core/app-lite.js" type="text/javascript"></script>
@@ -196,5 +196,7 @@ if(!isset($_SESSION['admin_id']))
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="theme-assets/js/scripts/pages/dashboard-lite.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS-->
+    <script src = "search.js"></script>
+
   </body>
 </html>

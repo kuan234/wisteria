@@ -247,7 +247,7 @@ if(isset($_GET['restore'])){
 
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
-                <table class="table table-striped" width="100%">
+                <table class="table table-striped" width="100%" id="myTable">
               <thead class="table-dark">
                 <tr>
                   <th scope="col" class="text-center">No</th>
@@ -455,7 +455,7 @@ if(isset($_GET['restore'])){
 
 
                 <div class="tab-pane fade" id="pills-unavailable" role="tabpanel" aria-labelledby="pills-unavailable-tab">
-                <table class="table table-striped" width="100%">
+                <table class="table table-striped" width="100%" id="myTable">
               <thead class="table-dark">
                 <tr>
                   <th scope="col" class="text-center">No</th>
@@ -875,6 +875,7 @@ function addload(e){
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src = "search.js"></script>
 
   </body>
 </html>
