@@ -118,6 +118,7 @@ color:#69707a;
                                 <th scope="col" class="text-center">Name</th>
                                 <th scope="col" class="text-center">Order Date</th>
                                 <th scope="col" class="text-center">Total Price</th>
+                                <th scope="col" class="text-center">Status</th>
                                 <th colspan="2" class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -140,6 +141,34 @@ color:#69707a;
                                     <td class="text-center"><?php echo $row['order_name'];?></td>
                                     <td class="fs-5 text-center"><?php echo $row['order_date']?></td>
                                     <td class="fs-5 text-center"><?php echo "RM " .$row['order_price']?></td>
+                                    <td class="fs-5 text-center">
+                                    <?php
+                                            if($row['status']=='1')
+                                            {
+                                                ?>
+                                                <button type="button" class="btn btn-danger text-white" >
+                                                Pending
+                                                </button>
+                                                <?php
+                                            }
+                                            else if($row['status']=='2')
+                                            {
+                                                ?>
+                                                <button type="button" class="btn btn-warning text-white">
+                                                Delivered
+                                                </button>
+                                                <?php
+                                            }
+                                            else
+                                            {
+                                                ?>
+                                                <button type="button" class="btn btn-success text-white" >
+                                                Completely
+                                                </button>
+                                                <?php
+                                            }
+                                        ?>
+                                    </td>
                                     <td class="text-center">
                                         <!-- ############################################################################################################### --> 
                                         <!-- Button trigger modal -->
