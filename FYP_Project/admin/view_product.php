@@ -206,6 +206,8 @@ if(isset($_GET['restore'])){
           </li>
           <li class=" nav-item"><a href="reports.php"><i class="material-symbols-rounded">monitoring</i><span class="menu-title" data-i18n="">Reports</span></a>
           </li>
+          <li class=" nav-item"><a href="contactform.php"><i class="material-symbols-rounded">edit_note</i><span class="menu-title" data-i18n="">Contact</span></a>
+          </li>
           <li class=" nav-item has-sub"><a href="#"><i class="material-symbols-rounded">settings</i><span class="menu-title" data-i18n="">Settings</span></a>
             <ul class="menu-content">
               <li class="is-shown">
@@ -403,7 +405,7 @@ if(isset($_GET['restore'])){
                                     </div>
                                     <div class="col-md-4">
                                       <label class="small mb-1" for="quantity">Quantity</label>
-                                      <input class="form-control" type="number" id="quantity" name="quantity" placeholder="Enter Your Quantity" value="<?php echo $row['quantity'];?>" min="1">
+                                      <input class="form-control" type="number" id="quantity" name="quantity" placeholder="Enter Your Quantity" value="<?php echo $row['quantity'];?>" min="0">
                                     </div>
                                 </div>
                                 
