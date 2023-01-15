@@ -258,8 +258,8 @@ li .mnav:hover {
                     <ul id="MenuItems">
                         <li><a class="mnav" href="index.php">Home</a></li>
                         <li><a class="mnav" href="product.php">Products</a></li>
-                        <li><a class="mnav" href="#">About</a></li>
-                        <li><a class="mnav" href="#">Contact</a></li>
+                        <li><a class="mnav" href="about.php">About</a></li>
+                        <li><a class="mnav" href="contact.php">Contact</a></li>
                         
                     
                 <li class="haction">
