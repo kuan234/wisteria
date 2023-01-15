@@ -223,7 +223,7 @@ include "connection.php";
                                     else
                                     {
                                         ?>
-                                        <button type="button" class="btn btn-danger my-2" value='out of stock' name="add_to_cart" >Out of Stock <i class="fas fa-shopping-cart"></i></button>
+                                        <button type="button" class="btn btn-danger my-2" value='out of stock' name="add_to_cart" style="cursor:not-allowed" >Out of Stock <i class="fas fa-shopping-cart"></i></button>
                                         <?php
                                     }
                                     ?>
@@ -286,7 +286,7 @@ include "connection.php";
             <div class="container">
                 <div class="row pt-5">
                     <div class="col-sm-4 footer-col-1 text-center">
-                        <a href="homepage.php"><img src="image/logo.png" 
+                        <a href="index.php"><img src="image/logo.png" 
                             style="width: 150px;
                             margin-bottom: 10px;
                             padding: auto;"></a>
@@ -294,9 +294,9 @@ include "connection.php";
                     <div class="col-sm-4 footer-col-2 ">
                         <h3>Support</h3>
                         <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Product</a></li>
+                            <li><a href="contact.php">Contact Us</a></li>
+                            <li><a href="about.php">About Us</a></li>
+                            <li><a href="product.php">Product</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-4 footer-col-3">
