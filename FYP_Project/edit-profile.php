@@ -313,7 +313,7 @@ if(isset($_POST['savebtn']))
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">+60</span>
                                 </div>
-                                <input class="form-control" name="phone" id="inputPhone" type="tel" placeholder="Enter your phone number" minlength="9" maxlength="10" value="<?php echo $row['phone'];?>">
+                                <input class="form-control" name="phone" id="inputPhone" type="tel" placeholder="Enter your phone number" pattern="[0-9]+" title="Only Number Accepted" minlength="9" maxlength="10" value="<?php echo $row['phone'];?>">
         </div>
                             </div>
                             <!-- Form Group (birthday)-->
