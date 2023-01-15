@@ -79,6 +79,7 @@ $('#postcode').on('keyup',function(){
 })
 }
 
+//show and hide password
 function showhidepassword(){
     $(document).ready(function() {
         $("#show_hide_password a").on('click', function(event) {
@@ -96,7 +97,7 @@ function showhidepassword(){
     });
 }
 
-
+//change input type with text/password
 function myFunction() {
     var x = document.getElementById("inputpassword");
     if (x.type === "password") {
@@ -105,3 +106,49 @@ function myFunction() {
       x.type = "password";
     }
   }
+
+
+//   jQuery to sorting product by Price
+  function asc()
+        {
+            var gridItems = jQuery(".product_list");
+
+            gridItems.sort(function(a,b){
+                return(
+                    jQuery(".price", a).data("price") - jQuery(".price", b).data("price")
+                );
+            });
+
+            jQuery(".product").append(gridItems);
+        }
+
+        function dsc()
+        {
+            var gridItems = jQuery(".product_list");
+
+            gridItems.sort(function(a,b){
+                return(
+                    jQuery(".price", b).data("price") - jQuery(".price", a).data("price")
+                );
+            });
+
+            jQuery(".product").append(gridItems);
+        }
+
+        function main()
+        {
+            var sorting = jQuery("#sort").val();
+
+            if(sorting=="l2h")
+            {
+                asc();
+            }
+            else
+            {
+                dsc();
+            }
+        }
+
+        jQuery("#sort").change(function(){
+            main();
+        });
