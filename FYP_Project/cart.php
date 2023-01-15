@@ -19,7 +19,7 @@ if(!isset($_SESSION['user_id']))
     <title>Shopping Cart</title>
      <!-- Font Awesome -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
-
+     <link rel="icon" href="image/logo.png">
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="cart-style.css">
@@ -39,7 +39,7 @@ if(isset($_POST['update_update_btn'])){
    $update_value = $_POST['update_quantity'];
    $update_id = $_POST['update_quantity_id'];
    $update_product_id = $_POST['update_product_id'];
-
+   echo "<script>alert('pid: $update_product_id')</script>";
 
    $chkq = mysqli_query($connect,"SELECT * FROM product where prodID = '$update_product_id'");
    if(mysqli_num_rows($chkq)>0)
@@ -175,11 +175,11 @@ if(isset($_GET['delete_all'])){
             <td>RM<?php echo number_format($fetch_cart['price']); ?>/-</td>
             <td>
                <form action="" method="post">
-                  <input type="hidden" name="update_quantity_id"  value="<?php echo $fetch_cart['id']; ?>" >
-                  <input type="hidden" name="update_product_id"  value="<?php echo $fetch_cart['prod_id']; ?>" >
                   <input type="number" name="update_quantity" min="1"  value="<?php echo $fetch_cart['quantity']; ?>" >
+                  <input type="hidden" name="update_quantity_id"  value="<?=  $fetch_cart['id']; ?>" >
+                  <input type="hidden" name="update_product_id"  value="<?=  $fetch_cart['prod_id']; ?>" >
                   <input type="submit" value="update" name="update_update_btn">
-                 
+                  
             </td>
             <td>RM<?php echo $sub_total = ($fetch_cart['price'] * $fetch_cart['quantity']); ?>/-</td>
             <td><a href="cart.php?remove=<?php echo $fetch_cart['id']; ?>" onclick="return confirm('remove item from cart?')" class="delete-btn"> <i class="fas fa-trash"></i> remove</a></td>

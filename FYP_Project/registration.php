@@ -61,6 +61,8 @@ function sendemail_verify($email, $verify_token)
         <title>Responsive Registration Form</title>
         <meta name="viewpoint" content="width=device-width, initial-scale=1.0"/>
         <link rel= "stylesheet" href= "registration.css">
+        <link rel="icon" href="image/logo.png">
+
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>

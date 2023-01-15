@@ -8,8 +8,11 @@ include('php/header.php');
     <head>
         <meta charset="utf-8" />
         <title>Login Form</title>
+        
         <meta name="viewpoint" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="login.css">
+        <link rel="icon" href="image/logo.png">
+
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="script.js"></script>
 

@@ -57,6 +57,8 @@ function sendemail_verify($email,$password)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password</title>
     <!-- Font Awesome -->
+    <link rel="icon" href="image/logo.png">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
