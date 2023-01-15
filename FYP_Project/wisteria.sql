@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2022 at 09:50 AM
+-- Generation Time: Jan 15, 2023 at 06:03 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -33,8 +33,7 @@ CREATE TABLE `admlogin` (
   `lastname` varchar(50) NOT NULL,
   `emailaddress` varchar(80) NOT NULL,
   `pw` varchar(80) NOT NULL,
-  `role_as` tinyint(4) NOT NULL,
-  `status` tinyint(1) NOT NULL,
+  `role_as` tinyint(1) NOT NULL,
   `created_at` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -42,8 +41,13 @@ CREATE TABLE `admlogin` (
 -- Dumping data for table `admlogin`
 --
 
-INSERT INTO `admlogin` (`admid`, `firstname`, `lastname`, `emailaddress`, `pw`, `role_as`, `status`, `created_at`) VALUES
-(1, 'q', 'we', 'qwe@email.com', '123', 0, 0, '2022-11-02');
+INSERT INTO `admlogin` (`admid`, `firstname`, `lastname`, `emailaddress`, `pw`, `role_as`, `created_at`) VALUES
+(1, 'q', 'we', 'qwe@email.com', '123', 0, '2022-11-02'),
+(3, 'testi\\', '1', 'test1@gmail.com', 'Wisteria_123', 1, '2022-12-19'),
+(4, 's', 'k', 'test2@gmail.com', '12345', 0, '2022-12-20'),
+(5, 'test', '3', 'test3@gmail.com', '12345', 0, '2022-12-20'),
+(7, 'k', '123', 'kuan@email.com', '12345', 1, '2022-12-20'),
+(9, 'sheng', 'zhe', 'kuanzhesheng02@gmail.com', 'e18b284b666dd22675c001c6eb3979f1', 1, '2023-01-02');
 
 -- --------------------------------------------------------
 
@@ -57,8 +61,63 @@ CREATE TABLE `cart` (
   `price` float NOT NULL,
   `quantity` int(10) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `user_id` int(20) DEFAULT NULL
+  `user_id` int(20) NOT NULL,
+  `prod_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `name`, `price`, `quantity`, `image`, `user_id`, `prod_id`) VALUES
+(1, 'Aglaonema Lady Valentine', 20, 1, 'Aglaonema Lady Valentine.jpg', 82, 20),
+(2, 'Artifical', 15, 6, 'Calathea.jpg', 82, 13);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `id` int(100) NOT NULL,
+  `category_name` varchar(200) NOT NULL,
+  `status` tinyint(2) NOT NULL DEFAULT 0 COMMENT '0-available, 1-unavailable'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `category_name`, `status`) VALUES
+(1, 'Pot Plant', 0),
+(2, 'Herb', 0),
+(3, 'High Light Plant', 0),
+(4, 'Low Light Plant', 0),
+(5, 'Big Tree', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact`
+--
+
+CREATE TABLE `contact` (
+  `id` int(100) NOT NULL,
+  `contact_name` varchar(255) NOT NULL,
+  `contact_email` varchar(255) NOT NULL,
+  `contact_phone` int(10) NOT NULL,
+  `contact_message` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`id`, `contact_name`, `contact_email`, `contact_phone`, `contact_message`) VALUES
+(1, 'kuan', 'kuanzhesheng02@gmail.com', 1123412421, 'trying to get a long text.trying to get a long text.trying to get a long text.trying to get a long text.trying to get a long text.trying to get a long text.trying to get a long text.trying to get a long text.trying to get a long text.trying to get a long text.trying to get a long text.trying to get a long text.trying to get a long text.'),
+(2, 'hey', 'hey@gmail.com', 1237416723, 'yoyo'),
+(3, 'kuan', '1201202314@student.mmu.edu.my', 124726372, 'Hi, Is Philodendron Lemon Lime have sells in shop?');
 
 -- --------------------------------------------------------
 
@@ -70,30 +129,26 @@ CREATE TABLE `order_manage` (
   `orderID` int(100) NOT NULL,
   `order_number` varchar(255) DEFAULT NULL,
   `order_name` varchar(255) NOT NULL,
-  `order_cardnum` int(20) NOT NULL,
+  `order_cardnum` varchar(20) NOT NULL,
   `order_address` varchar(255) NOT NULL,
   `order_city` varchar(100) NOT NULL,
   `order_state` varchar(100) NOT NULL,
   `order_postcode` int(10) NOT NULL,
+  `order_price` float NOT NULL,
   `order_user_id` int(100) NOT NULL,
   `order_date` date DEFAULT current_timestamp(),
-  `delivery_date` date NOT NULL DEFAULT current_timestamp()
+  `delivery_date` date NOT NULL DEFAULT current_timestamp(),
+  `status` int(20) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `order_manage`
 --
 
-INSERT INTO `order_manage` (`orderID`, `order_number`, `order_name`, `order_cardnum`, `order_address`, `order_city`, `order_state`, `order_postcode`, `order_user_id`, `order_date`, `delivery_date`) VALUES
-(2, NULL, 'kuan', 123456789, 'mmmmm', 'melaka', 'melaka', 123321, 1, '2022-12-05', '2022-12-07'),
-(16, NULL, 'test4', 123213, 'hhh', 'jjj', 'kkk', 123322, 1, '2022-12-05', '2022-12-07'),
-(24, 'W00000000100', 'test3', 2147483647, '6,jalan10,permata1', 'mmm', 'mlk', 12345, 1, '2022-12-07', '2022-12-07'),
-(27, 'W00000010102', 'test11', 12341234, 'wqdqwdwqdq', 'mlk', 'mlk', 88888, 1, '2022-12-07', '2022-12-14'),
-(28, 'W00000010103', 'test44', 2147483647, 'jjjhdlahegbf', 'MLK', 'MLK', 12345, 1, '2022-12-07', '2022-12-14'),
-(29, 'W00000010104', 'kk', 1231231231, '123123', '12312312', '32132131', 32131, 1, '2022-12-08', '2022-12-15'),
-(30, 'W00000010105', 'k', 1234, 'ewqe', 'qe', 'qwe', 12345, 1, '2022-12-09', '2022-12-16'),
-(34, 'W00000010106', 'kk', 2147483647, '6, jln1, tmn1', 'kluang', 'johor', 86000, 82, '2022-12-14', '2022-12-20'),
-(35, 'W00000010107', '22', 22, '6, jln1, tmn1', 'kluang', 'johor', 86000, 82, '2022-12-15', '2022-12-22');
+INSERT INTO `order_manage` (`orderID`, `order_number`, `order_name`, `order_cardnum`, `order_address`, `order_city`, `order_state`, `order_postcode`, `order_price`, `order_user_id`, `order_date`, `delivery_date`, `status`) VALUES
+(1, 'W000000100', 'kuan Sheng Zhe', '5423 1342 3123 4123', '6, jln1, tmn1', 'kluang', 'Johor', 12345, 40, 82, '2023-01-11', '2023-01-18', 2),
+(2, 'W000000101', 'kuan Sheng Zhe', '5454 3534 5345 3434', '6, jln1, tmn1', 'kluang', 'Johor', 12345, 60, 82, '2023-01-12', '2023-01-19', 3),
+(3, 'W000000102', '1201202314', '1231 2312 3123 1231', '10,Jalan Ye, Taman Ye', 'Kluang', 'Johor', 86000, 75, 85, '2023-01-16', '2023-01-22', 1);
 
 -- --------------------------------------------------------
 
@@ -104,22 +159,46 @@ INSERT INTO `order_manage` (`orderID`, `order_number`, `order_name`, `order_card
 CREATE TABLE `product` (
   `prodID` int(20) NOT NULL,
   `product_name` varchar(255) NOT NULL,
-  `product_price` varchar(255) NOT NULL,
+  `product_price` float NOT NULL,
   `product_image` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `quantity` int(10) NOT NULL,
-  `category` varchar(255) DEFAULT NULL
+  `category` int(20) NOT NULL,
+  `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0-available, 1-unavailable'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`prodID`, `product_name`, `product_price`, `product_image`, `description`, `quantity`, `category`) VALUES
-(1, 'Aloe Vara', '20', 'Aloe_Vara.jpg', 'Aloe Vara is a Pot Plants.', 50, 'Pot Plants'),
-(13, 'Artifical', '20', 'Artifical.jpg', 'euwifjknm', 20, 'pot_plants'),
-(14, 'Marble Pothos', '35', 'Marble pothos.PNG', 'Marble', 15, 'herbs'),
-(15, 'Baby Rubber', '25', 'Baby_Rubber.jpg', 'rubber', 15, 'pot_plants');
+INSERT INTO `product` (`prodID`, `product_name`, `product_price`, `product_image`, `description`, `quantity`, `category`, `is_delete`) VALUES
+(1, 'Aloe Vara', 20, 'Aloe_Vara.jpg', 'Aloe Vara is a Pot Plant.', 10, 1, 1),
+(13, 'Artifical', 15, 'Calathea.jpg', 'this is a long long long long long long long long long longlong v vlonglong long long long long long long long long long long long long longlonglonglonglonglonglong longlonglonglong text. long long long long long long ', 9, 2, 0),
+(14, 'Marble Pothos', 30, 'shawnmendes5.JPG', 'Testing for unavailvle edit ', 15, 3, 0),
+(15, 'Baby Rubber', 25, 'Baby_Rubber.jpg', 'rubber', 0, 1, 0),
+(18, 'Peach Lily', 20, 'Peace Lily.PNG', 'this is a testing function for add product', 6, 1, 0),
+(19, 'zz plants', 11, 'ZZ Plant.PNG', '21321312', 13, 1, 0),
+(20, 'Aglaonema Lady Valentine', 20, 'Aglaonema Lady Valentine.jpg', 'dusahdisahdiusadhuisadhisado', 12, 5, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `status`
+--
+
+CREATE TABLE `status` (
+  `id` int(10) NOT NULL,
+  `status` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `status`
+--
+
+INSERT INTO `status` (`id`, `status`) VALUES
+(1, 'Pending'),
+(2, 'Delivered'),
+(3, 'Completely');
 
 -- --------------------------------------------------------
 
@@ -146,7 +225,8 @@ CREATE TABLE `user_info` (
 
 INSERT INTO `user_info` (`infoid`, `username`, `address`, `state`, `city`, `postcode`, `phone`, `birthday`, `user_id`, `user_image`) VALUES
 (1, 'kuan', '1, Jalan Bass 1, Taman gugua, 21111, Melaka', '', '', NULL, 123456789, '2022-09-19', 1, 'Artifical.jpg'),
-(29, 'kuan', '6, jln1, tmn1', 'johor', 'kluang', 86000, 1123456789, '2015-06-23', 82, 'shawnmendes.JPG');
+(29, 'kuan Sheng Zhe', '6, jln1, tmn1', 'Johor', 'kluang', 12345, 123456789, '2015-06-23', 82, 'shawnmendes.JPG'),
+(32, '1201202314', '10,Jalan Ye, Taman Ye', 'Johor', 'Kluang', 86000, 112345678, '0000-00-00', 85, 'user.png');
 
 -- --------------------------------------------------------
 
@@ -168,21 +248,13 @@ CREATE TABLE `user_order` (
 --
 
 INSERT INTO `user_order` (`id`, `order_id`, `product_name`, `price`, `quantity`, `image`) VALUES
-(18, 27, 'Artifical', 20, 5, 'Artifical.jpg'),
-(21, 28, 'Marble Pothos', 35, 1, 'Marble pothos.PNG'),
-(22, 28, 'Artifical', 20, 1, 'Artifical.jpg'),
-(23, 28, 'Baby Rubber', 25, 1, 'Baby_Rubber.jpg'),
-(25, 29, 'Artifical', 20, 3, 'Artifical.jpg'),
-(26, 30, 'Aloe Vara', 20, 4, 'Aloe_Vara.jpg'),
-(27, 30, 'Artifical', 20, 1, 'Artifical.jpg'),
-(28, 31, 'Artifical', 20, 2, 'Artifical.jpg'),
-(29, 31, 'Aloe Vara', 20, 1, 'Aloe_Vara.jpg'),
-(30, 33, 'Artifical', 20, 1, 'Artifical.jpg'),
-(31, 33, 'Baby Rubber', 25, 1, 'Baby_Rubber.jpg'),
-(32, 34, 'Aloe Vara', 20, 4, 'Aloe_Vara.jpg'),
-(33, 34, 'Artifical', 20, 3, 'Artifical.jpg'),
-(34, 35, 'Artifical', 20, 3, 'Artifical.jpg'),
-(35, 35, 'Baby Rubber', 25, 1, 'Baby_Rubber.jpg');
+(1, 1, 'Baby Rubber', 25, 1, 'Baby_Rubber.jpg'),
+(2, 1, 'Artifical', 15, 1, 'Calathea.jpg'),
+(3, 2, 'Baby Rubber', 25, 1, 'Baby_Rubber.jpg'),
+(4, 2, 'Artifical', 15, 1, 'Calathea.jpg'),
+(5, 2, 'Peach Lily', 20, 1, 'Peace Lily.PNG'),
+(6, 3, 'Artifical', 15, 1, 'Calathea.jpg'),
+(7, 3, 'Aglaonema Lady Valentine', 20, 3, 'Aglaonema Lady Valentine.jpg');
 
 -- --------------------------------------------------------
 
@@ -205,8 +277,9 @@ CREATE TABLE `user_reg` (
 
 INSERT INTO `user_reg` (`uid`, `email`, `password`, `token`, `verify_status`, `created_at`) VALUES
 (1, 'email@gmail.com', '', '', 0, '2022-12-10 09:41:47'),
-(59, 'sz123@gmail.com', '', '', 0, '2022-12-10 09:41:47'),
-(82, 'kuanzhesheng02@gmail.com', '2551e68d7609259415d85a392198a560', 'c3777e20910a577ff1dee2cc3b2d3c2d', 1, '2022-12-13 17:48:58');
+(59, 'sz123@gmail.com', '123', '', 0, '2022-12-10 09:41:47'),
+(82, 'kuanzhesheng02@gmail.com', 'Wisteria_123', 'c3777e20910a577ff1dee2cc3b2d3c2d', 1, '2022-12-13 17:48:58'),
+(85, '1201202314@student.mmu.edu.my', 'Wisteria_123', '2a058b82ab66b883e26152a7a643123f', 1, '2023-01-12 17:42:34');
 
 --
 -- Indexes for dumped tables
@@ -226,18 +299,38 @@ ALTER TABLE `cart`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contact`
+--
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `order_manage`
 --
 ALTER TABLE `order_manage`
   ADD PRIMARY KEY (`orderID`),
   ADD UNIQUE KEY `order_number` (`order_number`),
-  ADD KEY `Foreignkey` (`order_user_id`);
+  ADD KEY `Foreignkey` (`order_user_id`),
+  ADD KEY `status` (`status`);
 
 --
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`prodID`);
+  ADD PRIMARY KEY (`prodID`),
+  ADD KEY `categorykey` (`category`);
+
+--
+-- Indexes for table `status`
+--
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user_info`
@@ -266,43 +359,61 @@ ALTER TABLE `user_reg`
 -- AUTO_INCREMENT for table `admlogin`
 --
 ALTER TABLE `admlogin`
-  MODIFY `admid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `admid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `contact`
+--
+ALTER TABLE `contact`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `order_manage`
 --
 ALTER TABLE `order_manage`
-  MODIFY `orderID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `orderID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `prodID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `prodID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `status`
+--
+ALTER TABLE `status`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `infoid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `infoid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `user_order`
 --
 ALTER TABLE `user_order`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user_reg`
 --
 ALTER TABLE `user_reg`
-  MODIFY `uid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `uid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- Constraints for dumped tables
@@ -318,7 +429,14 @@ ALTER TABLE `cart`
 -- Constraints for table `order_manage`
 --
 ALTER TABLE `order_manage`
-  ADD CONSTRAINT `Foreignkey` FOREIGN KEY (`order_user_id`) REFERENCES `user_reg` (`uid`);
+  ADD CONSTRAINT `Foreignkey` FOREIGN KEY (`order_user_id`) REFERENCES `user_reg` (`uid`),
+  ADD CONSTRAINT `KeyStatus` FOREIGN KEY (`status`) REFERENCES `status` (`id`);
+
+--
+-- Constraints for table `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `categorykey` FOREIGN KEY (`category`) REFERENCES `category` (`id`);
 
 --
 -- Constraints for table `user_info`
