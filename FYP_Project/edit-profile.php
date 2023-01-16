@@ -214,7 +214,7 @@ if(isset($_POST['savebtn']))
     <nav class="nav nav-borders">
         <a class="nav-link active ms-0" href="edit-profile.php" target="__blank">Profile</a>
         <a class="nav-link" href="order.php" target="__blank">History</a>
-        <a class="nav-link" href="change-password.php" target="__blank">Security</a>
+        <a class="nav-link" href="change-password.php" target="__blank">Password</a>
         
     </nav>
     <hr class="mt-0 mb-4">
