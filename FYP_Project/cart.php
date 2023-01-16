@@ -71,35 +71,51 @@ if(isset($_POST['update_update_btn'])){
 //Check Product & Quantity is in stock
 if(isset($_POST['checkoutbtn']))
 {
-   $update_value = $_POST['update_quantity'];
-   $update_id = $_POST['update_quantity_id'];
-   $update_product_id = $_POST['update_product_id'];
-
-
-   $chkq = mysqli_query($connect,"SELECT * FROM product where prodID = '$update_product_id'");
+   $chkq = mysqli_query($connect,"SELECT * FROM cart where user_id = '$id'");
+   $chkp = mysqli_query($connect,"SELECT * FROM product where is_delete = 0;");
    if(mysqli_num_rows($chkq)>0)
    {
      
      while($c1 = mysqli_fetch_assoc($chkq))
      {
-        if($update_value <= $c1['quantity'])
-        {
-           ?>
-           <script>window.location.href="checkout.php"</script> 
-           <?php
-        }
-        else
-        {
-           ?>
-           <script>
-           Swal.fire(
-              'Wrong',
-              'Product Already Sold Out.',
-              'question',
-            )
-            </script>
-            <?php
-        }
+         while($c2 = mysqli_fetch_assoc($chkp))
+         {
+            if($c1['name'] == $c2['product_name'])
+            {
+               if(($c2['quantity']!= 0) && ($c1['quantity']<=$c2['quantity']))
+               {
+                  ?>
+               
+                  <script>window.location.href="checkout.php"</script> 
+                  <?php
+               }else
+               {
+                  ?>
+               <script>
+               Swal.fire(
+                  'Wrong',
+                  "Product <?= $c1['name'] ?> Already Sold Out.",
+                  'question',
+                  )
+                  </script>
+                  <?php
+               }
+               
+               
+            }
+            else
+            {
+               ?>
+               <script>
+               Swal.fire(
+                  'Wrong',
+                  '<?= $c1['name'] ?> Already Sold Out.',
+                  'question',
+                  )
+                  </script>
+                  <?php
+            }
+      }
 
      }
    }
@@ -140,6 +156,10 @@ if(isset($_GET['delete_all'])){
       font-family: Georgia, serif;
    }
    </style>
+   <?php
+      $selectcart = mysqli_query($connect, "SELECT * FROM `cart` WHERE `user_id` = '$id'");
+      
+   ?>
 
 <div class="container">
 
@@ -164,6 +184,7 @@ if(isset($_GET['delete_all'])){
          
          $select_cart = mysqli_query($connect, "SELECT * FROM `cart` WHERE `user_id` = '$id'");
          $grand_total = 0;
+         
          if(mysqli_num_rows($select_cart) > 0){
             while($fetch_cart = mysqli_fetch_assoc($select_cart)){
          ?>
@@ -212,11 +233,13 @@ if(isset($_GET['delete_all'])){
                </form>  </td>
             
          </tr> -->
+         
          <form action="" method="post">
          <tr class="table-bottom">
             <td><a href="product.php" class="option-btn" style="margin-top: 0;">continue shopping</a></td>
             <td colspan="3">grand total</td>
             <td>RM<?php echo $grand_total; ?>/-</td>
+          
             <td><a href="cart.php?delete_all" onclick="return confirm('are you sure you want to delete all?');" class="delete-btn"> <i class="fas fa-trash"></i> delete all </a></td>
          </tr>
 
