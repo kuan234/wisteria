@@ -3,6 +3,7 @@ session_start();
 include("connection.php");
 include('php/header.php');
 $total = 0;
+$subtotal = 0;
 $count = 0;
 ?>
 <!DOCTYPE html>
