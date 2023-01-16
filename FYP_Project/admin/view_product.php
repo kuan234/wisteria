@@ -6,8 +6,10 @@ if(!isset($_SESSION['admin_id']))
     ?>
     <script>window.location.href="admlogin.php"</script>
     <?php
+    
 }
 ?>
+<script>var i =0;</script>
 
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -41,6 +43,7 @@ if(!isset($_SESSION['admin_id']))
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   </head>
 
@@ -420,8 +423,9 @@ if(isset($_GET['restore'])){
                                           <!-- Profile picture help block-->
                                           <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                           <!-- Profile picture upload button-->
-                                          <input class="btn btn-primary" name="image" id="image" type="file" onchange="loadImage(this)"  accept=".jpg, .jpeg, .png" >
+                                          <input class="files btn btn-primary" name="image" id="image" type="file"  accept=".jpg, .jpeg, .png" >
                                           <?php $editimage = $row['product_image']; ?>
+                                          <!-- onchange="loadImage(this)"  -->
                                       </div>
                                   </div>
                               </div>
@@ -432,7 +436,7 @@ if(isset($_GET['restore'])){
                               <div class="modal-footer">
                                 <!-- Save changes button-->
                                 <button class="btn btn-primary" name="editsavebtn" type="submit">Save changes</button>
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="empimg(this)">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Close</button>
                               </div>
                             </form>
                           </div>
@@ -629,8 +633,8 @@ if(isset($_GET['restore'])){
                                           <!-- Profile picture help block-->
                                           <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                           <!-- Profile picture upload button-->
-                                          <input class="btn btn-primary" name="image" id="image" type="file" onchange="loadImage(this)"  accept=".jpg, .jpeg, .png" >
-
+                                          <input class="files btn btn-primary" name="image" id="image" type="file" accept=".jpg, .jpeg, .png" >
+ <!-- onchange="loadImage(this)"  -->
                                       </div>
                                   </div>
                               </div>
@@ -770,8 +774,8 @@ if(isset($_GET['restore'])){
                                           <!-- Profile picture help block-->
                                           <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                           <!-- Profile picture upload button-->
-                                          <input class="btn btn-primary" name="aimage" id="aimage" type="file" onchange="addload(this)"  accept=".jpg, .jpeg, .png" required>
-
+                                          <input class="files btn btn-primary" name="aimage" id="aimage" type="file"   accept=".jpg, .jpeg, .png" required>
+<!-- onchange="addload(this)" -->
                                       </div>
                                   </div>
                               </div>
@@ -807,51 +811,55 @@ if(isset($_GET['restore'])){
     </footer>
 
     <script>
-      // $(document).ready(function () {
-      //     $('#example').DataTable();
-      // });
-//       function triggerClick()
-//       {
-//         document.querySelector('#profileImage').click();
+//     function loadImage(e){
+      
+//       // if(e.files.length>0){
+//       //   e.files = [e.files[1]];
+//       // }
+      
+//       if(e.files[i]){
+//         var reader = new FileReader();
+
+//         reader.onload = function(e){
+
+//           document.querySelector('#preview').setAttribute('src',e.target.result);
+//         }
+//         reader.readAsDataURL(e.files[i]);
 //       }
+//       i++;
+// }
 
-    function loadImage(e){
-      
-      // if(e.files.length>0){
-      //   e.files = [e.files[1]];
-      // }
 
-      if(e.files[0]){
-        var reader = new FileReader();
-
-        reader.onload = function(e){
-
-          document.querySelector('#preview').setAttribute('src',e.target.result);
-        }
-        reader.readAsDataURL(e.files[0]);
+  $(document).ready(function() {
+  if (window.File && window.FileList && window.FileReader) {
+    $(".files").on("change", function(e) {
+    	var clickedButton = this;
+      var files = e.target.files,
+        filesLength = files.length;
+      for (var i = 0; i < filesLength; i++) {
+        var f = files[i]
+        var fileReader = new FileReader();
+        fileReader.onload = (function(e) {
+          var file = e.target;
+          $("<span class=\"pip\">" +
+            "<img class=\"img-fluid mb-2\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+            "<br/><span class=\"remove btn btn-danger mb-5\">Remove image</span>" +
+            "</span>").insertBefore(clickedButton);
+          $(".remove").click(function(){
+            $(this).parent(".pip").remove();
+          });
+          });
+        fileReader.readAsDataURL(f);
       }
-}
-
-function addload(e){
-      
-      // if(e.files.length>0){
-      //   e.files = [e.files[1]];
-      // }
-
-      if(e.files[0]){
-        var reader = new FileReader();
-
-        reader.onload = function(e){
-
-          document.querySelector('#preview').setAttribute('src',e.target.result);
-        }
-        reader.readAsDataURL(e.files[0]);
-      }
-}
+    });
+  } else {
+    alert("Your browser doesn't support to File API")
+  }
+});
 
 // function empimg(e){
 //   $("#preview").remove();
-//   document.getElementById('image').value = "";
+
 //   document.getElementById('preview').src = e.target.result; 
 
 // }
@@ -862,22 +870,16 @@ function addload(e){
 
     <!-- BEGIN VENDOR JS-->
     <script src="theme-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
-    <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <script src="theme-assets/vendors/js/charts/chartist.min.js" type="text/javascript"></script>
-    <!-- END PAGE VENDOR JS-->
-    <!-- BEGIN JS-->
     <script src="theme-assets/js/core/app-menu-lite.js" type="text/javascript"></script>
     <script src="theme-assets/js/core/app-lite.js" type="text/javascript"></script>
     <!-- END JS-->
     <!-- BEGIN PAGE LEVEL JS-->
-    <script src="theme-assets/js/scripts/pages/dashboard-lite.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS-->
 
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src = "search.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 
   </body>
 </html>
