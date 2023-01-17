@@ -44,6 +44,8 @@ if(!isset($_SESSION['admin_id']))
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../ckeditor/ckeditor.js"></script>
+
 
   </head>
 
@@ -67,7 +69,7 @@ if(isset($_POST['editsavebtn'])){
   $tmpName = $_FILES["image"]["name"];
 
   // Image validation
-  $validImageExtension = ['jpg', 'jpeg', 'png'];
+  $validImageExtension = ['jpg', 'jpeg', 'png', 'webp'];
   $imageExtension = explode('.', $imageName);
   $imageExtension = strtolower(end($imageExtension));
   if (!in_array($imageExtension, $validImageExtension)){
@@ -80,7 +82,7 @@ if(isset($_POST['editsavebtn'])){
     $newImageName = $imageName; // Generate new image name
     //move_uploaded_file($tmpName, './image/' .$newImageName);
     $fnm = $_FILES["image"]["name"];
-    $dst="../image/upload_image/" .$fnm;
+    $dst="../image/" .$fnm;
     move_uploaded_file($_FILES["image"]["tmp_name"],$dst);
     $imgudp = "UPDATE `product` SET `product_image`='$newImageName' WHERE `prodID`='$pid'";
     $imgudp_run = mysqli_query($connect,"$imgudp");
@@ -353,8 +355,10 @@ if(isset($_GET['restore'])){
                                     <!-- Form Group (location)-->
                                     
                                         <label class="small mb-1" for="description">Description</label>
-                                        <textarea class="form-control" rows="3" name="description" id="productdesc" placeholder="Description" ><?php echo $row['description'];?></textarea>
-                                    
+                                        <textarea class="form-control" rows="3" name="description" id="productdesc<?php echo $row['prodID']; ?>" placeholder="Description" ><?php echo $row['description'];?></textarea>
+                                    <script>
+                                    CKEDITOR.replace('productdesc<?php echo $row['prodID'];?>');
+                                  </script>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-4">
@@ -526,14 +530,14 @@ if(isset($_GET['restore'])){
                   <td class="fs-5 text-center"><?php echo $row['quantity'] ?></td>
                   <td class="text-center">
                      <!-- ############################################################################################################### --> 
-                    <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $row['prodID']?>">
+                    <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#reditModal<?php echo $row['prodID']?>">
                       Edit
                       <?php
                       $_SESSION['pid'] = $row['prodID'];
                       ?>
                     </button>
                           <!--Edit & View  Modal -->
-                      <div class="modal fade " id="editModal<?php echo $row['prodID']?>" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
+                      <div class="modal fade " id="reditModal<?php echo $row['prodID']?>" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content ">
                             <div class="modal-header">
@@ -562,8 +566,10 @@ if(isset($_GET['restore'])){
                                     <!-- Form Group (location)-->
                                     
                                         <label class="small mb-1" for="description">Description</label>
-                                        <textarea class="form-control" rows="3" name="description" id="productdesc" placeholder="Description" ><?php echo $row['description'];?></textarea>
-                                    
+                                        <textarea class="form-control" rows="3" name="description" id="reproductdesc<?php echo $row['prodID'];?>" placeholder="Description" ><?php echo $row['description'];?></textarea>
+                                        <script>
+                                    CKEDITOR.replace('reproductdesc<?php echo $row['prodID'];?>');
+                                  </script>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-4">
@@ -633,7 +639,7 @@ if(isset($_GET['restore'])){
                                           <!-- Profile picture help block-->
                                           <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                           <!-- Profile picture upload button-->
-                                          <input class="files btn btn-primary" name="image" id="image" type="file" accept=".jpg, .jpeg, .png" >
+                                          <input class="files btn btn-primary" name="image" id="image" type="file" accept=".jpg, .jpeg, .png .webp" >
  <!-- onchange="loadImage(this)"  -->
                                       </div>
                                   </div>
@@ -703,8 +709,10 @@ if(isset($_GET['restore'])){
                                     <!-- Form Group (location)-->
                                     
                                         <label class="small mb-1" for="description">Description</label>
-                                        <textarea class="form-control" rows="3" name="description" id="productdesc" placeholder="Enter Description" required></textarea>
-                                    
+                                        <textarea class="form-control" rows="3" name="description" id="addproductdesc" placeholder="Enter Description" required></textarea>
+                                        <script>
+                                    CKEDITOR.replace('addproductdesc');
+                                  </script>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-4">
@@ -770,7 +778,7 @@ if(isset($_GET['restore'])){
                                       <div class="card-header">Product Picture</div>
                                       <div class="card-body text-center">
                                           <!-- Profile picture image-->
-                                          <img class="img-fluid mb-2" name="preview" id="preview" src="../FYP_Project/image/<?php echo $row['product_image']; ?>" onclick="triggerClick()" alt="">
+                                          <img class="img-fluid mb-2" name="preview" id="preview" src="../image/<?php echo $row['product_image']; ?>" onclick="triggerClick()" alt="">
                                           <!-- Profile picture help block-->
                                           <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                           <!-- Profile picture upload button-->
@@ -868,10 +876,7 @@ if(isset($_GET['restore'])){
       
     </script>
 
-<script src="../ckeditor/ckeditor.js"></script>
-<script>
-  CKEDITOR.replace('productdesc');
-</script>
+
 
     <!-- BEGIN VENDOR JS-->
     <script src="theme-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
