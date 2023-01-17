@@ -353,7 +353,7 @@ if(isset($_GET['restore'])){
                                     <!-- Form Group (location)-->
                                     
                                         <label class="small mb-1" for="description">Description</label>
-                                        <textarea class="form-control" rows="3" name="description" id="description" placeholder="Description" ><?php echo $row['description'];?></textarea>
+                                        <textarea class="form-control" rows="3" name="description" id="productdesc" placeholder="Description" ><?php echo $row['description'];?></textarea>
                                     
                                 </div>
                                 <div class="row gx-3 mb-3">
@@ -562,7 +562,7 @@ if(isset($_GET['restore'])){
                                     <!-- Form Group (location)-->
                                     
                                         <label class="small mb-1" for="description">Description</label>
-                                        <textarea class="form-control" rows="3" name="description" id="description" placeholder="Description" ><?php echo $row['description'];?></textarea>
+                                        <textarea class="form-control" rows="3" name="description" id="productdesc" placeholder="Description" ><?php echo $row['description'];?></textarea>
                                     
                                 </div>
                                 <div class="row gx-3 mb-3">
@@ -703,7 +703,7 @@ if(isset($_GET['restore'])){
                                     <!-- Form Group (location)-->
                                     
                                         <label class="small mb-1" for="description">Description</label>
-                                        <textarea class="form-control" rows="3" name="description" id="description" placeholder="Enter Description" required></textarea>
+                                        <textarea class="form-control" rows="3" name="description" id="productdesc" placeholder="Enter Description" required></textarea>
                                     
                                 </div>
                                 <div class="row gx-3 mb-3">
@@ -866,7 +866,10 @@ if(isset($_GET['restore'])){
       
     </script>
 
-    
+<script src="../ckeditor/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace('productdesc');
+</script>
 
     <!-- BEGIN VENDOR JS-->
     <script src="theme-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
@@ -879,7 +882,7 @@ if(isset($_GET['restore'])){
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src = "search.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+    
 
   </body>
 </html>
