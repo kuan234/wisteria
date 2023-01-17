@@ -841,10 +841,12 @@ if(isset($_GET['restore'])){
         var fileReader = new FileReader();
         fileReader.onload = (function(e) {
           var file = e.target;
-          $("<span class=\"pip\">" +
+          $("<div class=\"pip container border border-dark mt-3 mb-3\">" +
+            "<label class=\"container\">Image Preview : </label>" +
             "<img class=\"img-fluid mb-2\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-            "<br/><span class=\"remove btn btn-danger mb-5\">Remove image</span>" +
-            "</span>").insertBefore(clickedButton);
+            "<br/><span class=\"remove btn btn-danger mt-3 mb-3\">Remove image</span>" + 
+            
+            "</div>").insertBefore(clickedButton);
           $(".remove").click(function(){
             $(this).parent(".pip").remove();
           });
