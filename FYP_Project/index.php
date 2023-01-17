@@ -38,6 +38,26 @@ include "connection.php";
         border-color: black;
        }
 
+       .prod{
+        
+        overflow: hidden;
+    }
+
+    .image-photo >.img
+    {
+        object-fit: cover;
+        width:100%;
+        height: 100%;
+        transition: all .3s ease-in-out;
+
+    }
+
+    .image-photo:hover > img{
+        text-decoration: underline;
+        color: black;
+        transform: scale(1.1);
+    }
+
         /*----------------Footer--------------*/
         .footer h3
         {
@@ -187,8 +207,9 @@ include "connection.php";
                     ?>	
                     <div class="col-md-4 col-sm-6 my-3 md-0">
                         <form acion="" method="POST">
+                        <a class="prod" href="product-detail.php?id=<?php echo $row['prodID'];?>">
                             <div class="card " style="border:none; background-color: #f2f6fc;" >
-                                <div class="card-img-top">
+                                <div class="img-fluid card-img-top image-photo">
                                 <img src= "./image/<?php echo $row['product_image']; ?>" style="height:300px; width:300px;" class="img img-fluid" alt="" >
                                 </div>
 
@@ -196,6 +217,7 @@ include "connection.php";
 
                                 <div class="card-body">
                                     <p class="card-title"><?php echo $row["product_name"]; ?></p>
+                    </a>
                                     <p style="font-size:11px">
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
@@ -257,7 +279,7 @@ include "connection.php";
                         <ul style="list-style:none">
                             <li>
                                 <h2 class="" style="font-size:18px"><b>Select Plant</b></p>
-                                <p class="fw-light" style="font-size:16px">Determine amount of sunlight received in your plant area. From there, choose whether bright light or low light plant is suitable for your home. Not sure? Find out how to choose placement here</p>
+                                <p class="fw-light" style="font-size:16px">Determine amount of sunlight received in your plant area. From there, choose whether bright light or low light plant is suitable for your home.</p>
                             </li>
                             <li>
                                 <h2 class="" style="font-size:18px"><b>Delivery</b></p>
