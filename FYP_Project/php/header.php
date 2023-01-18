@@ -264,7 +264,8 @@ li .mnav:hover {
                 <nav>
                     <ul id="MenuItems">
                         <li><a class="mnav" href="index.php">Home</a></li>
-                        <li><a class="mnav dropdown dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
+                        <li><a class="mnav" href="product.php">Product</a></li>
+                        <li><a class="mnav dropdown dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Category</a>
                             <div class="dropdown">
                             <ul class="dropdown-menu">
                                 <?php 

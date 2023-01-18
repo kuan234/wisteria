@@ -192,7 +192,12 @@
 
     <div class="container">
         <h2 class="text-center">
-            All Plants
+            <?php $category_id = $_GET['cid'];
+                    $resultc = mysqli_query($connect, "SELECT * from category where id = '$category_id'");
+                    if(mysqli_num_rows($resultc)>0){
+                        $cc = mysqli_fetch_assoc($resultc);
+                        echo $cc['category_name'];
+                    } ?>
         </h2>
 
             <div class="row ms-5 mt-5">            
