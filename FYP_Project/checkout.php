@@ -347,11 +347,12 @@ $count = 0;
                                 <ul class="list-group mb-3">
                                     <li class="list-group-item d-flex justify-content-between lh-sm">
                                         <div>
-                                            <h6 class="my-0"><?= $c['name']?></h6>
-                                            <img class="text-muted" src="./image/<?= $c['image']?>" style="height:80px; width:80px">
-                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger ms-2">
+                                            <h6 class="my-0"><?= $c['name']?>
+                                            <span class="badge bg-danger">
                                                 <?= $c['quantity']?>
-                                            </span>
+                                            </span></h6>
+                                            <img class="text-muted rounded-circle mt-2" src="./image/<?= $c['image']?>" style="height:80px; width:80px">
+                                            
                                         </div>
 
                                         <span class="text-muted">RM <?= $c['price']?></span>

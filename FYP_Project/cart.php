@@ -17,21 +17,28 @@ if(!isset($_SESSION['user_id']))
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
+    <link rel="icon" href="image/logo.png">
      <!-- Font Awesome -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
-
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="cart-style.css">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
     
 </head>
 <body>
+   
 <?php
-include('./php/header.php');
+ include('./php/header.php');
 ?>
-
+<style>
+      .dropdown-menu{
+         font-size: large;
+      }
+   </style>
 <?php
 
 //update quantity
@@ -249,15 +256,22 @@ if(isset($_GET['delete_all'])){
 
     
    <div class="checkout-btn">
-      <button class="btn <?= ($grand_total > 1)?'':'disabled'; ?>" name= "checkoutbtn">proceed to checkout</button>
+      <button class="chkbtn btn-primary <?= ($grand_total > 1)?'':'disabled'; ?>" name= "checkoutbtn" 
+      style="
+    background-color: var(--blue);
+    color:var(--white);
+    font-size: 1.7rem;
+    padding:1.2rem 3rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    margin-top: 1rem;">
+      proceed to checkout</button>
    </div>
 </form>
 </section>
 
 </div>
 
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
