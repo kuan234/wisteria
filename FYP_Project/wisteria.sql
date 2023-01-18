@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2023 at 06:03 PM
+-- Generation Time: Jan 18, 2023 at 09:00 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -70,8 +70,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `name`, `price`, `quantity`, `image`, `user_id`, `prod_id`) VALUES
-(1, 'Aglaonema Lady Valentine', 20, 1, 'Aglaonema Lady Valentine.jpg', 82, 20),
-(2, 'Artifical', 15, 6, 'Calathea.jpg', 82, 13);
+(13, 'Marble Pothos', 30, 1, 'Marble pothos.PNG', 82, 14);
 
 -- --------------------------------------------------------
 
@@ -106,7 +105,7 @@ CREATE TABLE `contact` (
   `id` int(100) NOT NULL,
   `contact_name` varchar(255) NOT NULL,
   `contact_email` varchar(255) NOT NULL,
-  `contact_phone` int(10) NOT NULL,
+  `contact_phone` int(11) NOT NULL,
   `contact_message` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -148,7 +147,8 @@ CREATE TABLE `order_manage` (
 INSERT INTO `order_manage` (`orderID`, `order_number`, `order_name`, `order_cardnum`, `order_address`, `order_city`, `order_state`, `order_postcode`, `order_price`, `order_user_id`, `order_date`, `delivery_date`, `status`) VALUES
 (1, 'W000000100', 'kuan Sheng Zhe', '5423 1342 3123 4123', '6, jln1, tmn1', 'kluang', 'Johor', 12345, 40, 82, '2023-01-11', '2023-01-18', 2),
 (2, 'W000000101', 'kuan Sheng Zhe', '5454 3534 5345 3434', '6, jln1, tmn1', 'kluang', 'Johor', 12345, 60, 82, '2023-01-12', '2023-01-19', 3),
-(3, 'W000000102', '1201202314', '1231 2312 3123 1231', '10,Jalan Ye, Taman Ye', 'Kluang', 'Johor', 86000, 75, 85, '2023-01-16', '2023-01-22', 1);
+(3, 'W000000102', '1201202314', '1231 2312 3123 1231', '10,Jalan Ye, Taman Ye', 'Kluang', 'Johor', 86000, 75, 85, '2023-01-16', '2023-01-22', 2),
+(4, 'W000000103', 'Kuan Sheng Zhe', '5126 4826 0748 2542', '6, jln1, tmn1', 'kluang', 'Johor', 12345, 140, 82, '2023-01-16', '2023-01-23', 1);
 
 -- --------------------------------------------------------
 
@@ -161,7 +161,7 @@ CREATE TABLE `product` (
   `product_name` varchar(255) NOT NULL,
   `product_price` float NOT NULL,
   `product_image` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` text NOT NULL,
   `quantity` int(10) NOT NULL,
   `category` int(20) NOT NULL,
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0-available, 1-unavailable'
@@ -172,13 +172,13 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`prodID`, `product_name`, `product_price`, `product_image`, `description`, `quantity`, `category`, `is_delete`) VALUES
-(1, 'Aloe Vara', 20, 'Aloe_Vara.jpg', 'Aloe Vara is a Pot Plant.', 10, 1, 1),
-(13, 'Artifical', 15, 'Calathea.jpg', 'this is a long long long long long long long long long longlong v vlonglong long long long long long long long long long long long long longlonglonglonglonglonglong longlonglonglong text. long long long long long long ', 9, 2, 0),
-(14, 'Marble Pothos', 30, 'shawnmendes5.JPG', 'Testing for unavailvle edit ', 15, 3, 0),
-(15, 'Baby Rubber', 25, 'Baby_Rubber.jpg', 'rubber', 0, 1, 0),
-(18, 'Peach Lily', 20, 'Peace Lily.PNG', 'this is a testing function for add product', 6, 1, 0),
-(19, 'zz plants', 11, 'ZZ Plant.PNG', '21321312', 13, 1, 0),
-(20, 'Aglaonema Lady Valentine', 20, 'Aglaonema Lady Valentine.jpg', 'dusahdisahdiusadhuisadhisado', 12, 5, 0);
+(1, 'Aloe Vara', 20, 'Aloe_Vara.jpg', '<p>Aloe Vara is a Pot Plant. <strong>Aloe Vara Saigo!</strong>!</p>\r\n', 10, 1, 1),
+(13, 'Artifical', 15, 'Artifical.jpg', 'this is a long long long long long long long long long longlong v vlonglong long long long long long long long long long long long long longlonglonglonglonglonglong longlonglonglong text. long long long long long long ', 2, 2, 0),
+(14, 'Marble Pothos', 30, 'Marble pothos.PNG', '<p>Testing for unavailvle edit .<s><em> EIhehehehehe</em></s></p>\r\n', 15, 3, 0),
+(15, 'Baby Rubber', 25, 'Baby_Rubber.jpg', 'rubber', 2, 1, 0),
+(18, 'Peach Lily', 20, 'Peace Lily.PNG', '<p>Peach Lily</p>\r\n\r\n<p>&nbsp;</p>\r\n', 0, 1, 0),
+(19, 'zz plants', 11, 'ZZ Plant.PNG', '<p>zzplant</p>\r\n\r\n<p>&nbsp;</p>\r\n', 13, 1, 0),
+(20, 'Aglaonema Lady Valentine', 20, 'Aglaonema Lady Valentine.jpg', '<p><em>Agaonema Lady Valentine</em>&nbsp;<strong>Hahahaha</strong></p>\r\n\r\n<p><strong>S</strong>Hdhuenf</p>\r\n\r\n<p>jdiejdiejiejdijei</p>\r\n', 5, 5, 0);
 
 -- --------------------------------------------------------
 
@@ -225,7 +225,7 @@ CREATE TABLE `user_info` (
 
 INSERT INTO `user_info` (`infoid`, `username`, `address`, `state`, `city`, `postcode`, `phone`, `birthday`, `user_id`, `user_image`) VALUES
 (1, 'kuan', '1, Jalan Bass 1, Taman gugua, 21111, Melaka', '', '', NULL, 123456789, '2022-09-19', 1, 'Artifical.jpg'),
-(29, 'kuan Sheng Zhe', '6, jln1, tmn1', 'Johor', 'kluang', 12345, 123456789, '2015-06-23', 82, 'shawnmendes.JPG'),
+(29, 'Kuan Sheng Zhe', '6, jln1, tmn1', 'Johor', 'kluang', 12345, 123456789, '2015-06-23', 82, 'Aglaonema Lady Valentine.jpg'),
 (32, '1201202314', '10,Jalan Ye, Taman Ye', 'Johor', 'Kluang', 86000, 112345678, '0000-00-00', 85, 'user.png');
 
 -- --------------------------------------------------------
@@ -254,7 +254,8 @@ INSERT INTO `user_order` (`id`, `order_id`, `product_name`, `price`, `quantity`,
 (4, 2, 'Artifical', 15, 1, 'Calathea.jpg'),
 (5, 2, 'Peach Lily', 20, 1, 'Peace Lily.PNG'),
 (6, 3, 'Artifical', 15, 1, 'Calathea.jpg'),
-(7, 3, 'Aglaonema Lady Valentine', 20, 3, 'Aglaonema Lady Valentine.jpg');
+(7, 3, 'Aglaonema Lady Valentine', 20, 3, 'Aglaonema Lady Valentine.jpg'),
+(8, 4, 'Aglaonema Lady Valentine', 20, 7, 'Aglaonema Lady Valentine.jpg');
 
 -- --------------------------------------------------------
 
@@ -365,7 +366,7 @@ ALTER TABLE `admlogin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -383,7 +384,7 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `order_manage`
 --
 ALTER TABLE `order_manage`
-  MODIFY `orderID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `orderID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -407,7 +408,7 @@ ALTER TABLE `user_info`
 -- AUTO_INCREMENT for table `user_order`
 --
 ALTER TABLE `user_order`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_reg`
