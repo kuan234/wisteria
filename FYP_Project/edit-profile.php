@@ -209,7 +209,7 @@ if(isset($_POST['savebtn']))
 
 
 
-<div class="container-xl px-4 mt-4">
+<div class="container-fluid px-4 mt-4">
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
         <a class="nav-link active ms-0" href="edit-profile.php" target="__blank">Profile</a>
