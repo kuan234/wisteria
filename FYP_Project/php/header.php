@@ -13,11 +13,16 @@ include('connection.php');
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 </head>
 <body class="hbody">
 
 <style>
 .hbody{
+    background-color: #f2f6fc;
     font-family: "poppins", sans-serif;
     margin: 0;
     padding: 0;
@@ -243,10 +248,12 @@ li .mnav:hover {
         display: block;
         cursor: pointer;
     }
+
 }
 
 
     </style>
+
     <!--------------Header---------------->
     <div class="header">
         <div class="hcontainer">
@@ -257,7 +264,22 @@ li .mnav:hover {
                 <nav>
                     <ul id="MenuItems">
                         <li><a class="mnav" href="index.php">Home</a></li>
-                        <li><a class="mnav" href="product.php">Products</a></li>
+                        <li><a class="mnav dropdown dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
+                            <div class="dropdown">
+                            <ul class="dropdown-menu">
+                                <?php 
+                                    $category_sql = mysqli_query($connect,"SELECT * FROM category where status = 0;");
+                                    while($viewc = mysqli_fetch_assoc($category_sql))
+                                    {
+                                        ?>
+                                        <li><a class="dropdown-item" href="category.php?cid=<?= $viewc['id'] ?>"><?= $viewc['category_name'] ?></a></li>
+                                        <?php
+                                    }
+                                ?>
+                                
+                            </ul>
+                            </div>
+                        </li>
                         <li><a class="mnav" href="about.php">About</a></li>
                         <li><a class="mnav" href="contact.php">Contact</a></li>
                         
@@ -421,6 +443,7 @@ li .mnav:hover {
             toggleMenu.classList.toggle('active')
         }
     </script>
+
 
 </body>
 </html>
