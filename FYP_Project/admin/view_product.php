@@ -366,7 +366,7 @@ if(isset($_GET['restore'])){
                                       <select class="form-select" name="category" value="<?php $row['category'];?>" >
 
                                         <?php
-                                          $sqlctg = "SELECT * FROM category";
+                                          $sqlctg = "SELECT * FROM category WHERE status = 0;";
                                           $sqlctg_run = mysqli_query($connect,"$sqlctg");
                                           $pcat = $row['category'];
                                           if(mysqli_num_rows($sqlctg_run)>0)
@@ -380,7 +380,6 @@ if(isset($_GET['restore'])){
                                             
                                             while($ctg = mysqli_fetch_assoc($sqlctg_run))
                                             {
-                                                
                                                 $cname = $ctg['id'];
                                               ?>
                                               <?php 
@@ -577,7 +576,7 @@ if(isset($_GET['restore'])){
                                       <select class="form-select" name="category" value="<?php $row['category'];?>" >
 
                                         <?php
-                                          $sqlctg = "SELECT * FROM category";
+                                          $sqlctg = "SELECT * FROM category WHERE status = 0";
                                           $sqlctg_run = mysqli_query($connect,"$sqlctg");
                                           $pcat = $row['category'];
                                           if(mysqli_num_rows($sqlctg_run)>0)
@@ -717,10 +716,10 @@ if(isset($_GET['restore'])){
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-4">
                                       <label class="small mb-1" for="Category">Category</label>
-                                      <select class="form-select" name="category"  value="" required>
+                                      <select class="form-select" name="category"  required>
                                         
                                         <?php
-                                          $sqlctg = "SELECT * FROM category";
+                                          $sqlctg = "SELECT * FROM category where status =0;";
                                           $sqlctg_run = mysqli_query($connect,"$sqlctg");
                                           $pcat = $row['category'];
                                           if(mysqli_num_rows($sqlctg_run)>0)
@@ -728,7 +727,7 @@ if(isset($_GET['restore'])){
                                             if($pcat == null)
                                               {
                                                 ?>
-                                                  <option selected>NULL </option>
+                                                  <option value="" selected>NULL </option>
                                                 <?php
                                               }
                                             
