@@ -40,31 +40,75 @@
                 $product_image = $_POST['product_image'];
                 $product_quantity = 1;
 
-                $select_cart = mysqli_query($connect, "SELECT * FROM `cart` WHERE name = '$product_name' && `user_id` =" . $_SESSION['user_id']);
+                $select_cart = mysqli_query($connect, "SELECT * FROM `cart` WHERE name = '$product_name' AND `user_id` =" . $_SESSION['user_id']);
+                $select_prod = mysqli_query($connect,"SELECT * FROM `product` WHERE prodID = '$product_id' AND is_delete = 0 ");
+                if(mysqli_num_rows($select_prod)>0){
 
-                if(mysqli_num_rows($select_cart) > 0)
-                {
-                    ?>
-                <script>
-                        const Toast = Swal.mixin({
-                                        toast: true,
-                                        position: 'top',
-                                        showConfirmButton: false,
-                                        timer: 1500,
-                                        timerProgressBar: true,
-                                        })
+        
+                    if(mysqli_num_rows($select_cart) > 0)
+                    {
+                        ?>
+                    <script>
+                            const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top',
+                                            showConfirmButton: false,
+                                            timer: 1500,
+                                            timerProgressBar: true,
+                                            })
 
-                                        Toast.fire({
-                                        icon: 'error',
-                                        title: 'Product is in Cart'
-                                        })
-                            
-                </script>
-                <?php
+                                            Toast.fire({
+                                            icon: 'error',
+                                            title: 'Product is in Cart'
+                                            })
+                                
+                    </script>
+                    <?php
+                    }
+                    else{
+                        $insert_product = mysqli_query($connect,"INSERT INTO `cart`( name,price,image,quantity,`user_id`,`prod_id`)
+                        VALUES('$product_name','$product_price','$product_image','$product_quantity','{$_SESSION['user_id']}','$product_id')");
+                        ?>
+                        <script>
+                                const Toast = Swal.mixin({
+                                                toast: true,
+                                                position: 'top',
+                                                showConfirmButton: false,
+                                                timer: 1500,
+                                                timerProgressBar: true,
+                                                })
+            
+                                                Toast.fire({
+                                                icon: 'success',
+                                                title: 'Add to Cart Successful'
+                                                })
+                                    
+                        </script>
+                        <?php
+                    }
                 }
-                else{
-                    $insert_product = mysqli_query($connect,"INSERT INTO `cart`( name,price,image,quantity,`user_id`,`prod_id`)
-                    VALUES('$product_name','$product_price','$product_image','$product_quantity','{$_SESSION['user_id']}','$product_id')");
+                        else
+                        {
+                            ?>
+                            <script>
+                                    const Toast = Swal.mixin({
+                                                    toast: true,
+                                                    position: 'top',
+                                                    showConfirmButton: false,
+                                                    timer: 1500,
+                                                    timerProgressBar: true,
+                                                    })
+                
+                                                    Toast.fire({
+                                                    icon: 'info',
+                                                    title: 'Sorry.Product Already Delete.'
+                                                    })
+                                        
+                            </script>
+                            <?php
+                        }
+                    }else
+                {
                     ?>
                     <script>
                             const Toast = Swal.mixin({
@@ -74,38 +118,17 @@
                                             timer: 1500,
                                             timerProgressBar: true,
                                             })
-        
+
                                             Toast.fire({
-                                            icon: 'success',
-                                            title: 'Add to Cart Successful'
+                                            icon: 'info',
+                                            title: 'Please Log In'
                                             })
                                 
                     </script>
                     <?php
                 }
             }
-            else
-            {
-                ?>
-                <script>
-                        const Toast = Swal.mixin({
-                                        toast: true,
-                                        position: 'top',
-                                        showConfirmButton: false,
-                                        timer: 1500,
-                                        timerProgressBar: true,
-                                        })
-
-                                        Toast.fire({
-                                        icon: 'info',
-                                        title: 'Please Log In'
-                                        })
-                            
-                </script>
-                <?php
-            }
-        }
-
+        
         
     ?>
 
@@ -242,7 +265,7 @@
                                             <span class="price" data-price="<?= $row['product_price'] ?>">RM<?php echo number_format($row["product_price"],2); ?></span>
                                             <!-- <small><del class='text-secondary'>RM<?php echo $row['product_price'] *2.0;?></del></small> -->
                                         </h5>
-                        
+                       
                                         <input type='hidden' name='product_id' value='<?php echo $row["prodID"]; ?>'>
                                         <input type='hidden' name='product_name' value='<?php echo $row["product_name"]; ?>'>
                                         <input type='hidden' name='product_price' value='<?php echo $row['product_price']?>'>
