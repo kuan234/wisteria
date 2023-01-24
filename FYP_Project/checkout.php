@@ -23,6 +23,7 @@ $count = 0;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="checkout-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -80,9 +81,21 @@ $count = 0;
                     $qtty = $qty - $quantity;
                     $upd_prod_qtty = mysqli_query($connect, "UPDATE `product` SET `quantity`='$qtty'WHERE `prodID` = '$product_id'");
                 }
+                ?>
+                <script>
+                    swal({
+                        title: "Success!",
+                        text: "Your order have been saved!",
+                        type: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                        }, function(){
+                            window.location.href = "order_detail.php";
+                        });
+                </script>
+                    <?php
             }
-            echo "<script>alert('Order Successful!');
-        </script>";
+            
             if ($order2) {
                 mysqli_query($connect, "DELETE FROM `cart` WHERE user_id = $id");
             }
@@ -128,17 +141,26 @@ $count = 0;
                                 <h6 class="text-uppercase">Payment details</h6>
                                 <?php
                                 if ($r1['username'] == null) { ?>
-                                    <div class="inputbox mt-3"> <input type="text" name="cname" class="form-control" required="required"> <span>Name on card</span> </div>
+                                    <div class="inputbox mt-3"> <input type="text" name="cname" class="form-control" required="required"> <span>Full Name</span> </div>
                                 <?php
                                 } else {
-                                ?><div class="inputbox mt-3"> <input type="text" name="cname" class="form-control" value="<?php echo $r1['username'] ?>" required="required"> <span>Name on card</span> </div><?php
+                                ?><div class="inputbox mt-3"> <input type="text" name="cname" class="form-control" value="<?php echo $r1['username'] ?>" required="required"> <span>Full Name</span> </div><?php
                                                                                                                                                                                         }
                                                                                                                                                                                             ?>
 
                                 <div class="row">
+                                    <div class="col-md-6">
+ 
+                                        <div class="inputbox mt-3 mr-2"> <input type="text" name="cardname" id="cn" class="form-control" required="required"> 
+                                            </i> <span>Name on Card</span>
+
+                                        </div>
+
+
+                                    </div>
 
                                     <div class="col-md-6">
-
+ 
                                         <div class="inputbox mt-3 mr-2"> <input type="text" name="cardnum" id="cc" class="form-control" required="required" pattern="[0-9\s]{19}" title="Only contain 16 digit" onkeypress="return checkDigit(event)"> 
                                             <i class="fa fa-credit-card" id="credit"></i> <span>Card Number</span>
 
@@ -146,6 +168,7 @@ $count = 0;
 
 
                                     </div>
+                                    
 
 
 
@@ -296,26 +319,6 @@ $count = 0;
                             </div>
 
                         </div>
-
-
-
-                            <!-- <div class="col-md-4">
-                                <div class="card card-blue p-3 text-white mb-3">
-                                <span>You have to pay</span>
-                                    <div class="d-flex flex-row align-items-end mb-3">
-                                        <h1 class="mb-0 yellow">$549</h1> <span>.99</span>
-                                    </div>
-                                <span>Enjoy all the features and perk after you complete the payment</span>
-                                <a href="#" class="yellow decoration">Know all the features</a>
-
-                                <div class="hightlight">
-
-                                    <span>100% Guaranteed support and update for the next 5 years.</span>
-                                        
-
-                                </div>
-                                    
-                            </div> -->
                             
 
                             <div class="col-md-5 col-lg-4 order-md-last">

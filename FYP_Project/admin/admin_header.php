@@ -174,6 +174,32 @@ include('connection.php');
         content:"✔ ";
         
     }
+
+    .form-submit-btn input
+{
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    color: rgb(209, 209, 209); 
+    background: rgba(63, 114, blue76, 0.7);
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.form-submit-btn input.active
+{
+    pointer-events: auto;
+}
+
+.form-submit-btn input:hover
+{
+    background: rgba(56, 204, 93, 0.7);
+    color: rgb(255, 255, 255);
+}
     </style>
     <!-- fixed-top-->
     <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light">
@@ -359,7 +385,8 @@ include('connection.php');
                               </div>
                               <div class="modal-footer">
                                 <!-- Save changes button-->
-                                <button class="btn btn-primary" name="change_password_btn" type="submit">Save Changes</button>
+                                
+                                <button class="input_submit btn btn-primary disabled" name="change_password_btn" type="submit">Save Changes</button>
                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                               </div>
                             </form>
@@ -377,6 +404,6 @@ include('connection.php');
           }
           ?>
 
-            <script src="../script.js"></script>
+            <script src="./pass.js"></script>
   </body>
 </html>
