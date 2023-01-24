@@ -353,9 +353,7 @@ if(isset($_GET['delete'])){
                       
                      <!-- ############################################################################################################### --> 
 
-                    <a href="view_admin.php?delete=<?php echo $e1['admid'] ?>" onclick="return confirm('Remove <?php echo $e1['firstname'] .$e1['lastname'] ;?> from admin?')" ><button type="submit" class="btn btn-danger text-white" >
-                    Delete
-                    </button></a>
+                    
                   </td>
                 
                 </tr>
