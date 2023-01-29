@@ -283,12 +283,12 @@ $count = 0;
                                         <div class="col-md-6">
                                             <?php
                                             if ($r1['postcode'] == null) { ?>
-                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" required> <span>Postcode</span>
+                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" maxlength="5" pattern="[0-9]{5}" title="Only contain 5 digits"> <span>Postcode</span>
 
                                                 </div>
                                             <?php
                                             } else { ?>
-                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" value="<?php echo $r1['postcode']; ?>" required><span>Postcode</span>
+                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="postcode" class="form-control" value="<?php echo $r1['postcode']; ?>" maxlength="5" pattern="[0-9]{5}" title="Only contain 5 digits"><span>Postcode</span>
 
                                                 </div>
                                             <?php
