@@ -250,7 +250,7 @@ session_start();
 
                                     <div class="mt-4 inputs"> 
                                         <input type="text" name="name" class="form-control" placeholder="Name*" required> 
-                                        <input type="email" name="email" class="form-control" placeholder="Email*" required> 
+                                        <input type="email" name="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="" placeholder="Email*" required> 
                                         <input type="tel" name="contact_number" class="form-control" minlength="9" maxlength="11" pattern="[0-9]+" title="Only Number Accepted"  placeholder="Phone*" required> 
                                         <textarea class="form-control" name="message" placeholder="Type your message*"  required></textarea> 
                                     </div> 
