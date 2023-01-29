@@ -110,18 +110,7 @@ if(isset($_POST['checkoutbtn']))
                
                
             }
-            else
-            {
-               ?>
-               <script>
-               Swal.fire(
-                  'Wrong',
-                  '<?= $c1['name'] ?> Already Sold Out.',
-                  'question',
-                  )
-                  </script>
-                  <?php
-            }
+            
       }
 
      }

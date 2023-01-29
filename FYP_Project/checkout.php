@@ -243,12 +243,12 @@ $count = 0;
 
                                             <?php
                                             if ($r1['city'] == null) { ?>
-                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" required> <span>City</span>
+                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" pattern="[A-Za-z]{1,50}" title="Only contain alphabet" required> <span>City</span>
 
                                                 </div>
                                             <?php
                                             } else { ?>
-                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" value="<?php echo $r1['city']; ?>" required><span>City</span>
+                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="city" class="form-control" pattern="[A-Za-z]{1,50}" title="Only contain alphabet" value="<?php echo $r1['city']; ?>" required><span>City</span>
 
                                                 </div>
                                             <?php
@@ -265,12 +265,12 @@ $count = 0;
                                         <div class="col-md-6">
                                             <?php
                                             if ($r1['state'] == null) { ?>
-                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" required> <span>State</span>
+                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" pattern="[A-Za-z]{1,50}" title="Only contain alphabet" required> <span>State</span>
 
                                                 </div>
                                             <?php
                                             } else { ?>
-                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" value="<?php echo $r1['state']; ?>" required><span>State</span>
+                                                <div class="inputbox mt-3 mr-2"> <input type="text" name="state" class="form-control" pattern="[A-Za-z]{1,50}" title="Only contain alphabet" value="<?php echo $r1['state']; ?>" required><span>State</span>
 
                                                 </div>
                                             <?php

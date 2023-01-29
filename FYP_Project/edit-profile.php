@@ -286,11 +286,11 @@ if(isset($_POST['savebtn']))
                         <div class="row gx-3 mb-3">
                             <div class="col-md-4">
                             <label class="small mb-1" for="state">State</label>
-                            <input class="form-control" type="text" name="state"  placeholder="Enter Your State" value="<?php echo $row['state'];?>">
+                            <input class="form-control" type="text" name="state"  placeholder="Enter Your State" pattern="[A-Za-z]{1,50}" title="Only contain alphabet" value="<?php echo $row['state'];?>">
                             </div>
                             <div class="col-md-4">
                             <label class="small mb-1" for="city">City</label>
-                            <input class="form-control" type="text" name="city" placeholder="Enter Your City" value="<?php echo $row['city'];?>">
+                            <input class="form-control" type="text" name="city" placeholder="Enter Your City" pattern="[A-Za-z]{1,50}" title="Only contain alphabet" value="<?php echo $row['city'];?>">
                             </div>
                             <div class="col-md-4">
                             <label class="small mb-1" for="postcode">Postcode</label>
