@@ -177,7 +177,7 @@ if(!isset($_SESSION['admin_id']))
 
 
 <?php
-    $query = mysqli_query($connect,"SELECT (`product_name`) AS 'Product',
+    $query = mysqli_query($connect,"SELECT (`product_name`) AS 'Product',quantity AS 'Quantity',
     COUNT(*) AS 'Sales'
     FROM user_order GROUP BY `product_name`;");
 
@@ -185,6 +185,8 @@ if(!isset($_SESSION['admin_id']))
    {
         $month[] = $data['Product'];
         $tot_order[] = $data['Sales'];
+        $tot_quantity[] = $data['Quantity'];
+        $total[] = $data['Sales'] + $data['Quantity'] - 1;
    }
 ?>
 
@@ -216,7 +218,7 @@ if(!isset($_SESSION['admin_id']))
       'rgb(153, 102, 255)',
       'rgb(201, 203, 207)'
     ],
-        data: <?php echo json_encode($tot_order) ?>,
+        data: <?php echo json_encode($total) ?>,
         borderWidth: 1
       }]
     },
