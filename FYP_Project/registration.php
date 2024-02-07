@@ -1,12 +1,8 @@
 <?php
 session_start();
-$connect = mysqli_connect("localhost","root","","wisteria");
+include "connection.php";
 include('php/header.php');
 
-if(!$connect)
-{
-    echo("Failed to connect database.");
-}
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;

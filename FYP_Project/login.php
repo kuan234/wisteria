@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('php/header.php');
+include "connection.php";
 ?>
 
 <!DOCTYPE html>
@@ -58,13 +59,6 @@ include('php/header.php');
         </div>
 
         <?php
-            $connect = mysqli_connect("localhost","root","","wisteria");
-
-            if(!$connect)
-            {
-                echo("Failed to connect database.");
-            }
-
             if (isset($_POST["submit"]))
             {
                 $email=$_POST["userEmail"];
