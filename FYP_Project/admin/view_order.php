@@ -143,7 +143,6 @@ if(isset($_POST['statussavebtn']))
                                 <th scope="col" class="text-center">No</th>
                                 <th scope="col" class="text-center">Order ID</th>
                                 <th scope="col" class="text-center">Email</th>
-                                <th scope="col" class="text-center">Order Date</th>
                                 <th scope="col" class="text-center">Total Price</th>
                                 <th scope="col" class="text-center">Status</th>
                                 <th colspan="2" class="text-center">Action</th>
@@ -180,7 +179,6 @@ if(isset($_POST['statussavebtn']))
                                         }
                                         }?>    
                                   </td>
-                                    <td class="fs-5 text-center"><?php echo $row['order_date']?></td>
                                     <td class="fs-5 text-center"><?php echo "RM " .$row['order_price']?></td>
                                     
 
@@ -321,16 +319,7 @@ if(isset($_POST['statussavebtn']))
                     <!-- </h6><span class="fs-12 text-black-50">your order has been confirmed and will be shipped in two days</span> -->
                     <hr>
                     <div class="d-flex flex-row justify-content-between align-items-center order-details">
-                        <div><span class="d-block fs-12">Order date</span><span class="font-weight-bold">
-                        <?php 
-                        // $sql1 = mysqli_query($connect,"SELECT `order_date` FROM `order_manage` WHERE `orderID` = $orderid "); 
-                        // if(mysqli_num_rows($sql1)>0)
-                        // {
-                        //     $row = mysqli_fetch_assoc($sql1);
-                            echo $r1['order_date'];
-                        // }
-                        ?>
-                        </span></div>
+                
                         <div><span class="d-block fs-12">Order number</span><span class="font-weight-bold">
                         <?php 
                         // $sql1 = mysqli_query($connect,"SELECT `order_number` FROM `order_manage` WHERE `orderID` = $orderid "); 
@@ -423,12 +412,8 @@ if(isset($_POST['statussavebtn']))
                             </div>
                         </div>
                         
-                    </div><span class="d-block">Expected delivery date</span><span class="font-weight-bold text-success">
-                        <?php
-                        
-                        echo $r1['delivery_date'];
-                        ?>
-                    </span><span class="d-block mt-3 text-black-50 fs-15">We will be sending a shipping confirmation email when the item is shipped!</span>
+                    </div>
+                   <span class="d-block mt-3 text-black-50 fs-15">We will be sending a shipping confirmation email when the item is shipped!</span>
                     <hr>
                     <div class="d-flex justify-content-between align-items-center footer">
                         <div class="thanks"><span class="d-block font-weight-bold">Thanks for shopping</span><span>Wisteria team</span></div>
