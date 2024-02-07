@@ -33,19 +33,18 @@ CREATE TABLE `admlogin` (
   `lastname` varchar(50) NOT NULL,
   `emailaddress` varchar(80) NOT NULL,
   `pw` varchar(80) NOT NULL,
-  `role_as` tinyint(1) NOT NULL,
-  `created_at` date NOT NULL DEFAULT current_timestamp()
+  `role_as` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admlogin`
 --
 
-INSERT INTO `admlogin` (`admid`, `firstname`, `lastname`, `emailaddress`, `pw`, `role_as`, `created_at`) VALUES
-(9, 'sheng', 'zhe', 'kuanzhesheng02@gmail.com', 'Wisteria_123', 0, '2023-01-02'),
-(10, 'chu', 'jing', '1201201901@student.mmu.edu.my', 'Wisteria_123', 1, '2023-01-24'),
-(11, 'esther', '', '1201202452@student.mmu.edu.my', 'Wisteria_123', 1, '2023-01-24'),
-(12, 'sheng', 'zhe', '1201202314@student.mmu.edu.my', 'Wisteria_123', 1, '2023-01-24');
+INSERT INTO `admlogin` (`admid`, `firstname`, `lastname`, `emailaddress`, `pw`, `role_as`) VALUES
+(9, 'sheng', 'zhe', 'kuanzhesheng02@gmail.com', 'Wisteria_123', 0),
+(10, 'chu', 'jing', '1201201901@student.mmu.edu.my', 'Wisteria_123', 1),
+(11, 'esther', '', '1201202452@student.mmu.edu.my', 'Wisteria_123', 1),
+(12, 'sheng', 'zhe', '1201202314@student.mmu.edu.my', 'Wisteria_123', 1);
 
 -- --------------------------------------------------------
 
