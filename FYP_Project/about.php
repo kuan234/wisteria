@@ -157,7 +157,7 @@ include "connection.php";
             <div class="row mt-5 mb-5"></div>
 
            
-
+<!-- 
             <div class="row mt-5">
                 <div class="title-h4 text-center mb-5">
                     <h4>Wisteria Team</h4>
@@ -183,7 +183,7 @@ include "connection.php";
                             <label for="form-label"><strong>Team Member</strong></label><br>
                             <label for="form-label">Liong Xin Yei</label>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
                 
